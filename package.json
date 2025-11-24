@@ -1,0 +1,48 @@
+{
+  "name": "valk-ui",
+  "version": "1.0.0",
+  "description": "CLI interativo para instalar componentes Valk UI (React e Blade)",
+  "main": "cli/index.js",
+  "files": [
+    "cli",
+    "packages/react/src",
+    "packages/blade/resources",
+    "packages/blade/src",
+    "README.md"
+  ],
+  "scripts": {
+    "init": "node cli/index.js",
+    "prepublish": "cp README-NPM.md README.md",
+    "postpublish": "git checkout README.md"
+  },
+  "keywords": [
+    "react",
+    "blade",
+    "laravel",
+    "ui",
+    "components",
+    "tailwindcss",
+    "typescript",
+    "cli"
+  ],
+  "author": "Fernando Forastieri",
+  "license": "MIT",
+  "bin": {
+    "valk-ui": "./cli/index.js"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.12",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/inquirer": "^9.0.7",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
+

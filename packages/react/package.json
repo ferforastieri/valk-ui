@@ -1,0 +1,53 @@
+{
+  "name": "valk-ui-react",
+  "version": "1.0.1",
+  "description": "Valk UI - Modern React Components Library with TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ferforastieri/valk-ui.git",
+    "directory": "packages/react"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "react-components",
+    "ui",
+    "components",
+    "tailwindcss",
+    "typescript",
+    "design-system",
+    "valk-ui"
+  ],
+  "author": "Fernando Forastieri",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-chartjs-2": "^5.0.0",
+    "chart.js": "^4.0.0",
+    "@heroicons/react": "^2.0.0"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.3.3",
+    "chart.js": "^4.4.0",
+    "react-chartjs-2": "^5.2.0",
+    "@heroicons/react": "^2.1.5"
+  }
+}
