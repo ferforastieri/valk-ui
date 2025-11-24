@@ -6,8 +6,6 @@
   "files": [
     "cli",
     "packages/react/src",
-    "packages/blade/resources",
-    "packages/blade/src",
     "README.md"
   ],
   "scripts": {
