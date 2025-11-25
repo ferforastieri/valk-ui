@@ -141,7 +141,9 @@ const componentsStructure = {
   ],
   'Feedback': [
     { value: 'modal', category: 'feedback' },
+    { value: 'dialog', category: 'feedback' },
     { value: 'status-badge', category: 'feedback' },
+    { value: 'badge', category: 'feedback' },
     { value: 'progress-bar', category: 'feedback' },
     { value: 'theme-toggle', category: 'feedback' },
   ],
@@ -150,6 +152,10 @@ const componentsStructure = {
     { value: 'metric-card', category: 'layout' },
     { value: 'paginated-table', category: 'layout' },
     { value: 'sidebar', category: 'layout' },
+    { value: 'separator', category: 'layout' },
+    { value: 'accordion', category: 'layout' },
+    { value: 'card', category: 'layout' },
+    { value: 'sheet', category: 'layout' },
   ],
   'Charts': [
     { value: 'bar-chart', category: 'charts' },
