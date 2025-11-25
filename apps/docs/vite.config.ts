@@ -12,6 +12,17 @@ export default defineConfig({
       { find: '@headlessui/react', replacement: path.resolve(__dirname, 'node_modules/@headlessui/react') },
     ],
     extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'],
+    dedupe: ['react', 'react-dom', 'react-router-dom', '@headlessui/react'],
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['@headlessui/react', '@heroicons/react'],
+        },
+      },
+    },
   },
   server: {
     port: 3000,
