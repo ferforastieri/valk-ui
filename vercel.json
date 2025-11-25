@@ -1,0 +1,13 @@
+{
+  "buildCommand": "cd apps/docs && npm install && npm run build",
+  "outputDirectory": "apps/docs/dist",
+  "installCommand": "npm install",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+
