@@ -1,7 +1,6 @@
 {
   "buildCommand": "cd apps/docs && npm install && npm run build",
   "outputDirectory": "apps/docs/dist",
-  "installCommand": "npm install && cd apps/docs && npm install",
   "framework": null,
   "cleanUrls": true,
   "rewrites": [
