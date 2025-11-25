@@ -34,9 +34,11 @@
   "peerDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
     "react-chartjs-2": "^5.0.0",
     "chart.js": "^4.0.0",
-    "@heroicons/react": "^2.0.0"
+    "@heroicons/react": "^2.0.0",
+    "@headlessui/react": "^2.0.0"
   },
   "dependencies": {
     "clsx": "^2.1.1",

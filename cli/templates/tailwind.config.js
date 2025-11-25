@@ -4,7 +4,6 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "../../packages/react/src/**/*.{js,ts,jsx,tsx}",
   ],
   prefix: '',
   theme: {
@@ -38,6 +37,10 @@ export default {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
@@ -56,3 +59,4 @@ export default {
   },
   plugins: [],
 }
+

@@ -1,208 +1,165 @@
-import { Button, MetricCard, StatusBadge, ProgressBar } from '@/components'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { 
-  ArrowDownTrayIcon, 
-  CodeBracketIcon, 
-  SparklesIcon,
-  CheckCircleIcon 
-} from '@heroicons/react/24/outline'
+  Button, 
+  Input, 
+  Select, 
+  MetricCard,
+  StatusBadge,
+  ProgressBar
+} from '@/components'
+import type { SelectOption } from '@/components'
+import { CodeBracketIcon, CheckCircleIcon, BookOpenIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline'
 
 export default function Home() {
+  const [selectValue, setSelectValue] = useState<string[]>([])
+
+  const selectOptions: SelectOption[] = [
+    { value: '1', label: 'Opção 1' },
+    { value: '2', label: 'Opção 2' },
+    { value: '3', label: 'Opção 3' },
+  ]
+
   return (
     <div className="space-y-12">
       {/* Hero Section */}
       <div className="text-center space-y-6">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <SparklesIcon className="h-12 w-12 text-blue-600" />
-          <h1 className="text-5xl font-bold text-gray-900 dark:text-white">
-            Valk UI
-          </h1>
+          <img src="/logo.png" alt="Valk UI" className="h-14 w-14" />
+          <h1 className="text-5xl font-bold text-foreground">Valk UI</h1>
         </div>
-        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        <div className="bg-primary/10 border border-primary/20 rounded-lg px-4 py-2 inline-block">
+          <p className="text-sm text-primary font-medium">🎨 Demonstração Interativa</p>
+        </div>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Biblioteca moderna de componentes UI para React e Blade. 
           Crie interfaces bonitas e consistentes com componentes prontos para produção.
         </p>
-        <div className="flex items-center justify-center gap-4 pt-4">
-          <Button size="lg" variant="primary">
-            <CodeBracketIcon className="h-5 w-5 mr-2" />
-            Começar
-          </Button>
-          <Button size="lg" variant="outline">
-            <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
-            Instalar
-          </Button>
+        <div className="flex items-center justify-center gap-4 pt-4 flex-wrap">
+          <Link to="/components">
+            <Button variant="primary" size="lg">
+              <CodeBracketIcon className="h-5 w-5 mr-2" />
+              Veja Mais
+            </Button>
+          </Link>
+          <Link to="/docs">
+            <Button variant="outline" size="lg">
+              <BookOpenIcon className="h-5 w-5 mr-2" />
+              Ver Documentação
+            </Button>
+          </Link>
+          <a 
+            href="https://github.com/ferforastieri/valk-ui" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" size="lg">
+              <ArrowUpRightIcon className="h-5 w-5 mr-2" />
+              Repositório
+            </Button>
+          </a>
         </div>
       </div>
 
-      {/* Installation Section */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl border-2 border-gray-200 dark:border-gray-700 p-8 shadow-lg">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-          <CodeBracketIcon className="h-8 w-8 text-blue-600" />
-          Instalação
-        </h2>
-        
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-              Via CLI (Recomendado)
-            </h3>
-            <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 overflow-x-auto">
-              <code className="text-green-400 text-sm">
-                <div className="mb-2"># Instalar globalmente</div>
-                <div className="mb-2">npm install -g valk-ui</div>
-                <div className="mb-2"># ou</div>
-                <div>npx valk-ui</div>
-              </code>
-            </div>
+      {/* Características */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-card border rounded-lg p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <CheckCircleIcon className="h-6 w-6 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground">Pronto para Produção</h3>
           </div>
-
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-              React / TypeScript
-            </h3>
-            <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 overflow-x-auto">
-              <code className="text-green-400 text-sm">
-                <div className="mb-2"># Execute o CLI e selecione React</div>
-                <div className="mb-2">npx valk-ui</div>
-                <div className="mb-2"># Escolha os componentes desejados</div>
-                <div># Os componentes serão copiados para ./src/components/ui</div>
-              </code>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-              Blade / Laravel
-            </h3>
-            <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 overflow-x-auto">
-              <code className="text-green-400 text-sm">
-                <div className="mb-2"># Execute o CLI e selecione Blade</div>
-                <div className="mb-2">npx valk-ui</div>
-                <div className="mb-2"># Escolha os componentes desejados</div>
-                <div># Os componentes serão copiados para ./resources/views/components</div>
-              </code>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Features */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-sm">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
-              <CodeBracketIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              ⚛️ React / TypeScript
-            </h3>
-          </div>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
-            Componentes React totalmente tipados com TypeScript, prontos para uso em qualquer projeto React.
+          <p className="text-sm text-muted-foreground">
+            Componentes testados e otimizados para uso em projetos reais.
           </p>
-          <ul className="space-y-2">
-            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <CheckCircleIcon className="h-5 w-5 text-green-500" />
-              Totalmente tipado com TypeScript
-            </li>
-            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <CheckCircleIcon className="h-5 w-5 text-green-500" />
-              Customizável e acessível
-            </li>
-            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <CheckCircleIcon className="h-5 w-5 text-green-500" />
-              Dark mode suportado
-            </li>
-          </ul>
         </div>
-
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border-2 border-gray-200 dark:border-gray-700 shadow-sm">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
-              <CodeBracketIcon className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              🔷 Blade / Laravel
-            </h3>
+        <div className="bg-card border rounded-lg p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <CheckCircleIcon className="h-6 w-6 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground">TypeScript</h3>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
-            Componentes Blade para Laravel com Tailwind CSS, integração perfeita com Alpine.js.
+          <p className="text-sm text-muted-foreground">
+            Totalmente tipado com TypeScript para melhor experiência de desenvolvimento.
           </p>
-          <ul className="space-y-2">
-            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <CheckCircleIcon className="h-5 w-5 text-green-500" />
-              Integração com Alpine.js
-            </li>
-            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <CheckCircleIcon className="h-5 w-5 text-green-500" />
-              Tailwind CSS incluído
-            </li>
-            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <CheckCircleIcon className="h-5 w-5 text-green-500" />
-              Fácil de customizar
-            </li>
-          </ul>
+        </div>
+        <div className="bg-card border rounded-lg p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <CheckCircleIcon className="h-6 w-6 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground">Dark Mode</h3>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Suporte nativo a modo escuro em todos os componentes.
+          </p>
         </div>
       </div>
 
-      {/* Demo Components */}
+      {/* Exemplos Rápidos */}
       <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
-          Componentes em Ação
-        </h2>
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-foreground">Exemplos Rápidos</h2>
+          <p className="text-sm text-muted-foreground mt-2">Interaja com os componentes abaixo - esta é uma demonstração</p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <MetricCard
-            title="Componentes"
-            value="15+"
-            subtitle="Prontos para uso"
-            variant="blue"
-          />
-          <MetricCard
-            title="Categorias"
-            value="4"
-            subtitle="Forms, Feedback, Layout, Charts"
-            variant="default"
-          />
-          <MetricCard
-            title="Tecnologias"
-            value="2"
-            subtitle="React e Blade"
-            variant="success"
-          />
-        </div>
-
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border-2 border-gray-200 dark:border-gray-700">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Status Badges
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            <StatusBadge status="active">Ativo</StatusBadge>
-            <StatusBadge status="completed">Concluído</StatusBadge>
-            <StatusBadge status="pending">Pendente</StatusBadge>
-            <StatusBadge status="error">Erro</StatusBadge>
-            <StatusBadge status="warning">Aviso</StatusBadge>
-          </div>
-        </div>
-
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border-2 border-gray-200 dark:border-gray-700">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Progress Bars
-          </h3>
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Progresso 75%</p>
+        <div className="bg-card border rounded-lg p-6">
+          <h3 className="text-xl font-semibold text-foreground mb-4">Formulários</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="flex flex-wrap gap-3">
+                <Button variant="primary">Primary</Button>
+                <Button variant="secondary">Secondary</Button>
+                <Button variant="outline">Outline</Button>
+              </div>
+              <Input label="Nome" placeholder="Digite seu nome" />
+              <Select
+                label="Selecione"
+                options={selectOptions}
+                value={selectValue}
+                onChange={(value: string | string[]) => setSelectValue(Array.isArray(value) ? value : [value])}
+                mode="multi"
+              />
+            </div>
+            <div className="space-y-4">
+              <div className="flex flex-wrap gap-3">
+                <StatusBadge status="active">Ativo</StatusBadge>
+                <StatusBadge status="completed">Concluído</StatusBadge>
+                <StatusBadge status="pending">Pendente</StatusBadge>
+              </div>
               <ProgressBar value={75} color="blue" showLabel />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Progresso 50%</p>
-              <ProgressBar value={50} color="green" showLabel />
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Progresso 25%</p>
-              <ProgressBar value={25} color="purple" showLabel />
+              <div className="grid grid-cols-3 gap-4">
+                <MetricCard
+                  title="Vendas"
+                  value="R$ 125k"
+                  subtitle="Este mês"
+                  variant="blue"
+                />
+                <MetricCard
+                  title="Usuários"
+                  value="1.2k"
+                  subtitle="Ativos"
+                  variant="success"
+                />
+                <MetricCard
+                  title="Taxa"
+                  value="3.2%"
+                  subtitle="Conversão"
+                  variant="warning"
+                />
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Instalação Rápida */}
+      <div className="bg-card border rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-foreground mb-4">Instalação Rápida</h2>
+        <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+          <code className="text-green-400 text-sm">
+            <div className="mb-2">npx valk-ui</div>
+          </code>
+        </div>
+        <p className="text-sm text-muted-foreground mt-4">
+          Execute o CLI interativo e escolha os componentes que deseja instalar.
+        </p>
       </div>
     </div>
   )

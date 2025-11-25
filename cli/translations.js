@@ -28,6 +28,15 @@ const translations = {
     installComplete: 'Instalação concluída!',
     componentsInstalled: 'componente(s) instalado(s).',
     installError: 'Erro durante a instalação:',
+    tailwindConfigCreated: 'tailwind.config.js criado',
+    tailwindConfigUpdated: 'tailwind.config.js atualizado',
+    tailwindConfigExists: 'tailwind.config.js já existe',
+    tailwindConfigExistsButIncomplete: 'tailwind.config.js existe mas está incompleto',
+    manualConfigRequired: 'Configure manualmente as variáveis CSS no tailwind.config.js',
+    cssFileCreated: 'Arquivo CSS global criado (src/index.css)',
+    cssFileUpdated: 'Arquivo CSS global atualizado',
+    cssFileExists: 'Arquivo CSS global já existe com variáveis',
+    importCssInMain: 'Importe o CSS no seu main.tsx/main.jsx:',
     // Componentes
     components: {
       Forms: 'Formulários',
@@ -80,6 +89,15 @@ const translations = {
     installComplete: 'Installation complete!',
     componentsInstalled: 'component(s) installed.',
     installError: 'Error during installation:',
+    tailwindConfigCreated: 'tailwind.config.js created',
+    tailwindConfigUpdated: 'tailwind.config.js updated',
+    tailwindConfigExists: 'tailwind.config.js already exists',
+    tailwindConfigExistsButIncomplete: 'tailwind.config.js exists but is incomplete',
+    manualConfigRequired: 'Manually configure CSS variables in tailwind.config.js',
+    cssFileCreated: 'Global CSS file created (src/index.css)',
+    cssFileUpdated: 'Global CSS file updated',
+    cssFileExists: 'Global CSS file already exists with variables',
+    importCssInMain: 'Import CSS in your main.tsx/main.jsx:',
     // Componentes
     components: {
       Forms: 'Forms',
@@ -132,6 +150,15 @@ const translations = {
     installComplete: '¡Instalación completada!',
     componentsInstalled: 'componente(s) instalado(s).',
     installError: 'Error durante la instalación:',
+    tailwindConfigCreated: 'tailwind.config.js creado',
+    tailwindConfigUpdated: 'tailwind.config.js actualizado',
+    tailwindConfigExists: 'tailwind.config.js ya existe',
+    tailwindConfigExistsButIncomplete: 'tailwind.config.js existe pero está incompleto',
+    manualConfigRequired: 'Configure manualmente las variables CSS en tailwind.config.js',
+    cssFileCreated: 'Archivo CSS global creado (src/index.css)',
+    cssFileUpdated: 'Archivo CSS global actualizado',
+    cssFileExists: 'Archivo CSS global ya existe con variables',
+    importCssInMain: 'Importe el CSS en su main.tsx/main.jsx:',
     // Componentes
     components: {
       Forms: 'Formularios',
