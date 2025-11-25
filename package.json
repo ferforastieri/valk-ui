@@ -1,6 +1,6 @@
 {
   "name": "valk-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI interativo para instalar componentes Valk UI (React e Blade)",
   "main": "cli/index.js",
   "files": [
@@ -43,4 +43,3 @@
     "react-dom": "^18.0.0"
   }
 }
-
