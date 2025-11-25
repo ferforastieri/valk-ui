@@ -143,11 +143,13 @@ const componentsStructure = {
     { value: 'modal', category: 'feedback' },
     { value: 'status-badge', category: 'feedback' },
     { value: 'progress-bar', category: 'feedback' },
+    { value: 'theme-toggle', category: 'feedback' },
   ],
   'Layout': [
     { value: 'avatar', category: 'layout' },
     { value: 'metric-card', category: 'layout' },
     { value: 'paginated-table', category: 'layout' },
+    { value: 'sidebar', category: 'layout' },
   ],
   'Charts': [
     { value: 'bar-chart', category: 'charts' },
