@@ -13,9 +13,11 @@ export default defineConfig({
       { find: /^@heroicons\/react/, replacement: path.resolve(__dirname, 'node_modules/@heroicons/react') },
       { find: 'react-chartjs-2', replacement: path.resolve(__dirname, 'node_modules/react-chartjs-2') },
       { find: 'chart.js', replacement: path.resolve(__dirname, 'node_modules/chart.js') },
+      { find: 'clsx', replacement: path.resolve(__dirname, 'node_modules/clsx') },
+      { find: 'tailwind-merge', replacement: path.resolve(__dirname, 'node_modules/tailwind-merge') },
     ],
     extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'],
-    dedupe: ['react', 'react-dom', 'react-router-dom', '@headlessui/react', '@heroicons/react', 'react-chartjs-2', 'chart.js'],
+    dedupe: ['react', 'react-dom', 'react-router-dom', '@headlessui/react', '@heroicons/react', 'react-chartjs-2', 'chart.js', 'clsx', 'tailwind-merge'],
   },
   build: {
     rollupOptions: {
