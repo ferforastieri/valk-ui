@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: [
-      { find: /^@\/components$/, replacement: path.resolve(__dirname, '../react/src/components/index.ts') },
-      { find: /^@\/lib$/, replacement: path.resolve(__dirname, '../react/src/lib/index.ts') },
+      { find: /^@\/components$/, replacement: path.resolve(__dirname, '../../packages/react/src/components/index.ts') },
+      { find: /^@\/lib$/, replacement: path.resolve(__dirname, '../../packages/react/src/lib/index.ts') },
       { find: /^@\/(.*)/, replacement: path.resolve(__dirname, './src/$1') },
     ],
     extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'],
