@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "init": "node cli/index.js",
-    "prepublish": "cp README-NPM.md README.md",
-    "postpublish": "git checkout README.md"
+    "prepublish": "echo 'Using existing README.md'",
+    "postpublish": "echo 'Publish complete'"
   },
   "keywords": [
     "react",
