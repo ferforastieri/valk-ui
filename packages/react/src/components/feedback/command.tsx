@@ -11,7 +11,7 @@ export interface CommandItem {
   onSelect?: () => void
 }
 
-export interface CommandProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CommandProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   items: CommandItem[]
   placeholder?: string
   onSelect?: (item: CommandItem) => void

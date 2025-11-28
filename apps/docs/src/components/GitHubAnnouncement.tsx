@@ -7,6 +7,8 @@ interface GitHubRelease {
   published_at: string
   body: string
   html_url: string
+  prerelease?: boolean
+  draft?: boolean
 }
 
 export default function GitHubAnnouncement() {
@@ -37,7 +39,11 @@ export default function GitHubAnnouncement() {
     fetchLatestRelease()
   }, [])
 
-  if (loading || !latestRelease) {
+  if (loading) {
+    return null
+  }
+
+  if (!latestRelease) {
     return null
   }
 

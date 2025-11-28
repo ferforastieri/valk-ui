@@ -52,7 +52,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
                 return (
                   <Link
                     key={item.href}
-                    {...linkProps}
+                    {...(LinkComponent ? { to: item.href } : { href: item.href })}
                     className={cn(
                       'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-xl whitespace-nowrap',
                       isActive
