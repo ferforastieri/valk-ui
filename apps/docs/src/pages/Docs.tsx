@@ -168,17 +168,6 @@ export default function Docs() {
           </ul>
         </div>
       </section>
-
-      {/* Customização */}
-      <section className="bg-card border rounded-lg p-6 space-y-6">
-        <h2 className="text-2xl font-bold text-foreground">{t.docs.customization}</h2>
-        <p className="text-muted-foreground">
-          {t.docs.customizationDesc}
-        </p>
-        <p className="text-muted-foreground">
-          {t.docs.customizationDesc2}
-        </p>
-      </section>
     </div>
   )
 }

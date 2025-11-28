@@ -36,9 +36,6 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
             <div className="hidden md:flex items-center gap-2">
               {items.map((item) => {
                 const isActive = currentPath === item.href || (item.href !== '/' && currentPath?.startsWith(item.href))
-                const linkProps = LinkComponent 
-                  ? { to: item.href }
-                  : { href: item.href }
                 
                 if (item.hasDropdown && item.dropdownContent) {
                   return (
@@ -49,10 +46,37 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
                 }
                 
                 const Icon = item.icon
+                
+                if (LinkComponent) {
+                  return (
+                    <LinkComponent
+                      key={item.href}
+                      to={item.href}
+                      className={cn(
+                        'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-xl whitespace-nowrap',
+                        isActive
+                          ? 'text-foreground bg-accent shadow-sm'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
+                      )}
+                    >
+                      {Icon && (
+                        <Icon className={cn(
+                          'h-4 w-4 flex-shrink-0',
+                          isActive ? 'text-foreground' : 'text-muted-foreground'
+                        )} />
+                      )}
+                      <span>{item.name}</span>
+                      {isActive && (
+                        <div className="ml-1 w-1.5 h-1.5 rounded-full bg-foreground" />
+                      )}
+                    </LinkComponent>
+                  )
+                }
+                
                 return (
-                  <Link
+                  <a
                     key={item.href}
-                    {...(LinkComponent ? { to: item.href } : { href: item.href })}
+                    href={item.href}
                     className={cn(
                       'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-xl whitespace-nowrap',
                       isActive
@@ -70,7 +94,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
                     {isActive && (
                       <div className="ml-1 w-1.5 h-1.5 rounded-full bg-foreground" />
                     )}
-                  </Link>
+                  </a>
                 )
               })}
             </div>
