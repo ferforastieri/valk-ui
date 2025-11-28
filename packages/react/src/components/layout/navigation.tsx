@@ -5,6 +5,8 @@ export interface NavigationItem {
   name: string
   href: string
   icon?: React.ElementType
+  hasDropdown?: boolean
+  dropdownContent?: React.ReactNode
 }
 
 export interface NavigationProps extends React.HTMLAttributes<HTMLElement> {
@@ -28,37 +30,53 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
         )}
         {...props}
       >
-        <div className="flex h-16 items-center justify-between px-4 max-w-7xl mx-auto">
-          <div className="flex items-center gap-6">
+        <div className="flex h-14 items-center justify-between px-4 md:px-6">
+          <div className="flex items-center gap-6 md:gap-8">
             {logo && <div className="flex items-center">{logo}</div>}
-            <div className="hidden md:flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-2">
               {items.map((item) => {
-                const Icon = item.icon
-                const isActive = currentPath === item.href
+                const isActive = currentPath === item.href || (item.href !== '/' && currentPath?.startsWith(item.href))
                 const linkProps = LinkComponent 
                   ? { to: item.href }
                   : { href: item.href }
                 
+                if (item.hasDropdown && item.dropdownContent) {
+                  return (
+                    <div key={item.href} className="relative">
+                      {item.dropdownContent}
+                    </div>
+                  )
+                }
+                
+                const Icon = item.icon
                 return (
                   <Link
                     key={item.href}
                     {...linkProps}
                     className={cn(
-                      'text-sm font-medium transition-colors hover:text-foreground/80',
+                      'flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-xl whitespace-nowrap',
                       isActive
-                        ? 'text-foreground'
-                        : 'text-muted-foreground'
+                        ? 'text-foreground bg-accent shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                     )}
                   >
-                    {Icon && <Icon className="h-4 w-4 inline-block mr-2" />}
-                    {item.name}
+                    {Icon && (
+                      <Icon className={cn(
+                        'h-4 w-4 flex-shrink-0',
+                        isActive ? 'text-foreground' : 'text-muted-foreground'
+                      )} />
+                    )}
+                    <span>{item.name}</span>
+                    {isActive && (
+                      <div className="ml-1 w-1.5 h-1.5 rounded-full bg-foreground" />
+                    )}
                   </Link>
                 )
               })}
             </div>
           </div>
           {rightContent && (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center">
               {rightContent}
             </div>
           )}
@@ -71,4 +89,3 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
 Navigation.displayName = 'Navigation'
 
 export { Navigation }
-

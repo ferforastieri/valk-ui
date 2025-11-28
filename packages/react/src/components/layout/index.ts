@@ -14,4 +14,8 @@ export { Sheet } from './sheet'
 export type { SheetProps } from './sheet'
 export { Navigation } from './navigation'
 export type { NavigationProps, NavigationItem } from './navigation'
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs'
+export type { TabsProps, TabsListProps, TabsTriggerProps, TabsContentProps } from './tabs'
+export { DocsSidebar } from './docs-sidebar'
+export type { DocsSidebarProps, DocsSidebarItem, DocsSidebarSection } from './docs-sidebar'
 

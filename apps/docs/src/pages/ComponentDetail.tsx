@@ -1,10 +1,13 @@
-import { Link as RouterLink, useLocation } from 'react-router-dom'
-import { DocsSidebar, Card, CardTitle, CardContent } from '@/components'
+import { useParams, Link as RouterLink } from 'react-router-dom'
+import { DocsSidebar, Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components'
 import { useTranslation } from '../contexts/TranslationContext'
+import { useLocation } from 'react-router-dom'
+import ComponentExamples from '../components/ComponentExamples'
 
-export default function Components() {
-  const { t } = useTranslation()
+export default function ComponentDetail() {
+  const { componentName } = useParams<{ componentName: string }>()
   const location = useLocation()
+  const { t } = useTranslation()
 
   const sidebarSections = [
     {
@@ -55,6 +58,10 @@ export default function Components() {
     },
   ]
 
+  const componentDisplayName = componentName
+    ? componentName.charAt(0).toUpperCase() + componentName.slice(1).replace(/([A-Z])/g, ' $1')
+    : ''
+
   return (
     <>
       <DocsSidebar
@@ -64,35 +71,17 @@ export default function Components() {
       />
       <div className="flex-1 min-w-0 px-6 py-8 md:px-8 md:py-10 lg:px-10">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t.components.title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+            {componentDisplayName}
+          </h1>
           <p className="text-base md:text-lg text-muted-foreground">
-            {t.components.subtitle}
+            Documentação e exemplos de uso do componente {componentDisplayName}
           </p>
         </div>
 
-        {sidebarSections.map((section, sectionIndex) => (
-          <section key={sectionIndex} className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">{section.title}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {section.items.map((item) => (
-                <RouterLink
-                  key={item.href}
-                  to={item.href}
-                  className="block"
-                >
-                  <Card className="hover:bg-accent/50 transition-colors cursor-pointer h-full">
-                    <CardContent className="p-4">
-                      <CardTitle className="text-base font-medium">
-                        {item.title}
-                      </CardTitle>
-                    </CardContent>
-                  </Card>
-                </RouterLink>
-              ))}
-            </div>
-          </section>
-        ))}
+        <ComponentExamples componentName={componentName || ''} />
       </div>
     </>
   )
 }
+
