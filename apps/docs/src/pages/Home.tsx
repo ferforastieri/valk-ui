@@ -3,163 +3,166 @@ import { Link } from 'react-router-dom'
 import { 
   Button, 
   Input, 
-  Select, 
-  MetricCard,
-  StatusBadge,
-  ProgressBar
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
 } from '@/components'
-import type { SelectOption } from '@/components'
-import { CodeBracketIcon, CheckCircleIcon, BookOpenIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline'
+import { useTranslation } from '../contexts/TranslationContext'
 
 export default function Home() {
-  const [selectValue, setSelectValue] = useState<string[]>([])
+  const [activeTab, setActiveTab] = useState('examples')
+  const { t } = useTranslation()
 
-  const selectOptions: SelectOption[] = [
-    { value: '1', label: 'Opção 1' },
-    { value: '2', label: 'Opção 2' },
-    { value: '3', label: 'Opção 3' },
+  const tabs = [
+    { id: 'examples', label: t.home.examples },
+    { id: 'dashboard', label: t.home.dashboard },
+    { id: 'tasks', label: t.home.tasks },
   ]
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-16">
       {/* Hero Section */}
-      <div className="text-center space-y-6">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <img src="/logo.png" alt="Valk UI" className="h-14 w-14" />
-          <h1 className="text-5xl font-bold text-foreground">Valk UI</h1>
-        </div>
-        <div className="bg-primary/10 border border-primary/20 rounded-lg px-4 py-2 inline-block">
-          <p className="text-sm text-primary font-medium">🎨 Demonstração Interativa</p>
-        </div>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Biblioteca moderna de componentes UI para React e Blade. 
-          Crie interfaces bonitas e consistentes com componentes prontos para produção.
-        </p>
-        <div className="flex items-center justify-center gap-4 pt-4 flex-wrap">
-          <Link to="/components">
-            <Button variant="primary" size="lg">
-              <CodeBracketIcon className="h-5 w-5 mr-2" />
-              Veja Mais
-            </Button>
-          </Link>
-          <Link to="/docs">
-            <Button variant="outline" size="lg">
-              <BookOpenIcon className="h-5 w-5 mr-2" />
-              Ver Documentação
-            </Button>
-          </Link>
-          <a 
-            href="https://github.com/ferforastieri/valk-ui" 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            <Button variant="outline" size="lg">
-              <ArrowUpRightIcon className="h-5 w-5 mr-2" />
-              Repositório
-            </Button>
-          </a>
-        </div>
-      </div>
-
-      {/* Características */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-card border rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <CheckCircleIcon className="h-6 w-6 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">Pronto para Produção</h3>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Componentes testados e otimizados para uso em projetos reais.
-          </p>
-        </div>
-        <div className="bg-card border rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <CheckCircleIcon className="h-6 w-6 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">TypeScript</h3>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Totalmente tipado com TypeScript para melhor experiência de desenvolvimento.
-          </p>
-        </div>
-        <div className="bg-card border rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <CheckCircleIcon className="h-6 w-6 text-primary" />
-            <h3 className="text-lg font-semibold text-foreground">Dark Mode</h3>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Suporte nativo a modo escuro em todos os componentes.
-          </p>
-        </div>
-      </div>
-
-      {/* Exemplos Rápidos */}
-      <div className="space-y-6">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-foreground">Exemplos Rápidos</h2>
-          <p className="text-sm text-muted-foreground mt-2">Interaja com os componentes abaixo - esta é uma demonstração</p>
+      <div className="text-center space-y-6 max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
+          <span className="w-2 h-2 rounded-full bg-primary"></span>
+          {t.home.announcement}
         </div>
         
-        <div className="bg-card border rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-foreground mb-4">Formulários</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="flex flex-wrap gap-3">
-                <Button variant="primary">Primary</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="outline">Outline</Button>
-              </div>
-              <Input label="Nome" placeholder="Digite seu nome" />
-              <Select
-                label="Selecione"
-                options={selectOptions}
-                value={selectValue}
-                onChange={(value: string | string[]) => setSelectValue(Array.isArray(value) ? value : [value])}
-                mode="multi"
-              />
-            </div>
-            <div className="space-y-4">
-              <div className="flex flex-wrap gap-3">
-                <StatusBadge status="active">Ativo</StatusBadge>
-                <StatusBadge status="completed">Concluído</StatusBadge>
-                <StatusBadge status="pending">Pendente</StatusBadge>
-              </div>
-              <ProgressBar value={75} color="blue" showLabel />
-              <div className="grid grid-cols-3 gap-4">
-                <MetricCard
-                  title="Vendas"
-                  value="R$ 125k"
-                  subtitle="Este mês"
-                  variant="blue"
-                />
-                <MetricCard
-                  title="Usuários"
-                  value="1.2k"
-                  subtitle="Ativos"
-                  variant="success"
-                />
-                <MetricCard
-                  title="Taxa"
-                  value="3.2%"
-                  subtitle="Conversão"
-                  variant="warning"
-                />
-              </div>
-            </div>
-          </div>
+        <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight">
+          {t.home.title}
+        </h1>
+        
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          {t.home.subtitle}
+        </p>
+        
+        <div className="flex items-center justify-center gap-4 pt-4 flex-wrap">
+          <Link to="/docs">
+            <Button variant="primary" size="lg">
+              {t.home.getStarted}
+            </Button>
+          </Link>
+          <Link to="/components">
+            <Button variant="outline" size="lg">
+              {t.home.viewComponents}
+            </Button>
+          </Link>
         </div>
       </div>
 
-      {/* Instalação Rápida */}
-      <div className="bg-card border rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-foreground mb-4">Instalação Rápida</h2>
-        <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-          <code className="text-green-400 text-sm">
-            <div className="mb-2">npx valk-ui</div>
-          </code>
+      {/* Component Examples Section */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1 border-b border-border">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`
+                  px-4 py-2 text-sm font-medium transition-colors
+                  border-b-2 -mb-px
+                  ${
+                    activeTab === tab.id
+                      ? 'border-foreground text-foreground'
+                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                  }
+                `}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-muted-foreground">{t.home.theme}</span>
+            <button className="p-2 rounded-md hover:bg-muted">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </button>
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground mt-4">
-          Execute o CLI interativo e escolha os componentes que deseja instalar.
-        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Payment Method Card */}
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.home.paymentMethod}</CardTitle>
+              <CardDescription>{t.home.paymentDescription}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Input 
+                label={t.home.nameOnCard} 
+                placeholder="John Doe"
+                className="w-full"
+              />
+            </CardContent>
+          </Card>
+
+          {/* Team Members Card */}
+          <Card>
+            <CardHeader>
+              <div className="flex -space-x-2 mb-4">
+                <div className="h-10 w-10 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center text-sm font-medium">
+                  JD
+                </div>
+                <div className="h-10 w-10 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center text-sm font-medium">
+                  MS
+                </div>
+                <div className="h-10 w-10 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center text-sm font-medium">
+                  PC
+                </div>
+              </div>
+              <CardTitle>{t.home.noTeamMembers}</CardTitle>
+              <CardDescription>{t.home.inviteTeam}</CardDescription>
+            </CardHeader>
+          </Card>
+
+          {/* Two-factor Authentication Card */}
+          <Card>
+            <CardHeader>
+              <div className="mb-4">
+                <Input 
+                  placeholder="https://"
+                  className="w-full"
+                  rightIcon={
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                    </svg>
+                  }
+                />
+              </div>
+              <CardTitle>{t.home.twoFactorAuth}</CardTitle>
+              <CardDescription>{t.home.twoFactorDescription}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button variant="primary" size="sm">{t.home.enable}</Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-foreground">{t.home.copyPaste}</h3>
+          <p className="text-sm text-muted-foreground">
+            {t.home.copyPasteDesc}
+          </p>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-foreground">{t.home.fullyCustomizable}</h3>
+          <p className="text-sm text-muted-foreground">
+            {t.home.fullyCustomizableDesc}
+          </p>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold text-foreground">{t.home.typescript}</h3>
+          <p className="text-sm text-muted-foreground">
+            {t.home.typescriptDesc}
+          </p>
+        </div>
       </div>
     </div>
   )

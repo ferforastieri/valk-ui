@@ -17,8 +17,10 @@ import {
   LineChart
 } from '@/components'
 import type { SelectOption } from '@/components'
+import { useTranslation } from '../contexts/TranslationContext'
 
 export default function Components() {
+  const { t } = useTranslation()
   const [modalOpen, setModalOpen] = useState(false)
   const [selectValue, setSelectValue] = useState<string[]>([])
   const [checkboxChecked, setCheckboxChecked] = useState(false)
@@ -64,15 +66,15 @@ export default function Components() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold text-foreground mb-4">Componentes</h1>
+        <h1 className="text-4xl font-bold text-foreground mb-4">{t.components.title}</h1>
         <p className="text-lg text-muted-foreground">
-          Explore todos os componentes disponíveis na biblioteca Valk UI.
+          {t.components.subtitle}
         </p>
       </div>
 
       {/* Forms */}
       <section className="bg-card border rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-foreground mb-6">Forms</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">{t.components.forms}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Button</h3>
@@ -126,7 +128,7 @@ export default function Components() {
 
       {/* Feedback */}
       <section className="bg-card border rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-foreground mb-6">Feedback</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">{t.components.feedback}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">StatusBadge</h3>
@@ -161,7 +163,7 @@ export default function Components() {
 
       {/* Layout */}
       <section className="bg-card border rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-foreground mb-6">Layout</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">{t.components.layout}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Avatar</h3>
@@ -207,7 +209,7 @@ export default function Components() {
 
       {/* Charts */}
       <section className="bg-card border rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-foreground mb-6">Charts</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">{t.components.charts}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <h3 className="font-semibold text-foreground mb-4">BarChart</h3>

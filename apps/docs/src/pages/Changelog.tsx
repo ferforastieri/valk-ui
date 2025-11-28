@@ -1,7 +1,10 @@
 import { StatusBadge, MetricCard } from '@/components'
-import { DocumentTextIcon, SparklesIcon } from '@heroicons/react/24/outline'
+import { SparklesIcon } from '@heroicons/react/24/outline'
+import { useTranslation } from '../contexts/TranslationContext'
 
 export default function Changelog() {
+  const { t } = useTranslation()
+  
   const versions = [
     {
       version: '1.0.0',
@@ -47,9 +50,9 @@ export default function Changelog() {
 
   const getBadgeLabel = (type: string) => {
     switch (type) {
-      case 'added': return 'Adicionado'
-      case 'fixed': return 'Corrigido'
-      case 'improved': return 'Melhorado'
+      case 'added': return t.changelog.added
+      case 'fixed': return t.changelog.fixed
+      case 'improved': return t.changelog.improved
       default: return type
     }
   }
@@ -57,30 +60,30 @@ export default function Changelog() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold text-foreground mb-4">Changelog</h1>
+        <h1 className="text-4xl font-bold text-foreground mb-4">{t.changelog.title}</h1>
         <p className="text-lg text-muted-foreground">
-          Acompanhe todas as mudanças e atualizações da biblioteca.
+          {t.changelog.subtitle}
         </p>
       </div>
 
       {/* Estatísticas */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <MetricCard
-          title="Versão Atual"
+          title={t.changelog.currentVersion}
           value="1.0.0"
           subtitle="Stable release"
           variant="blue"
         />
         <MetricCard
-          title="Total de Versões"
+          title={t.changelog.totalVersions}
           value={versions.length.toString()}
-          subtitle="Lançamentos"
+          subtitle={t.changelog.releases}
           variant="success"
         />
         <MetricCard
-          title="Última Atualização"
+          title={t.changelog.lastUpdate}
           value="25/11/2025"
-          subtitle="Última versão"
+          subtitle={t.changelog.lastVersion}
           variant="warning"
         />
       </div>
@@ -94,7 +97,7 @@ export default function Changelog() {
                 <SparklesIcon className="h-6 w-6 text-primary" />
                 <h2 className="text-2xl font-bold text-foreground">v{version.version}</h2>
                 <StatusBadge status={version.type === 'major' ? 'completed' : 'active'}>
-                  {version.type === 'major' ? 'Major' : 'Minor'}
+                  {version.type === 'major' ? t.changelog.major : t.changelog.minor}
                 </StatusBadge>
               </div>
               <span className="text-sm text-muted-foreground">{version.date}</span>
@@ -115,4 +118,3 @@ export default function Changelog() {
     </div>
   )
 }
-

@@ -152,6 +152,7 @@ const componentsStructure = {
     { value: 'metric-card', category: 'layout' },
     { value: 'paginated-table', category: 'layout' },
     { value: 'sidebar', category: 'layout' },
+    { value: 'navigation', category: 'layout' },
     { value: 'separator', category: 'layout' },
     { value: 'accordion', category: 'layout' },
     { value: 'card', category: 'layout' },

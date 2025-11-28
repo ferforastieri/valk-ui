@@ -12,4 +12,6 @@ export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 export type { CardProps, CardHeaderProps, CardTitleProps, CardDescriptionProps, CardContentProps, CardFooterProps } from './card'
 export { Sheet } from './sheet'
 export type { SheetProps } from './sheet'
+export { Navigation } from './navigation'
+export type { NavigationProps, NavigationItem } from './navigation'
 
