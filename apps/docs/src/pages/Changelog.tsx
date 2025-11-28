@@ -31,36 +31,33 @@ export default function Changelog() {
   useEffect(() => {
     const fetchReleases = async () => {
       try {
-        const response = await fetch('https://api.github.com/repos/ferforastieri/valk-ui/releases', {
+        const releasesResponse = await fetch('https://api.github.com/repos/ferforastieri/valk-ui/releases?per_page=30', {
           headers: {
             Accept: 'application/vnd.github.v3+json',
           },
         })
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch releases')
+        if (!releasesResponse.ok) {
+          throw new Error(`GitHub API error: ${releasesResponse.status}`)
         }
 
-        const releases: GitHubRelease[] = await response.json()
+        const releases: GitHubRelease[] = await releasesResponse.json()
         
-        // Filtrar apenas releases publicados e não draft
         const publishedReleases = releases.filter(
           (release) => !release.draft && !release.prerelease
         )
 
-        // Converter releases do GitHub para formato local
         const formattedVersions: Version[] = publishedReleases.map((release) => {
-          // Extrair versão do tag_name (remove 'v' se existir)
           const version = release.tag_name.replace(/^v/, '')
+          const versionParts = version.split('.')
+          const minor = parseInt(versionParts[1]) || 0
+          const patch = parseInt(versionParts[2]) || 0
           
-          // Determinar tipo baseado na versão (semver)
-          const [major, minor] = version.split('.')
           const type: 'major' | 'minor' | 'patch' = 
-            minor === '0' && version.split('.')[2] === '0' ? 'major' :
-            version.split('.')[2] === '0' ? 'minor' : 'patch'
+            minor === 0 && patch === 0 ? 'major' :
+            patch === 0 ? 'minor' : 'patch'
 
-          // Parsear body do release para extrair mudanças
-          const changes = parseReleaseBody(release.body)
+          const changes = parseReleaseBody(release.body || release.name || '')
 
           return {
             version,
@@ -70,16 +67,51 @@ export default function Changelog() {
           }
         })
 
-        // Se não houver releases, usar dados padrão
         if (formattedVersions.length === 0) {
+          try {
+            const tagsResponse = await fetch('https://api.github.com/repos/ferforastieri/valk-ui/tags?per_page=30', {
+              headers: {
+                Accept: 'application/vnd.github.v3+json',
+              },
+            })
+
+            if (tagsResponse.ok) {
+              const tags = await tagsResponse.json()
+              const tagVersions: Version[] = tags.slice(0, 10).map((tag: any) => {
+                const version = tag.name.replace(/^v/, '')
+                const versionParts = version.split('.')
+                const minor = parseInt(versionParts[1]) || 0
+                const patch = parseInt(versionParts[2]) || 0
+                
+                const type: 'major' | 'minor' | 'patch' = 
+                  minor === 0 && patch === 0 ? 'major' :
+                  patch === 0 ? 'minor' : 'patch'
+
+                return {
+                  version,
+                  date: new Date().toISOString().split('T')[0],
+                  type,
+                  changes: [{ type: 'added' as const, text: `Release ${version}` }],
+                }
+              })
+
+              if (tagVersions.length > 0) {
+                setVersions(tagVersions)
+                setLoading(false)
+                return
+              }
+            }
+          } catch (tagsError) {
+          }
+
           setVersions(getDefaultVersions())
+          setError('No releases found. Using default changelog.')
         } else {
           setVersions(formattedVersions)
         }
       } catch (err) {
-        console.error('Error fetching releases:', err)
-        setError('Failed to load changelog from GitHub')
-        // Usar dados padrão em caso de erro
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+        setError(`Failed to load changelog from GitHub: ${errorMessage}`)
         setVersions(getDefaultVersions())
       } finally {
         setLoading(false)
@@ -94,42 +126,105 @@ export default function Changelog() {
     
     if (!body) return changes
 
-    // Padrões comuns em changelogs
+    const cleanMarkdown = (text: string): string => {
+      return text
+        .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+        .replace(/\*\*([^\*]+)\*\*/g, '$1')
+        .replace(/\*([^\*]+)\*/g, '$1')
+        .replace(/`([^`]+)`/g, '$1')
+        .replace(/#{1,6}\s+/g, '')
+        .trim()
+    }
     const patterns = {
-      added: /(?:^|\n)(?:\*\s*)?(?:added|add|new|feat):\s*(.+)/gi,
-      fixed: /(?:^|\n)(?:\*\s*)?(?:fix|fixed|bugfix):\s*(.+)/gi,
-      improved: /(?:^|\n)(?:\*\s*)?(?:improve|improved|enhance|enhanced):\s*(.+)/gi,
-      changed: /(?:^|\n)(?:\*\s*)?(?:change|changed|update|updated):\s*(.+)/gi,
-      removed: /(?:^|\n)(?:\*\s*)?(?:remove|removed|deprecate|deprecated):\s*(.+)/gi,
+      added: [
+        /(?:^|\n)(?:\*\s*)?(?:added|add|new|feat|feature)(?:\(.+\))?:\s*(.+)/gi,
+        /(?:^|\n)(?:\*\s*)?\+ (.+)/gi,
+        /(?:^|\n)###?\s*(?:Added|New|Features?)\s*\n([\s\S]*?)(?=\n###|$)/gi,
+      ],
+      fixed: [
+        /(?:^|\n)(?:\*\s*)?(?:fix|fixed|bugfix|bug)(?:\(.+\))?:\s*(.+)/gi,
+        /(?:^|\n)(?:\*\s*)?🐛\s*(.+)/gi,
+        /(?:^|\n)###?\s*(?:Fixed|Fixes|Bugs?)\s*\n([\s\S]*?)(?=\n###|$)/gi,
+      ],
+      improved: [
+        /(?:^|\n)(?:\*\s*)?(?:improve|improved|enhance|enhanced|perf)(?:\(.+\))?:\s*(.+)/gi,
+        /(?:^|\n)(?:\*\s*)?⚡\s*(.+)/gi,
+        /(?:^|\n)###?\s*(?:Improved|Enhancements?|Performance)\s*\n([\s\S]*?)(?=\n###|$)/gi,
+      ],
+      changed: [
+        /(?:^|\n)(?:\*\s*)?(?:change|changed|update|updated|refactor)(?:\(.+\))?:\s*(.+)/gi,
+        /(?:^|\n)(?:\*\s*)?🔄\s*(.+)/gi,
+        /(?:^|\n)###?\s*(?:Changed|Changes|Updates?)\s*\n([\s\S]*?)(?=\n###|$)/gi,
+      ],
+      removed: [
+        /(?:^|\n)(?:\*\s*)?(?:remove|removed|deprecate|deprecated|removed)(?:\(.+\))?:\s*(.+)/gi,
+        /(?:^|\n)(?:\*\s*)?🗑️\s*(.+)/gi,
+        /(?:^|\n)###?\s*(?:Removed|Deprecated|Removals?)\s*\n([\s\S]*?)(?=\n###|$)/gi,
+      ],
     }
 
-    Object.entries(patterns).forEach(([type, pattern]) => {
-      const matches = body.matchAll(pattern)
-      for (const match of matches) {
-        if (match[1]) {
-          changes.push({
-            type: type as Version['changes'][0]['type'],
-            text: match[1].trim(),
-          })
+    Object.entries(patterns).forEach(([type, typePatterns]) => {
+      typePatterns.forEach((pattern) => {
+        const matches = body.matchAll(pattern)
+        for (const match of matches) {
+          const text = match[1] || match[0]
+          if (text) {
+            if (text.includes('\n')) {
+              const lines = text.split('\n')
+                .map(line => line.trim())
+                .filter(line => line && !line.match(/^#{1,6}\s/))
+                .map(line => line.replace(/^[-*]\s+/, '').trim())
+                .filter(line => line)
+              
+              lines.forEach((line) => {
+                const cleaned = cleanMarkdown(line)
+                if (cleaned) {
+                  changes.push({
+                    type: type as Version['changes'][0]['type'],
+                    text: cleaned,
+                  })
+                }
+              })
+            } else {
+              const cleaned = cleanMarkdown(text)
+              if (cleaned) {
+                changes.push({
+                  type: type as Version['changes'][0]['type'],
+                  text: cleaned,
+                })
+              }
+            }
+          }
         }
-      }
+      })
     })
 
-    // Se não encontrou padrões, dividir por linhas que começam com - ou *
     if (changes.length === 0) {
-      const lines = body.split('\n').filter(line => line.trim().match(/^[-*]\s+/))
+      const lines = body.split('\n')
+        .filter(line => {
+          const trimmed = line.trim()
+          return trimmed && (trimmed.startsWith('-') || trimmed.startsWith('*')) && !trimmed.match(/^#{1,6}\s/)
+        })
+      
       lines.forEach((line) => {
         const text = line.replace(/^[-*]\s+/, '').trim()
-        if (text) {
+        const cleaned = cleanMarkdown(text)
+        if (cleaned) {
           changes.push({
             type: 'added',
-            text,
+            text: cleaned,
           })
         }
       })
     }
 
-    return changes.length > 0 ? changes : [{ type: 'added' as const, text: 'Release notes available on GitHub' }]
+    const uniqueChanges = changes.filter((change, index, self) =>
+      index === self.findIndex((c) => c.text === change.text)
+    )
+
+    return uniqueChanges.length > 0 
+      ? uniqueChanges 
+      : [{ type: 'added' as const, text: 'Release notes available on GitHub' }]
   }
 
   const getDefaultVersions = (): Version[] => [
@@ -184,9 +279,9 @@ export default function Changelog() {
   if (loading) {
     return (
       <div className="space-y-8">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground mb-4">{t.changelog.title}</h1>
-          <p className="text-lg text-muted-foreground">{t.changelog.subtitle}</p>
+        <div className="mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t.changelog.title}</h1>
+          <p className="text-base md:text-lg text-muted-foreground">{t.changelog.subtitle}</p>
         </div>
         <div className="flex items-center justify-center py-12">
           <div className="text-muted-foreground">Loading changelog...</div>
@@ -209,7 +304,6 @@ export default function Changelog() {
         )}
       </div>
 
-      {/* Estatísticas */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <MetricCard
           title={t.changelog.currentVersion}
@@ -231,10 +325,9 @@ export default function Changelog() {
         />
       </div>
 
-      {/* Versões */}
       <div className="space-y-6">
         {versions.map((version) => (
-          <section key={version.version} className="bg-card border rounded-lg p-6">
+          <section key={version.version} className="bg-card border rounded-lg p-4 md:p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <SparklesIcon className="h-6 w-6 text-primary" />

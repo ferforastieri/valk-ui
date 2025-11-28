@@ -215,7 +215,6 @@ function LayoutContent({ children }: LayoutProps) {
         LinkComponent={RouterLink}
       />
 
-      {/* Mobile Navigation Menu */}
       <Transition.Root show={mobileMenuOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50 md:hidden" onClose={setMobileMenuOpen}>
           <Transition.Child
@@ -246,12 +245,10 @@ function LayoutContent({ children }: LayoutProps) {
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
               >
-                {/* Handle bar para puxar */}
                 <div className="flex items-center justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing">
                   <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
                 </div>
 
-                {/* Header */}
                 <div className="flex items-center justify-between px-6 pb-4 border-b border-border">
                   <div className="flex items-center gap-3">
                     <img src="/logo.png" alt="Valk UI" className="h-8 w-8" />
@@ -267,7 +264,6 @@ function LayoutContent({ children }: LayoutProps) {
                   </button>
                 </div>
 
-                {/* Navigation Items */}
                 <nav className="px-4 py-4">
                   <div className="space-y-1">
                     {navigationItems.map((item) => {
@@ -299,7 +295,6 @@ function LayoutContent({ children }: LayoutProps) {
                   </div>
                 </nav>
 
-                {/* Footer Actions */}
                 <div className="border-t border-border px-4 py-4 space-y-3 bg-muted/30">
                   <button
                     onClick={() => {

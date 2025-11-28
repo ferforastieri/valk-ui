@@ -15,12 +15,11 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
     if (saved && ['pt', 'en', 'es'].includes(saved)) {
       return saved
     }
-    // Detectar idioma do navegador
     const browserLang = navigator.language || (navigator as any).userLanguage
     if (browserLang.startsWith('pt')) return 'pt'
     if (browserLang.startsWith('es')) return 'es'
     if (browserLang.startsWith('en')) return 'en'
-    return 'pt' // padrão
+    return 'pt'
   })
 
   useEffect(() => {

@@ -22,6 +22,7 @@ import {
 import type { SelectOption } from '@/components'
 import { useTranslation } from '../contexts/TranslationContext'
 import ThemeSelector, { themes } from '../components/ThemeSelector'
+import GitHubAnnouncement from '../components/GitHubAnnouncement'
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('examples')
@@ -456,10 +457,7 @@ export default function Home() {
     <div className="space-y-10 md:space-y-12">
       {/* Hero Section */}
       <div className="text-center space-y-5 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
-          <span className="w-2 h-2 rounded-full bg-primary"></span>
-          {t.home.announcement}
-        </div>
+        <GitHubAnnouncement />
         
         <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight">
           {t.home.title}

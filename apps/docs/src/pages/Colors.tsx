@@ -3,7 +3,6 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription, useToast } f
 
 type ColorFormat = 'hsl' | 'hex' | 'rgb' | 'css'
 
-// Paleta completa do Tailwind CSS
 const tailwindColors = {
   slate: {
     50: { hsl: '210 40% 98%', hex: '#f8fafc', rgb: '248 250 252' },
@@ -333,7 +332,6 @@ export default function Colors() {
         </p>
       </div>
 
-      {/* Format Selector */}
       <Card>
         <CardHeader>
           <CardTitle>Format</CardTitle>
@@ -360,7 +358,6 @@ export default function Colors() {
         </CardContent>
       </Card>
 
-      {/* Color Palettes */}
       {Object.entries(tailwindColors).map(([colorName, shades]) => (
         <div key={colorName} className="space-y-4">
           <div className="flex items-center justify-between">

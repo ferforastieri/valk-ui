@@ -208,7 +208,7 @@ export default function ComponentExamples({ componentName }: ComponentExamplesPr
               { id: '2', title: 'Item 2', description: 'Descrição do item 2' },
               { id: '3', title: 'Item 3', description: 'Descrição do item 3' },
             ]}
-            onSelect={(item: CommandItem) => console.log('Selected:', item)}
+            onSelect={() => {}}
           />
         )
       case 'themetoggle':
@@ -528,7 +528,7 @@ function MyComponent() {
     <Command
       placeholder="Buscar..."
       items={items}
-      onSelect={(item) => console.log(item)}
+      onSelect={() => {}}
     />
   )
 }`
