@@ -84,24 +84,42 @@ export interface Translations {
       lastVersion: string
       major: string
       minor: string
+      patch: string
       added: string
       fixed: string
       improved: string
+      changed?: string
+      removed?: string
+      loading: string
+      viewOnGitHub: string
+      stableRelease: string
+      noReleasesFound: string
+      usingDefault: string
+      releaseNotesAvailable: string
+    }
+    colors: {
+      title: string
+      subtitle: string
+      format: string
+      formatDescription: string
+      clickToCopy: string
+      copySuccess: string
+      copyError: string
     }
 }
 
 export const translations: Record<Language, Translations> = {
   pt: {
     nav: {
-      docs: 'Docs',
-      components: 'Components',
+      docs: 'Documentação',
+      components: 'Componentes',
       changelog: 'Changelog',
       search: 'Buscar documentação...',
     },
     home: {
       announcement: 'Novos Componentes: Field, Input Group, Item e mais →',
       title: 'A Base para seu Design System',
-      subtitle: 'Um conjunto de componentes lindamente projetados que você pode personalizar, estender e construir. Comece aqui e faça seu próprio. Open Source. Open Code.',
+      subtitle: 'Um conjunto de componentes cuidadosamente projetados que você pode copiar, personalizar e estender. Construa seu design system com componentes de código aberto e totalmente customizáveis.',
       getStarted: 'Começar',
       viewComponents: 'Ver Componentes',
       examples: 'Exemplos',
@@ -117,15 +135,15 @@ export const translations: Record<Language, Translations> = {
       twoFactorDescription: 'Verifique via email ou número de telefone.',
       enable: 'Habilitar',
       copyPaste: 'Copiar e Colar',
-      copyPasteDesc: 'Copie componentes diretamente para seu app. Sem dependências, sem complicação.',
+      copyPasteDesc: 'Copie e cole componentes diretamente no seu projeto. Sem dependências adicionais, sem complicações. Você tem controle total sobre o código.',
       fullyCustomizable: 'Totalmente Customizável',
-      fullyCustomizableDesc: 'Cada componente é construído com Tailwind CSS e pode ser facilmente customizado.',
+      fullyCustomizableDesc: 'Cada componente é construído com Tailwind CSS e pode ser facilmente modificado para se adequar ao seu design. O código é seu.',
       typescript: 'TypeScript',
-      typescriptDesc: 'Construído com TypeScript para melhor experiência de desenvolvimento e segurança de tipos.',
+      typescriptDesc: 'Construído com TypeScript para oferecer melhor experiência de desenvolvimento, autocompletar inteligente e segurança de tipos.',
     },
     docs: {
       title: 'Documentação',
-      subtitle: 'Aprenda a instalar e usar os componentes Valk UI no seu projeto.',
+      subtitle: 'Aprenda como instalar, configurar e usar os componentes Valk UI no seu projeto React ou Laravel.',
       installation: 'Instalação',
       viaCLI: 'Via CLI (Recomendado)',
       installGlobally: '# Instalar globalmente',
@@ -159,7 +177,7 @@ export const translations: Record<Language, Translations> = {
     },
     components: {
       title: 'Componentes',
-      subtitle: 'Explore todos os componentes disponíveis na biblioteca Valk UI.',
+      subtitle: 'Explore todos os componentes disponíveis na biblioteca Valk UI. Cada componente inclui exemplos de uso e documentação completa.',
       forms: 'Formulários',
       feedback: 'Feedback',
       layout: 'Layout',
@@ -167,17 +185,35 @@ export const translations: Record<Language, Translations> = {
     },
     changelog: {
       title: 'Changelog',
-      subtitle: 'Acompanhe todas as mudanças e atualizações da biblioteca.',
+      subtitle: 'Acompanhe todas as mudanças, melhorias e novas funcionalidades da biblioteca Valk UI. Histórico completo de versões e releases.',
       currentVersion: 'Versão Atual',
       totalVersions: 'Total de Versões',
       releases: 'Lançamentos',
       lastUpdate: 'Última Atualização',
-      lastVersion: 'Última versão',
+      lastVersion: 'Última versão publicada',
       major: 'Major',
       minor: 'Minor',
       added: 'Adicionado',
       fixed: 'Corrigido',
       improved: 'Melhorado',
+      changed: 'Alterado',
+      removed: 'Removido',
+      loading: 'Carregando changelog...',
+      viewOnGitHub: 'Ver no GitHub',
+      stableRelease: 'Release estável',
+      noReleasesFound: 'Nenhum release encontrado',
+      usingDefault: 'Usando dados padrão do changelog',
+      releaseNotesAvailable: 'Notas de release disponíveis no GitHub',
+      patch: 'Patch',
+    },
+    colors: {
+      title: 'Cores do Tailwind em Todos os Formatos',
+      subtitle: 'A paleta completa de cores do Tailwind em HEX, RGB, HSL, variáveis CSS e classes. Pronto para copiar e colar no seu projeto.',
+      format: 'Formato',
+      formatDescription: 'Escolha o formato que deseja visualizar as cores',
+      clickToCopy: 'Clique para copiar',
+      copySuccess: 'Copiado!',
+      copyError: 'Erro ao copiar',
     },
   },
   en: {
@@ -190,7 +226,7 @@ export const translations: Record<Language, Translations> = {
     home: {
       announcement: 'New Components: Field, Input Group, Item and more →',
       title: 'The Foundation for your Design System',
-      subtitle: 'A set of beautifully designed components that you can customize, extend, and build on. Start here then make it your own. Open Source. Open Code.',
+      subtitle: 'A carefully crafted set of components that you can copy, customize, and extend. Build your design system with open source, fully customizable components.',
       getStarted: 'Get Started',
       viewComponents: 'View Components',
       examples: 'Examples',
@@ -214,7 +250,7 @@ export const translations: Record<Language, Translations> = {
     },
     docs: {
       title: 'Documentation',
-      subtitle: 'Learn how to install and use Valk UI components in your project.',
+      subtitle: 'Learn how to install, configure, and use Valk UI components in your React or Laravel project.',
       installation: 'Installation',
       viaCLI: 'Via CLI (Recommended)',
       installGlobally: '# Install globally',
@@ -248,7 +284,7 @@ export const translations: Record<Language, Translations> = {
     },
     components: {
       title: 'Components',
-      subtitle: 'Explore all available components in the Valk UI library.',
+      subtitle: 'Explore all available components in the Valk UI library. Each component includes usage examples and complete documentation.',
       forms: 'Forms',
       feedback: 'Feedback',
       layout: 'Layout',
@@ -256,17 +292,35 @@ export const translations: Record<Language, Translations> = {
     },
     changelog: {
       title: 'Changelog',
-      subtitle: 'Track all changes and updates to the library.',
+      subtitle: 'Track all changes, improvements, and new features in the Valk UI library. Complete version history and releases.',
       currentVersion: 'Current Version',
       totalVersions: 'Total Versions',
       releases: 'Releases',
       lastUpdate: 'Last Update',
-      lastVersion: 'Last version',
+      lastVersion: 'Last published version',
       major: 'Major',
       minor: 'Minor',
       added: 'Added',
       fixed: 'Fixed',
       improved: 'Improved',
+      changed: 'Changed',
+      removed: 'Removed',
+      loading: 'Loading changelog...',
+      viewOnGitHub: 'View on GitHub',
+      stableRelease: 'Stable release',
+      noReleasesFound: 'No releases found',
+      usingDefault: 'Using default changelog data',
+      releaseNotesAvailable: 'Release notes available on GitHub',
+      patch: 'Patch',
+    },
+    colors: {
+      title: 'Tailwind Colors in Every Format',
+      subtitle: 'The complete Tailwind color palette in HEX, RGB, HSL, CSS variables, and classes. Ready to copy and paste into your project.',
+      format: 'Format',
+      formatDescription: 'Choose the format you want to view the colors in',
+      clickToCopy: 'Click to copy',
+      copySuccess: 'Copied!',
+      copyError: 'Error copying',
     },
   },
   es: {
@@ -279,7 +333,7 @@ export const translations: Record<Language, Translations> = {
     home: {
       announcement: 'Nuevos Componentes: Field, Input Group, Item y más →',
       title: 'La Base para tu Design System',
-      subtitle: 'Un conjunto de componentes bellamente diseñados que puedes personalizar, extender y construir. Comienza aquí y hazlo tuyo. Open Source. Open Code.',
+      subtitle: 'Un conjunto de componentes cuidadosamente diseñados que puedes copiar, personalizar y extender. Construye tu design system con componentes de código abierto y totalmente personalizables.',
       getStarted: 'Comenzar',
       viewComponents: 'Ver Componentes',
       examples: 'Ejemplos',
@@ -303,7 +357,7 @@ export const translations: Record<Language, Translations> = {
     },
     docs: {
       title: 'Documentación',
-      subtitle: 'Aprende a instalar y usar los componentes Valk UI en tu proyecto.',
+      subtitle: 'Aprende cómo instalar, configurar y usar los componentes Valk UI en tu proyecto React o Laravel.',
       installation: 'Instalación',
       viaCLI: 'Via CLI (Recomendado)',
       installGlobally: '# Instalar globalmente',
@@ -337,7 +391,7 @@ export const translations: Record<Language, Translations> = {
     },
     components: {
       title: 'Componentes',
-      subtitle: 'Explora todos los componentes disponibles en la biblioteca Valk UI.',
+      subtitle: 'Explora todos los componentes disponibles en la biblioteca Valk UI. Cada componente incluye ejemplos de uso y documentación completa.',
       forms: 'Formularios',
       feedback: 'Retroalimentación',
       layout: 'Diseño',
@@ -345,17 +399,35 @@ export const translations: Record<Language, Translations> = {
     },
     changelog: {
       title: 'Changelog',
-      subtitle: 'Sigue todos los cambios y actualizaciones de la biblioteca.',
+      subtitle: 'Sigue todos los cambios, mejoras y nuevas funcionalidades de la biblioteca Valk UI. Historial completo de versiones y lanzamientos.',
       currentVersion: 'Versión Actual',
       totalVersions: 'Total de Versiones',
       releases: 'Lanzamientos',
       lastUpdate: 'Última Actualización',
-      lastVersion: 'Última versión',
+      lastVersion: 'Última versión publicada',
       major: 'Major',
       minor: 'Minor',
       added: 'Agregado',
       fixed: 'Corregido',
       improved: 'Mejorado',
+      changed: 'Cambiado',
+      removed: 'Eliminado',
+      loading: 'Cargando changelog...',
+      viewOnGitHub: 'Ver en GitHub',
+      stableRelease: 'Release estable',
+      noReleasesFound: 'No se encontraron releases',
+      usingDefault: 'Usando datos predeterminados del changelog',
+      releaseNotesAvailable: 'Notas de release disponibles en GitHub',
+      patch: 'Patch',
+    },
+    colors: {
+      title: 'Colores de Tailwind en Todos los Formatos',
+      subtitle: 'La paleta completa de colores de Tailwind en HEX, RGB, HSL, variables CSS y clases. Listo para copiar y pegar en tu proyecto.',
+      format: 'Formato',
+      formatDescription: 'Elige el formato en el que deseas ver los colores',
+      clickToCopy: 'Haz clic para copiar',
+      copySuccess: '¡Copiado!',
+      copyError: 'Error al copiar',
     },
   },
 }

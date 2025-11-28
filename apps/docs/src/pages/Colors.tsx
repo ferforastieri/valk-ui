@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, useToast } from '@/components'
+import { useTranslation } from '../contexts/TranslationContext'
 
 type ColorFormat = 'hsl' | 'hex' | 'rgb' | 'css'
 
@@ -294,7 +295,8 @@ const tailwindColors = {
 
 export default function Colors() {
   const [selectedFormat, setSelectedFormat] = useState<ColorFormat>('hsl')
-  const { showToast } = useToast()
+  const { toast } = useToast()
+  const { t } = useTranslation()
 
   const formatColor = (color: { hsl: string; hex: string; rgb: string }, format: ColorFormat): string => {
     switch (format) {
@@ -312,12 +314,20 @@ export default function Colors() {
   }
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-    showToast({
-      title: 'Copied!',
-      description: `Color ${text} copied to clipboard`,
-      variant: 'success',
-      duration: 2000,
+    navigator.clipboard.writeText(text).then(() => {
+      toast({
+        title: t.colors.copySuccess,
+        description: `"${text}" ${t.colors.copySuccess.toLowerCase()}`,
+        variant: 'success',
+        duration: 2000,
+      })
+    }).catch(() => {
+      toast({
+        title: t.colors.copyError,
+        description: t.colors.copyError,
+        variant: 'error',
+        duration: 2000,
+      })
     })
   }
 
@@ -325,17 +335,17 @@ export default function Colors() {
     <div className="space-y-12">
       <div className="mb-6">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-          Tailwind Colors in Every Format
+          {t.colors.title}
         </h1>
         <p className="text-base md:text-lg text-muted-foreground">
-          The complete Tailwind color palette in HEX, RGB, HSL, CSS variables, and classes. Ready to copy and paste into your project.
+          {t.colors.subtitle}
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Format</CardTitle>
-          <CardDescription>Choose the format you want to view the colors in</CardDescription>
+          <CardTitle>{t.colors.format}</CardTitle>
+          <CardDescription>{t.colors.formatDescription}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex gap-2 flex-wrap">
@@ -363,7 +373,7 @@ export default function Colors() {
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold text-foreground capitalize">{colorName}</h2>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Format:</span>
+              <span className="text-sm text-muted-foreground">{t.colors.format}:</span>
               <select
                 value={selectedFormat}
                 onChange={(e) => setSelectedFormat(e.target.value as ColorFormat)}
@@ -384,7 +394,7 @@ export default function Colors() {
                   className="h-16 rounded-lg border border-border cursor-pointer hover:scale-105 transition-transform"
                   style={{ backgroundColor: `hsl(${color.hsl})` }}
                   onClick={() => copyToClipboard(formatColor(color, selectedFormat))}
-                  title="Click to copy"
+                  title={t.colors.clickToCopy}
                 />
                 <div className="text-center">
                   <div className="text-xs font-medium text-foreground mb-1">{shade}</div>

@@ -105,9 +105,19 @@ export default function Changelog() {
           }
 
           setVersions(getDefaultVersions())
-          setError('No releases found. Using default changelog.')
+          setError(t.changelog.noReleasesFound + '. ' + t.changelog.usingDefault)
         } else {
-          setVersions(formattedVersions)
+          const sortedVersions = formattedVersions.sort((a, b) => {
+            const aParts = a.version.split('.').map(Number)
+            const bParts = b.version.split('.').map(Number)
+            for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
+              const aVal = aParts[i] || 0
+              const bVal = bParts[i] || 0
+              if (bVal !== aVal) return bVal - aVal
+            }
+            return new Date(b.date).getTime() - new Date(a.date).getTime()
+          })
+          setVersions(sortedVersions)
         }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Unknown error'
@@ -265,8 +275,8 @@ export default function Changelog() {
       case 'added': return t.changelog.added
       case 'fixed': return t.changelog.fixed
       case 'improved': return t.changelog.improved
-      case 'changed': return 'Changed'
-      case 'removed': return 'Removed'
+      case 'changed': return t.changelog.changed || 'Changed'
+      case 'removed': return t.changelog.removed || 'Removed'
       default: return type
     }
   }
@@ -284,7 +294,7 @@ export default function Changelog() {
           <p className="text-base md:text-lg text-muted-foreground">{t.changelog.subtitle}</p>
         </div>
         <div className="flex items-center justify-center py-12">
-          <div className="text-muted-foreground">Loading changelog...</div>
+          <div className="text-muted-foreground">{t.changelog.loading}</div>
         </div>
       </div>
     )
@@ -299,7 +309,7 @@ export default function Changelog() {
         </p>
         {error && (
           <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-md text-sm text-yellow-600 dark:text-yellow-400">
-            {error} Using default changelog data.
+            {error} {t.changelog.usingDefault}
           </div>
         )}
       </div>
@@ -308,7 +318,7 @@ export default function Changelog() {
         <MetricCard
           title={t.changelog.currentVersion}
           value={versions[0]?.version || '1.0.0'}
-          subtitle="Stable release"
+          subtitle={t.changelog.stableRelease}
           variant="blue"
         />
         <MetricCard
@@ -333,7 +343,7 @@ export default function Changelog() {
                 <SparklesIcon className="h-6 w-6 text-primary" />
                 <h2 className="text-2xl font-bold text-foreground">v{version.version}</h2>
                 <StatusBadge status={version.type === 'major' ? 'completed' : 'active'}>
-                  {version.type === 'major' ? t.changelog.major : version.type === 'minor' ? t.changelog.minor : 'Patch'}
+                  {version.type === 'major' ? t.changelog.major : version.type === 'minor' ? t.changelog.minor : t.changelog.patch}
                 </StatusBadge>
               </div>
               <span className="text-sm text-muted-foreground">{formatDate(version.date)}</span>
@@ -355,7 +365,7 @@ export default function Changelog() {
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline inline-flex items-center gap-1"
               >
-                View on GitHub
+                {t.changelog.viewOnGitHub}
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
