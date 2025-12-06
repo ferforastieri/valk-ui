@@ -51,7 +51,3 @@ Thumbs.db
 
 # Vite
 .vite/
-
-# Laravel specific (for blade package)
-vendor/
-composer.lock

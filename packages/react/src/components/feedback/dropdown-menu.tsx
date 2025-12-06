@@ -20,7 +20,6 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
       onOpenChange?.(open)
     }
 
-    // Adicionar classe ao trigger quando aberto
     const triggerWithState = React.isValidElement(trigger)
       ? React.cloneElement(trigger, {
           className: cn(
@@ -62,7 +61,6 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
       bottom: 'top-full mt-2',
     }
 
-    // Clonar children para adicionar onClick que fecha o dropdown
     const childrenWithClose = React.Children.map(children, (child) => {
       if (React.isValidElement(child)) {
         return React.cloneElement(child, {

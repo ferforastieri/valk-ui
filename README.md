@@ -7,7 +7,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=for-the-badge&logo=typescript)
 ![React](https://img.shields.io/badge/React-18.3-blue?style=for-the-badge&logo=react)
 
-**Biblioteca moderna de componentes UI para React e Blade (Laravel)**
+**Biblioteca moderna de componentes UI para React**
 
 [Documentação](#-documentação) • [Instalação](#-instalação-rápida) • [Componentes](#-componentes-disponíveis) • [Contribuir](#-contribuindo)
 
@@ -19,7 +19,6 @@
 
 - 🎨 **Design Moderno**: Componentes bonitos e consistentes com Tailwind CSS
 - ⚛️ **React/TypeScript**: Totalmente tipado e pronto para produção
-- 🔷 **Blade/Laravel**: Integração perfeita com Laravel e Alpine.js
 - 🌙 **Dark Mode**: Suporte nativo a modo escuro
 - 📦 **CLI Interativo**: Instale apenas os componentes que você precisa
 - 🎯 **Zero Dependências**: Componentes leves e performáticos
@@ -40,7 +39,6 @@ npx valk-ui
 
 O CLI interativo permite:
 - ✅ Escolher idioma (PT, EN, ES)
-- ✅ Selecionar tecnologia (React ou Blade)
 - ✅ Instalar por categoria ou individualmente
 - ✅ Definir diretório de instalação
 
@@ -53,12 +51,6 @@ O CLI interativo permite:
 # para o seu projeto em ./src/components/ui
 ```
 
-#### Blade/Laravel
-
-```bash
-# Copie os componentes de packages/blade/resources/views/components
-# para o seu projeto em ./resources/views/components
-```
 
 ## 📖 Documentação
 
@@ -111,12 +103,6 @@ valk-ui/
 │   │   │   │   └── charts/
 │   │   │   └── lib/         # Utilitários (cn, etc)
 │   │   └── package.json
-│   ├── blade/               # Componentes Blade/Laravel
-│   │   ├── resources/
-│   │   │   └── views/
-│   │   │       └── components/  # Componentes Blade
-│   │   └── src/
-│   │       └── ValkUIBladeServiceProvider.php
 │   └── docs/                # Site de documentação
 │       ├── src/
 │       │   ├── pages/       # Páginas do site
@@ -150,25 +136,11 @@ function App() {
 }
 ```
 
-### Blade/Laravel
-
-```blade
-<x-forms.button variant="primary" size="lg">
-    Clique aqui
-</x-forms.button>
-
-<x-forms.input label="Email" placeholder="email@example.com" />
-
-<x-feedback.modal isOpen="true" title="Título">
-    Conteúdo do modal
-</x-feedback.modal>
-```
 
 ## 🛠️ Requisitos
 
 - **React**: ^18.0.0
-- **TypeScript**: ^5.0.0 (para projetos React)
-- **Laravel**: ^9.0 (para projetos Blade)
+- **TypeScript**: ^5.0.0
 - **Tailwind CSS**: ^3.0.0
 - **Node.js**: ^18.0.0
 
@@ -181,10 +153,6 @@ function App() {
 - `chart.js` ^4.0.0 e `react-chartjs-2` ^5.0.0 (para gráficos)
 - `clsx` e `tailwind-merge` (para utilitários)
 
-### Blade
-- `laravel/framework` ^9.0
-- `alpinejs` (recomendado para interatividade)
-- `chart.js` (para componentes de gráficos)
 
 ## 🤝 Contribuindo
 

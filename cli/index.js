@@ -204,17 +204,7 @@ async function main() {
 
   const t = translations[language];
   
-  const { technology } = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'technology',
-      message: t.selectTechnology,
-      choices: [
-        { name: '⚛️  React / TypeScript', value: 'react' },
-        { name: '🔷 Blade / Laravel', value: 'blade' },
-      ],
-    },
-  ]);
+  const technology = 'react';
 
   const components = getComponents(language);
   const categoryKeys = Object.keys(componentsStructure);
@@ -290,9 +280,7 @@ async function main() {
     return;
   }
 
-  const defaultPath = technology === 'react' 
-    ? './src/components/ui' 
-    : './resources/views/components';
+  const defaultPath = './src/components/ui';
     
   const { installPath } = await inquirer.prompt([
     {
@@ -356,26 +344,24 @@ async function main() {
     
     await fs.ensureDir(targetDir);
 
-    if (technology === 'react') {
-      const possibleUtilsDirs = [
-        path.join(__dirname, '..', 'packages', technology, 'src', 'lib'),
-        path.join(__dirname, '..', 'node_modules', 'valk-ui', 'packages', technology, 'src', 'lib'),
-        path.join(process.cwd(), 'node_modules', 'valk-ui', 'packages', technology, 'src', 'lib')
-      ];
-      
-      let utilsSource = null;
-      for (const dir of possibleUtilsDirs) {
-        if (await fs.pathExists(dir)) {
-          utilsSource = dir;
-          break;
-        }
+    const possibleUtilsDirs = [
+      path.join(__dirname, '..', 'packages', technology, 'src', 'lib'),
+      path.join(__dirname, '..', 'node_modules', 'valk-ui', 'packages', technology, 'src', 'lib'),
+      path.join(process.cwd(), 'node_modules', 'valk-ui', 'packages', technology, 'src', 'lib')
+    ];
+    
+    let utilsSource = null;
+    for (const dir of possibleUtilsDirs) {
+      if (await fs.pathExists(dir)) {
+        utilsSource = dir;
+        break;
       }
-      
-      if (utilsSource) {
-        const utilsTarget = path.resolve(installPath, '..', 'lib');
-        await fs.copy(utilsSource, utilsTarget);
-        console.log(chalk.green(`✓ ${t.utilsCopied}`));
-      }
+    }
+    
+    if (utilsSource) {
+      const utilsTarget = path.resolve(installPath, '..', 'lib');
+      await fs.copy(utilsSource, utilsTarget);
+      console.log(chalk.green(`✓ ${t.utilsCopied}`));
     }
 
     const installedComponents = [];
@@ -397,9 +383,7 @@ async function main() {
         }
       }
       
-      const componentFile = technology === 'react' 
-        ? `${compValue}.tsx` 
-        : `${compValue}.blade.php`;
+      const componentFile = `${compValue}.tsx`;
       const sourceFile = path.join(sourceCategoryDir, componentFile);
       
       const targetCategoryDir = compCategory ? path.join(targetDir, compCategory) : targetDir;
@@ -424,46 +408,44 @@ async function main() {
       categories[comp.category || 'root'].push(comp.value);
     });
 
-    if (technology === 'react') {
-      for (const [category, comps] of Object.entries(categories)) {
-        const categoryDir = category === 'root' ? targetDir : path.join(targetDir, category);
-        const indexPath = path.join(categoryDir, 'index.ts');
-        const indexContent = comps
-          .map(comp => {
-            const compName = comp.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
-            return `export { ${compName} } from './${comp}'`;
-          })
-          .join('\n');
-
-        await fs.writeFile(indexPath, indexContent + '\n');
-        const categoryLabel = category === 'root' ? t.root : category;
-        console.log(chalk.green(`✓ ${t.indexCreated} ${categoryLabel}`));
-      }
-
-      const mainIndexPath = path.join(targetDir, 'index.ts');
-      const mainIndexContent = Object.entries(categories)
-        .map(([category, comps]) => {
-          if (category === 'root') {
-            return comps.map(comp => {
-              const compName = comp.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
-              return `export { ${compName} } from './${comp}'`;
-            }).join('\n');
-          } else {
-            return `export * from './${category}'`;
-          }
+    for (const [category, comps] of Object.entries(categories)) {
+      const categoryDir = category === 'root' ? targetDir : path.join(targetDir, category);
+      const indexPath = path.join(categoryDir, 'index.ts');
+      const indexContent = comps
+        .map(comp => {
+          const compName = comp.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
+          return `export { ${compName} } from './${comp}'`;
         })
-        .filter(Boolean)
         .join('\n');
 
-      await fs.writeFile(mainIndexPath, mainIndexContent + '\n');
-      console.log(chalk.green(`✓ ${t.mainIndexCreated}`));
-
-      // Configurar Tailwind CSS
-      await setupTailwindConfig(process.cwd(), targetDir, t);
-      
-      // Configurar CSS Global
-      await setupGlobalCSS(process.cwd(), t);
+      await fs.writeFile(indexPath, indexContent + '\n');
+      const categoryLabel = category === 'root' ? t.root : category;
+      console.log(chalk.green(`✓ ${t.indexCreated} ${categoryLabel}`));
     }
+
+    const mainIndexPath = path.join(targetDir, 'index.ts');
+    const mainIndexContent = Object.entries(categories)
+      .map(([category, comps]) => {
+        if (category === 'root') {
+          return comps.map(comp => {
+            const compName = comp.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('');
+            return `export { ${compName} } from './${comp}'`;
+          }).join('\n');
+        } else {
+          return `export * from './${category}'`;
+        }
+      })
+      .filter(Boolean)
+      .join('\n');
+
+    await fs.writeFile(mainIndexPath, mainIndexContent + '\n');
+    console.log(chalk.green(`✓ ${t.mainIndexCreated}`));
+
+    // Configurar Tailwind CSS
+    await setupTailwindConfig(process.cwd(), targetDir, t);
+    
+    // Configurar CSS Global
+    await setupGlobalCSS(process.cwd(), t);
 
     console.log(chalk.green.bold(`\n✅ ${t.installComplete} ${installedComponents.length} ${t.componentsInstalled}\n`));
   } catch (error) {

@@ -17,8 +17,5 @@ packages/*/build/
 packages/docs/
 packages/react/node_modules/
 packages/react/dist/
-packages/blade/
-packages/blade/vendor/
-packages/blade/node_modules/
 **/package-lock.json
 

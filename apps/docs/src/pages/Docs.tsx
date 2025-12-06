@@ -72,23 +72,6 @@ export default function Docs() {
           </div>
         </div>
 
-        <div>
-          <h3 className="text-xl font-semibold text-foreground mb-3">{t.docs.blade}</h3>
-          <div className="space-y-3">
-            <p className="text-muted-foreground">
-              {t.docs.bladeStep1}
-            </p>
-            <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-              <code className="text-green-400 text-sm">npx valk-ui</code>
-            </div>
-            <p className="text-muted-foreground">
-              {t.docs.bladeStep2}
-            </p>
-            <p className="text-muted-foreground">
-              {t.docs.bladeStep3} <code className="bg-muted px-1 rounded">./resources/views/components</code>
-            </p>
-          </div>
-        </div>
       </section>
 
       {/* Uso Básico */}
@@ -113,15 +96,6 @@ export default function Docs() {
           </div>
         </div>
 
-        <div>
-          <h3 className="text-xl font-semibold text-foreground mb-3">{t.docs.bladeReq}</h3>
-          <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-            <code className="text-green-400 text-sm">
-              <div className="mb-2">{'<'}x-ui.button variant="primary"{'>'}Click here{'<'}/x-ui.button{'>'}</div>
-              <div className="mb-2">{'<'}x-ui.input label="Name" placeholder="Enter your name" /{'>'}</div>
-            </code>
-          </div>
-        </div>
       </section>
 
       {/* Requisitos */}
@@ -150,23 +124,6 @@ export default function Docs() {
           </ul>
         </div>
 
-        <div>
-          <h3 className="text-xl font-semibold text-foreground mb-3">{t.docs.bladeReq}</h3>
-          <ul className="space-y-2 text-muted-foreground">
-            <li className="flex items-center gap-2">
-              <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
-              <span>{t.docs.bladeReq1}</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
-              <span>{t.docs.bladeReq2}</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <CheckCircleIcon className="h-5 w-5 text-green-500 flex-shrink-0" />
-              <span>{t.docs.bladeReq3}</span>
-            </li>
-          </ul>
-        </div>
       </section>
     </div>
   )

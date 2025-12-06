@@ -47,10 +47,6 @@ export interface Translations {
     reactStep4Item1: string
     reactStep4Item2: string
     reactStep4Item3: string
-    blade: string
-    bladeStep1: string
-    bladeStep2: string
-    bladeStep3: string
     basicUsage: string
     requirements: string
     reactReq: string
@@ -58,10 +54,6 @@ export interface Translations {
     reactReq2: string
     reactReq3: string
     reactReq4: string
-    bladeReq: string
-    bladeReq1: string
-    bladeReq2: string
-    bladeReq3: string
     customization: string
     customizationDesc: string
     customizationDesc2: string
@@ -143,7 +135,7 @@ export const translations: Record<Language, Translations> = {
     },
     docs: {
       title: 'Documentação',
-      subtitle: 'Aprenda como instalar, configurar e usar os componentes Valk UI no seu projeto React ou Laravel.',
+      subtitle: 'Aprenda como instalar, configurar e usar os componentes Valk UI no seu projeto React.',
       installation: 'Instalação',
       viaCLI: 'Via CLI (Recomendado)',
       installGlobally: '# Instalar globalmente',
@@ -156,10 +148,6 @@ export const translations: Record<Language, Translations> = {
       reactStep4Item1: 'tailwind.config.js com as variáveis CSS necessárias',
       reactStep4Item2: 'CSS global com variáveis de tema (light/dark mode)',
       reactStep4Item3: 'Arquivos index.ts para exportação dos componentes',
-      blade: 'Blade / Laravel',
-      bladeStep1: '1. Execute o CLI e selecione Blade:',
-      bladeStep2: '2. Escolha os componentes desejados',
-      bladeStep3: '3. Os componentes serão copiados para',
       basicUsage: 'Uso Básico',
       requirements: 'Requisitos',
       reactReq: 'React',
@@ -167,10 +155,6 @@ export const translations: Record<Language, Translations> = {
       reactReq2: 'TypeScript (recomendado)',
       reactReq3: 'Tailwind CSS 3+',
       reactReq4: 'Heroicons (para ícones)',
-      bladeReq: 'Blade / Laravel',
-      bladeReq1: 'Laravel 10+',
-      bladeReq2: 'Tailwind CSS 3+',
-      bladeReq3: 'Alpine.js (para interatividade)',
       customization: 'Customização',
       customizationDesc: 'Todos os componentes são totalmente customizáveis. Você pode modificar as classes CSS diretamente nos arquivos dos componentes ou usar as variáveis CSS do tema para personalizar cores e espaçamentos.',
       customizationDesc2: 'O CLI configura automaticamente as variáveis CSS no seu tailwind.config.js e no arquivo CSS global, permitindo fácil customização de temas.',
@@ -250,7 +234,7 @@ export const translations: Record<Language, Translations> = {
     },
     docs: {
       title: 'Documentation',
-      subtitle: 'Learn how to install, configure, and use Valk UI components in your React or Laravel project.',
+      subtitle: 'Learn how to install, configure, and use Valk UI components in your React project.',
       installation: 'Installation',
       viaCLI: 'Via CLI (Recommended)',
       installGlobally: '# Install globally',
@@ -263,10 +247,6 @@ export const translations: Record<Language, Translations> = {
       reactStep4Item1: 'tailwind.config.js with necessary CSS variables',
       reactStep4Item2: 'Global CSS with theme variables (light/dark mode)',
       reactStep4Item3: 'index.ts files for component exports',
-      blade: 'Blade / Laravel',
-      bladeStep1: '1. Run the CLI and select Blade:',
-      bladeStep2: '2. Choose the desired components',
-      bladeStep3: '3. Components will be copied to',
       basicUsage: 'Basic Usage',
       requirements: 'Requirements',
       reactReq: 'React',
@@ -274,10 +254,6 @@ export const translations: Record<Language, Translations> = {
       reactReq2: 'TypeScript (recommended)',
       reactReq3: 'Tailwind CSS 3+',
       reactReq4: 'Heroicons (for icons)',
-      bladeReq: 'Blade / Laravel',
-      bladeReq1: 'Laravel 10+',
-      bladeReq2: 'Tailwind CSS 3+',
-      bladeReq3: 'Alpine.js (for interactivity)',
       customization: 'Customization',
       customizationDesc: 'All components are fully customizable. You can modify CSS classes directly in component files or use theme CSS variables to customize colors and spacing.',
       customizationDesc2: 'The CLI automatically configures CSS variables in your tailwind.config.js and in the global CSS file, allowing easy theme customization.',
@@ -357,7 +333,7 @@ export const translations: Record<Language, Translations> = {
     },
     docs: {
       title: 'Documentación',
-      subtitle: 'Aprende cómo instalar, configurar y usar los componentes Valk UI en tu proyecto React o Laravel.',
+      subtitle: 'Aprende cómo instalar, configurar y usar los componentes Valk UI en tu proyecto React.',
       installation: 'Instalación',
       viaCLI: 'Via CLI (Recomendado)',
       installGlobally: '# Instalar globalmente',
@@ -370,10 +346,6 @@ export const translations: Record<Language, Translations> = {
       reactStep4Item1: 'tailwind.config.js con las variables CSS necesarias',
       reactStep4Item2: 'CSS global con variables de tema (modo claro/oscuro)',
       reactStep4Item3: 'Archivos index.ts para exportación de componentes',
-      blade: 'Blade / Laravel',
-      bladeStep1: '1. Ejecuta el CLI y selecciona Blade:',
-      bladeStep2: '2. Elige los componentes deseados',
-      bladeStep3: '3. Los componentes serán copiados a',
       basicUsage: 'Uso Básico',
       requirements: 'Requisitos',
       reactReq: 'React',
@@ -381,10 +353,6 @@ export const translations: Record<Language, Translations> = {
       reactReq2: 'TypeScript (recomendado)',
       reactReq3: 'Tailwind CSS 3+',
       reactReq4: 'Heroicons (para iconos)',
-      bladeReq: 'Blade / Laravel',
-      bladeReq1: 'Laravel 10+',
-      bladeReq2: 'Tailwind CSS 3+',
-      bladeReq3: 'Alpine.js (para interactividad)',
       customization: 'Personalización',
       customizationDesc: 'Todos los componentes son totalmente personalizables. Puedes modificar las clases CSS directamente en los archivos de componentes o usar las variables CSS del tema para personalizar colores y espaciados.',
       customizationDesc2: 'El CLI configura automáticamente las variables CSS en tu tailwind.config.js y en el archivo CSS global, permitiendo fácil personalización de temas.',

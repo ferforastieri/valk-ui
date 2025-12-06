@@ -1,7 +1,7 @@
 {
   "name": "Valk UI",
   "short_name": "Valk UI",
-  "description": "Biblioteca moderna de componentes UI para React e Blade",
+  "description": "Biblioteca moderna de componentes UI para React",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#003d7a",

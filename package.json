@@ -1,7 +1,7 @@
 {
   "name": "valk-ui",
   "version": "1.1.0",
-  "description": "CLI interativo para instalar componentes Valk UI (React e Blade)",
+  "description": "CLI interativo para instalar componentes Valk UI (React)",
   "main": "cli/index.js",
   "files": [
     "cli",
@@ -15,8 +15,6 @@
   },
   "keywords": [
     "react",
-    "blade",
-    "laravel",
     "ui",
     "components",
     "tailwindcss",
