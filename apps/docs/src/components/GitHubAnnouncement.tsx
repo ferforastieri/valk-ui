@@ -18,16 +18,30 @@ export default function GitHubAnnouncement() {
   useEffect(() => {
     const fetchLatestRelease = async () => {
       try {
-        const response = await fetch('https://api.github.com/repos/ferforastieri/valk-ui/releases/latest', {
+        const response = await fetch('https://api.github.com/repos/ferforastieri/valk-ui/releases?per_page=10', {
           headers: {
             Accept: 'application/vnd.github.v3+json',
           },
         })
 
         if (response.ok) {
-          const release: GitHubRelease = await response.json()
-          if (!release.prerelease && !release.draft) {
-            setLatestRelease(release)
+          const releases: GitHubRelease[] = await response.json()
+          const validReleases = releases.filter(r => !r.prerelease && !r.draft)
+          
+          if (validReleases.length > 0) {
+            const latest = validReleases.sort((a, b) => {
+              const aVersion = a.tag_name.replace(/^v/, '').split('.').map(Number)
+              const bVersion = b.tag_name.replace(/^v/, '').split('.').map(Number)
+              
+              for (let i = 0; i < Math.max(aVersion.length, bVersion.length); i++) {
+                const aVal = aVersion[i] || 0
+                const bVal = bVersion[i] || 0
+                if (bVal !== aVal) return bVal - aVal
+              }
+              
+              return new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+            })[0]
+            setLatestRelease(latest)
           }
         }
       } catch (error) {

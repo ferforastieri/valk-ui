@@ -120,7 +120,7 @@ function LayoutContent({ children }: LayoutProps) {
   const logo = (
     <RouterLink to="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
       <img src="/logo.png" alt="Valk UI" className="h-8 w-8" />
-      <span className="text-xl font-bold text-foreground">Valk UI</span>
+      <span className="text-xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
     </RouterLink>
   )
 
@@ -252,7 +252,7 @@ function LayoutContent({ children }: LayoutProps) {
                 <div className="flex items-center justify-between px-6 pb-4 border-b border-border">
                   <div className="flex items-center gap-3">
                     <img src="/logo.png" alt="Valk UI" className="h-8 w-8" />
-                    <span className="text-lg font-bold text-foreground">Valk UI</span>
+                    <span className="text-lg font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
                   </div>
                   <button
                     type="button"
