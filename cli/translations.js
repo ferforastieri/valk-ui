@@ -1,6 +1,5 @@
 const translations = {
   pt: {
-    selectTechnology: 'Qual tecnologia você deseja usar?',
     title: '🎨 Valk UI - Instalação de Componentes',
     installMode: 'Como deseja instalar os componentes?',
     installModeChoices: {
@@ -74,7 +73,6 @@ const translations = {
     }
   },
   en: {
-    selectTechnology: 'Which technology would you like to use?',
     title: '🎨 Valk UI - Component Installation',
     installMode: 'How would you like to install the components?',
     installModeChoices: {
@@ -148,7 +146,6 @@ const translations = {
     }
   },
   es: {
-    selectTechnology: '¿Qué tecnología desea usar?',
     title: '🎨 Valk UI - Instalación de Componentes',
     installMode: '¿Cómo desea instalar los componentes?',
     installModeChoices: {
