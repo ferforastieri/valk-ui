@@ -32,7 +32,6 @@ export default function Home() {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
   const [toggleChecked, setToggleChecked] = useState(false)
   
-  // Estados para os checkboxes das tarefas
   const [taskCheckboxes, setTaskCheckboxes] = useState({
     todo1: false,
     todo2: false,

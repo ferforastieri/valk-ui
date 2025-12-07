@@ -10,21 +10,16 @@ async function setupTailwindConfig(projectRoot, componentsPath, t) {
   const tailwindConfigPath = path.join(projectRoot, 'tailwind.config.js');
   const tailwindConfigTemplate = path.join(__dirname, 'templates', 'tailwind.config.js');
   
-  // Calcular caminho relativo dos componentes para o content
   const relativeComponentsPath = path.relative(projectRoot, componentsPath);
   const contentPath = relativeComponentsPath.startsWith('..') 
     ? relativeComponentsPath 
     : `./${relativeComponentsPath}/**/*.{js,ts,jsx,tsx}`;
 
   if (await fs.pathExists(tailwindConfigPath)) {
-    // Ler config existente
     const existingConfig = await fs.readFile(tailwindConfigPath, 'utf8');
     
-    // Verificar se já tem as configurações necessárias
     if (existingConfig.includes('border:') && existingConfig.includes('background:')) {
-      // Verificar se o content já inclui o caminho dos componentes
       if (!existingConfig.includes(relativeComponentsPath) && !existingConfig.includes(componentsPath)) {
-        // Adicionar o caminho ao content
         const updatedConfig = existingConfig.replace(
           /content:\s*\[([^\]]+)\]/,
           (match, content) => {
@@ -41,14 +36,11 @@ async function setupTailwindConfig(projectRoot, componentsPath, t) {
         console.log(chalk.gray(`  ${t.tailwindConfigExists}`));
       }
     } else {
-      // Config não tem as variáveis, fazer merge
       console.log(chalk.yellow(`⚠️  ${t.tailwindConfigExistsButIncomplete}`));
       console.log(chalk.gray(`  ${t.manualConfigRequired}`));
     }
   } else {
-    // Criar novo config
     let configContent = await fs.readFile(tailwindConfigTemplate, 'utf8');
-    // Substituir o content para incluir o caminho dos componentes
     configContent = configContent.replace(
       /content:\s*\[([^\]]+)\]/,
       `content: [
@@ -63,7 +55,6 @@ async function setupTailwindConfig(projectRoot, componentsPath, t) {
 }
 
 async function setupGlobalCSS(projectRoot, t) {
-  // Procurar arquivo CSS principal (index.css, global.css, app.css, main.css)
   const possibleCssFiles = [
     path.join(projectRoot, 'src', 'index.css'),
     path.join(projectRoot, 'src', 'global.css'),
@@ -86,13 +77,10 @@ async function setupGlobalCSS(projectRoot, t) {
   if (cssFile) {
     const existingContent = await fs.readFile(cssFile, 'utf8');
     
-    // Verificar se já tem as variáveis CSS
     if (existingContent.includes('--background:') && existingContent.includes('--foreground:')) {
       console.log(chalk.gray(`  ${t.cssFileExists}`));
     } else {
-      // Adicionar as variáveis CSS ao arquivo existente
       if (!existingContent.includes('@tailwind base')) {
-        // Adicionar diretivas do Tailwind se não existirem
         const updatedContent = `@tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -103,10 +91,8 @@ ${templateContent.split('@tailwind').slice(1).join('@tailwind')}`;
         await fs.writeFile(cssFile, updatedContent);
         console.log(chalk.green(`✓ ${t.cssFileUpdated}`));
       } else {
-        // Adicionar apenas as variáveis CSS
         const layerBaseMatch = existingContent.match(/@layer base\s*\{[^}]*\}/);
         if (layerBaseMatch) {
-          // Já tem @layer base, adicionar variáveis dentro
           const updatedContent = existingContent.replace(
             /@layer base\s*\{/,
             `@layer base {\n${templateContent.match(/@layer base\s*\{([\s\S]*)\}/)[1]}`
@@ -114,7 +100,6 @@ ${templateContent.split('@tailwind').slice(1).join('@tailwind')}`;
           await fs.writeFile(cssFile, updatedContent);
           console.log(chalk.green(`✓ ${t.cssFileUpdated}`));
         } else {
-          // Adicionar @layer base com variáveis
           const updatedContent = existingContent + '\n\n' + templateContent.split('@tailwind').slice(1).join('@tailwind');
           await fs.writeFile(cssFile, updatedContent);
           console.log(chalk.green(`✓ ${t.cssFileUpdated}`));
@@ -122,7 +107,6 @@ ${templateContent.split('@tailwind').slice(1).join('@tailwind')}`;
       }
     }
   } else {
-    // Criar novo arquivo CSS
     const defaultCssPath = path.join(projectRoot, 'src', 'index.css');
     await fs.writeFile(defaultCssPath, templateContent);
     console.log(chalk.green(`✓ ${t.cssFileCreated}`));
@@ -440,10 +424,8 @@ async function main() {
     await fs.writeFile(mainIndexPath, mainIndexContent + '\n');
     console.log(chalk.green(`✓ ${t.mainIndexCreated}`));
 
-    // Configurar Tailwind CSS
     await setupTailwindConfig(process.cwd(), targetDir, t);
     
-    // Configurar CSS Global
     await setupGlobalCSS(process.cwd(), t);
 
     console.log(chalk.green.bold(`\n✅ ${t.installComplete} ${installedComponents.length} ${t.componentsInstalled}\n`));

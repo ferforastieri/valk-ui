@@ -37,7 +37,6 @@ const translations = {
     cssFileUpdated: 'Arquivo CSS global atualizado',
     cssFileExists: 'Arquivo CSS global já existe com variáveis',
     importCssInMain: 'Importe o CSS no seu main.tsx/main.jsx:',
-    // Componentes
     components: {
       Forms: 'Formulários',
       Feedback: 'Feedback',
@@ -112,7 +111,6 @@ const translations = {
     cssFileUpdated: 'Global CSS file updated',
     cssFileExists: 'Global CSS file already exists with variables',
     importCssInMain: 'Import CSS in your main.tsx/main.jsx:',
-    // Componentes
     components: {
       Forms: 'Forms',
       Feedback: 'Feedback',
@@ -187,7 +185,6 @@ const translations = {
     cssFileUpdated: 'Archivo CSS global actualizado',
     cssFileExists: 'Archivo CSS global ya existe con variables',
     importCssInMain: 'Importe el CSS en su main.tsx/main.jsx:',
-    // Componentes
     components: {
       Forms: 'Formularios',
       Feedback: 'Retroalimentación',
