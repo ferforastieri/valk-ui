@@ -39,9 +39,9 @@ export default function Docs() {
           <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
             <code className="text-green-400 text-sm">
               <div className="mb-2">{t.docs.installGlobally}</div>
-              <div className="mb-2">npm install -g valk-ui</div>
+              <div className="mb-2">npm install -g ui-valk</div>
               <div className="mb-2">{t.docs.orRunDirectly}</div>
-              <div>npx valk-ui</div>
+              <div>npx ui-valk</div>
             </code>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function Docs() {
               {t.docs.reactStep1}
             </p>
             <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-              <code className="text-green-400 text-sm">npx valk-ui</code>
+              <code className="text-green-400 text-sm">npx ui-valk</code>
             </div>
             <p className="text-muted-foreground">
               {t.docs.reactStep2}
