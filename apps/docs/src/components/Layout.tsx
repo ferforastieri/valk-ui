@@ -191,7 +191,7 @@ function LayoutContent({ children }: LayoutProps) {
   const hasSidebar = location.pathname.startsWith('/components')
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden w-full">
       <Navigation
         items={navigationItems}
         logo={logo}
@@ -274,8 +274,8 @@ function LayoutContent({ children }: LayoutProps) {
       />
 
       <main className={cn(
-        "flex-1",
-        hasSidebar ? "flex overflow-hidden" : "mx-auto max-w-6xl px-6 py-8 md:px-8 md:py-10 lg:px-10"
+        "flex-1 w-full overflow-x-hidden",
+        hasSidebar ? "flex overflow-hidden" : "mx-auto max-w-6xl px-4 sm:px-6 py-8 md:px-8 md:py-10 lg:px-10"
       )}>
         {children}
       </main>

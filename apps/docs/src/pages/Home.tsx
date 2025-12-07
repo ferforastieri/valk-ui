@@ -460,16 +460,16 @@ export default function Home() {
   )
 
   const renderMarketplaceContent = () => (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full overflow-x-hidden">
       {/* Header com busca e filtros */}
-      <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between">
-        <div className="flex-1 w-full sm:max-w-md">
+      <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between w-full">
+        <div className="flex-1 w-full min-w-0 sm:max-w-md">
           <Input 
             placeholder="Buscar produtos..." 
             className="w-full focus:!ring-primary"
           />
         </div>
-        <div className="flex gap-2 w-full sm:w-auto">
+        <div className="flex gap-2 w-full sm:w-auto sm:flex-shrink-0">
           <Select
             options={[
               { value: 'all', label: 'Todas as categorias' },
@@ -479,254 +479,254 @@ export default function Home() {
             ]}
             value={selectValue}
             onChange={(value: string | string[]) => setSelectValue(Array.isArray(value) ? value : [value])}
-            className="flex-1 sm:flex-none sm:w-48 [&_div.flex]:focus:!ring-primary"
+            className="w-full sm:w-48 [&_div.flex]:focus:!ring-primary"
           />
         </div>
       </div>
 
       {/* Grid de Produtos */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full">
         {/* Produto 1 */}
-        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
-          <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center flex-shrink-0">
-            <div className="text-6xl">📱</div>
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
+          <div className="h-32 sm:h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-4xl sm:text-6xl">📱</div>
           </div>
-          <CardHeader className="flex-shrink-0">
+          <CardHeader className="flex-shrink-0 pb-2 sm:pb-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg">Smartphone Pro Max</CardTitle>
-                <CardDescription>128GB, Tela 6.7", 5G</CardDescription>
+                <CardTitle className="text-base sm:text-lg break-words">Smartphone Pro Max</CardTitle>
+                <CardDescription className="text-xs sm:text-sm break-words">128GB, Tela 6.7", 5G</CardDescription>
               </div>
-              <StatusBadge status="active">Em Estoque</StatusBadge>
+              <StatusBadge status="active" className="flex-shrink-0 text-xs">Em Estoque</StatusBadge>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3 flex-1">
+          <CardContent className="space-y-2 sm:space-y-3 flex-1 pb-2 sm:pb-3">
             <div className="flex items-center gap-2">
-              <Avatar fallback="⭐" size="sm" />
-              <div>
-                <p className="text-sm font-medium">4.8</p>
-                <p className="text-xs text-muted-foreground">234 avaliações</p>
+              <Avatar fallback="⭐" size="sm" className="flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium">4.8</p>
+                <p className="text-xs text-muted-foreground truncate">234 avaliações</p>
               </div>
             </div>
             <Separator />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-foreground">R$ 2.499</p>
-                <p className="text-sm text-muted-foreground line-through">R$ 2.999</p>
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground break-words">R$ 2.499</p>
+                <p className="text-xs sm:text-sm text-muted-foreground line-through break-words">R$ 2.999</p>
               </div>
-              <Badge variant="high">-17%</Badge>
+              <Badge variant="high" className="flex-shrink-0 text-xs">-17%</Badge>
             </div>
           </CardContent>
-          <CardFooter className="flex gap-2 flex-shrink-0">
-            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+          <CardFooter className="flex gap-2 flex-shrink-0 pt-2 sm:pt-3">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground text-xs sm:text-sm">
               Adicionar ao Carrinho
             </Button>
-            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground px-2 sm:px-3">
               ♡
             </Button>
           </CardFooter>
         </Card>
 
         {/* Produto 2 */}
-        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
-          <div className="h-48 bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center flex-shrink-0">
-            <div className="text-6xl">👕</div>
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
+          <div className="h-32 sm:h-48 bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-4xl sm:text-6xl">👕</div>
           </div>
-          <CardHeader className="flex-shrink-0">
+          <CardHeader className="flex-shrink-0 pb-2 sm:pb-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg">Camiseta Premium</CardTitle>
-                <CardDescription>Algodão 100%, Múltiplas cores</CardDescription>
+                <CardTitle className="text-base sm:text-lg break-words">Camiseta Premium</CardTitle>
+                <CardDescription className="text-xs sm:text-sm break-words">Algodão 100%, Múltiplas cores</CardDescription>
               </div>
-              <StatusBadge status="active">Em Estoque</StatusBadge>
+              <StatusBadge status="active" className="flex-shrink-0 text-xs">Em Estoque</StatusBadge>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3 flex-1">
+          <CardContent className="space-y-2 sm:space-y-3 flex-1 pb-2 sm:pb-3">
             <div className="flex items-center gap-2">
-              <Avatar fallback="⭐" size="sm" />
-              <div>
-                <p className="text-sm font-medium">4.6</p>
-                <p className="text-xs text-muted-foreground">89 avaliações</p>
+              <Avatar fallback="⭐" size="sm" className="flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium">4.6</p>
+                <p className="text-xs text-muted-foreground truncate">89 avaliações</p>
               </div>
             </div>
             <Separator />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-foreground">R$ 89</p>
-                <p className="text-sm text-muted-foreground">Preço único</p>
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground break-words">R$ 89</p>
+                <p className="text-xs sm:text-sm text-muted-foreground break-words">Preço único</p>
               </div>
-              <Badge variant="medium">Popular</Badge>
+              <Badge variant="medium" className="flex-shrink-0 text-xs">Popular</Badge>
             </div>
           </CardContent>
-          <CardFooter className="flex gap-2 flex-shrink-0">
-            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+          <CardFooter className="flex gap-2 flex-shrink-0 pt-2 sm:pt-3">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground text-xs sm:text-sm">
               Adicionar ao Carrinho
             </Button>
-            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground px-2 sm:px-3">
               ♡
             </Button>
           </CardFooter>
         </Card>
 
         {/* Produto 3 */}
-        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
-          <div className="h-48 bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center flex-shrink-0">
-            <div className="text-6xl">📚</div>
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
+          <div className="h-32 sm:h-48 bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-4xl sm:text-6xl">📚</div>
           </div>
-          <CardHeader className="flex-shrink-0">
+          <CardHeader className="flex-shrink-0 pb-2 sm:pb-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg">Livro: Design Systems</CardTitle>
-                <CardDescription>Edição especial, 400 páginas</CardDescription>
+                <CardTitle className="text-base sm:text-lg break-words">Livro: Design Systems</CardTitle>
+                <CardDescription className="text-xs sm:text-sm break-words">Edição especial, 400 páginas</CardDescription>
               </div>
-              <StatusBadge status="pending">Últimas Unidades</StatusBadge>
+              <StatusBadge status="pending" className="flex-shrink-0 text-xs">Últimas Unidades</StatusBadge>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3 flex-1">
+          <CardContent className="space-y-2 sm:space-y-3 flex-1 pb-2 sm:pb-3">
             <div className="flex items-center gap-2">
-              <Avatar fallback="⭐" size="sm" />
-              <div>
-                <p className="text-sm font-medium">4.9</p>
-                <p className="text-xs text-muted-foreground">156 avaliações</p>
+              <Avatar fallback="⭐" size="sm" className="flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium">4.9</p>
+                <p className="text-xs text-muted-foreground truncate">156 avaliações</p>
               </div>
             </div>
             <Separator />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-foreground">R$ 59</p>
-                <p className="text-sm text-muted-foreground">Edição limitada</p>
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground break-words">R$ 59</p>
+                <p className="text-xs sm:text-sm text-muted-foreground break-words">Edição limitada</p>
               </div>
-              <Badge variant="low">Novo</Badge>
+              <Badge variant="low" className="flex-shrink-0 text-xs">Novo</Badge>
             </div>
           </CardContent>
-          <CardFooter className="flex gap-2 flex-shrink-0">
-            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+          <CardFooter className="flex gap-2 flex-shrink-0 pt-2 sm:pt-3">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground text-xs sm:text-sm">
               Adicionar ao Carrinho
             </Button>
-            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground px-2 sm:px-3">
               ♡
             </Button>
           </CardFooter>
         </Card>
 
         {/* Produto 4 */}
-        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
-          <div className="h-48 bg-gradient-to-br from-blue-500/20 to-blue-500/5 flex items-center justify-center flex-shrink-0">
-            <div className="text-6xl">🎧</div>
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
+          <div className="h-32 sm:h-48 bg-gradient-to-br from-blue-500/20 to-blue-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-4xl sm:text-6xl">🎧</div>
           </div>
-          <CardHeader className="flex-shrink-0">
+          <CardHeader className="flex-shrink-0 pb-2 sm:pb-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg">Fones Bluetooth</CardTitle>
-                <CardDescription>Cancelamento de ruído, 30h bateria</CardDescription>
+                <CardTitle className="text-base sm:text-lg break-words">Fones Bluetooth</CardTitle>
+                <CardDescription className="text-xs sm:text-sm break-words">Cancelamento de ruído, 30h bateria</CardDescription>
               </div>
-              <StatusBadge status="active">Em Estoque</StatusBadge>
+              <StatusBadge status="active" className="flex-shrink-0 text-xs">Em Estoque</StatusBadge>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3 flex-1">
+          <CardContent className="space-y-2 sm:space-y-3 flex-1 pb-2 sm:pb-3">
             <div className="flex items-center gap-2">
-              <Avatar fallback="⭐" size="sm" />
-              <div>
-                <p className="text-sm font-medium">4.7</p>
-                <p className="text-xs text-muted-foreground">312 avaliações</p>
+              <Avatar fallback="⭐" size="sm" className="flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium">4.7</p>
+                <p className="text-xs text-muted-foreground truncate">312 avaliações</p>
               </div>
             </div>
             <Separator />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-foreground">R$ 349</p>
-                <p className="text-sm text-muted-foreground line-through">R$ 449</p>
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground break-words">R$ 349</p>
+                <p className="text-xs sm:text-sm text-muted-foreground line-through break-words">R$ 449</p>
               </div>
-              <Badge variant="high">-22%</Badge>
+              <Badge variant="high" className="flex-shrink-0 text-xs">-22%</Badge>
             </div>
           </CardContent>
-          <CardFooter className="flex gap-2 flex-shrink-0">
-            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+          <CardFooter className="flex gap-2 flex-shrink-0 pt-2 sm:pt-3">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground text-xs sm:text-sm">
               Adicionar ao Carrinho
             </Button>
-            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground px-2 sm:px-3">
               ♡
             </Button>
           </CardFooter>
         </Card>
 
         {/* Produto 5 */}
-        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
-          <div className="h-48 bg-gradient-to-br from-orange-500/20 to-orange-500/5 flex items-center justify-center flex-shrink-0">
-            <div className="text-6xl">⌚</div>
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
+          <div className="h-32 sm:h-48 bg-gradient-to-br from-orange-500/20 to-orange-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-4xl sm:text-6xl">⌚</div>
           </div>
-          <CardHeader className="flex-shrink-0">
+          <CardHeader className="flex-shrink-0 pb-2 sm:pb-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg">Smartwatch Pro</CardTitle>
-                <CardDescription>Monitor de saúde, GPS, Resistente à água</CardDescription>
+                <CardTitle className="text-base sm:text-lg break-words">Smartwatch Pro</CardTitle>
+                <CardDescription className="text-xs sm:text-sm break-words">Monitor de saúde, GPS, Resistente à água</CardDescription>
               </div>
-              <StatusBadge status="completed">Mais Vendido</StatusBadge>
+              <StatusBadge status="completed" className="flex-shrink-0 text-xs">Mais Vendido</StatusBadge>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3 flex-1">
+          <CardContent className="space-y-2 sm:space-y-3 flex-1 pb-2 sm:pb-3">
             <div className="flex items-center gap-2">
-              <Avatar fallback="⭐" size="sm" />
-              <div>
-                <p className="text-sm font-medium">4.8</p>
-                <p className="text-xs text-muted-foreground">567 avaliações</p>
+              <Avatar fallback="⭐" size="sm" className="flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium">4.8</p>
+                <p className="text-xs text-muted-foreground truncate">567 avaliações</p>
               </div>
             </div>
             <Separator />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-foreground">R$ 899</p>
-                <p className="text-sm text-muted-foreground">Preço especial</p>
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground break-words">R$ 899</p>
+                <p className="text-xs sm:text-sm text-muted-foreground break-words">Preço especial</p>
               </div>
-              <Badge variant="medium">Destaque</Badge>
+              <Badge variant="medium" className="flex-shrink-0 text-xs">Destaque</Badge>
             </div>
           </CardContent>
-          <CardFooter className="flex gap-2 flex-shrink-0">
-            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+          <CardFooter className="flex gap-2 flex-shrink-0 pt-2 sm:pt-3">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground text-xs sm:text-sm">
               Adicionar ao Carrinho
             </Button>
-            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground px-2 sm:px-3">
               ♡
             </Button>
           </CardFooter>
         </Card>
 
         {/* Produto 6 */}
-        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
-          <div className="h-48 bg-gradient-to-br from-pink-500/20 to-pink-500/5 flex items-center justify-center flex-shrink-0">
-            <div className="text-6xl">💻</div>
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
+          <div className="h-32 sm:h-48 bg-gradient-to-br from-pink-500/20 to-pink-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-4xl sm:text-6xl">💻</div>
           </div>
-          <CardHeader className="flex-shrink-0">
+          <CardHeader className="flex-shrink-0 pb-2 sm:pb-3">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg">Notebook Ultra</CardTitle>
-                <CardDescription>16GB RAM, SSD 512GB, Intel i7</CardDescription>
+                <CardTitle className="text-base sm:text-lg break-words">Notebook Ultra</CardTitle>
+                <CardDescription className="text-xs sm:text-sm break-words">16GB RAM, SSD 512GB, Intel i7</CardDescription>
               </div>
-              <StatusBadge status="active">Em Estoque</StatusBadge>
+              <StatusBadge status="active" className="flex-shrink-0 text-xs">Em Estoque</StatusBadge>
             </div>
           </CardHeader>
-          <CardContent className="space-y-3 flex-1">
+          <CardContent className="space-y-2 sm:space-y-3 flex-1 pb-2 sm:pb-3">
             <div className="flex items-center gap-2">
-              <Avatar fallback="⭐" size="sm" />
-              <div>
-                <p className="text-sm font-medium">4.9</p>
-                <p className="text-xs text-muted-foreground">123 avaliações</p>
+              <Avatar fallback="⭐" size="sm" className="flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-medium">4.9</p>
+                <p className="text-xs text-muted-foreground truncate">123 avaliações</p>
               </div>
             </div>
             <Separator />
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-foreground">R$ 4.999</p>
-                <p className="text-sm text-muted-foreground line-through">R$ 5.999</p>
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground break-words">R$ 4.999</p>
+                <p className="text-xs sm:text-sm text-muted-foreground line-through break-words">R$ 5.999</p>
               </div>
-              <Badge variant="high">-17%</Badge>
+              <Badge variant="high" className="flex-shrink-0 text-xs">-17%</Badge>
             </div>
           </CardContent>
-          <CardFooter className="flex gap-2 flex-shrink-0">
-            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+          <CardFooter className="flex gap-2 flex-shrink-0 pt-2 sm:pt-3">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground text-xs sm:text-sm">
               Adicionar ao Carrinho
             </Button>
-            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground px-2 sm:px-3">
               ♡
             </Button>
           </CardFooter>
@@ -734,62 +734,62 @@ export default function Home() {
       </div>
 
       {/* Carrinho de Compras */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
+        <div className="lg:col-span-2 w-full">
           <Card>
             <CardHeader>
-              <CardTitle>Carrinho de Compras</CardTitle>
-              <CardDescription>3 itens no carrinho</CardDescription>
+              <CardTitle className="text-base sm:text-lg break-words">Carrinho de Compras</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">3 itens no carrinho</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3 border rounded-lg bg-card">
+            <CardContent className="space-y-3 sm:space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-3 border rounded-lg bg-card w-full">
                 <Avatar fallback="📱" size="md" className="flex-shrink-0" />
                 <div className="flex-1 min-w-0 w-full sm:w-auto">
-                  <p className="text-sm font-medium truncate">Smartphone Pro Max</p>
+                  <p className="text-xs sm:text-sm font-medium break-words">Smartphone Pro Max</p>
                   <p className="text-xs text-muted-foreground">Quantidade: 1</p>
                 </div>
                 <div className="text-left sm:text-right w-full sm:w-auto">
-                  <p className="text-sm font-bold">R$ 2.499</p>
+                  <p className="text-xs sm:text-sm font-bold break-words">R$ 2.499</p>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3 border rounded-lg bg-card">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-3 border rounded-lg bg-card w-full">
                 <Avatar fallback="👕" size="md" className="flex-shrink-0" />
                 <div className="flex-1 min-w-0 w-full sm:w-auto">
-                  <p className="text-sm font-medium truncate">Camiseta Premium</p>
+                  <p className="text-xs sm:text-sm font-medium break-words">Camiseta Premium</p>
                   <p className="text-xs text-muted-foreground">Quantidade: 2</p>
                 </div>
                 <div className="text-left sm:text-right w-full sm:w-auto">
-                  <p className="text-sm font-bold">R$ 178</p>
+                  <p className="text-xs sm:text-sm font-bold break-words">R$ 178</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 w-full">
           <Card>
             <CardHeader>
-              <CardTitle>Resumo do Pedido</CardTitle>
+              <CardTitle className="text-base sm:text-lg break-words">Resumo do Pedido</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3 sm:space-y-4">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">Subtotal</p>
-                <p className="text-sm font-medium">R$ 2.677</p>
+                <p className="text-xs sm:text-sm text-muted-foreground break-words">Subtotal</p>
+                <p className="text-xs sm:text-sm font-medium break-words">R$ 2.677</p>
               </div>
               <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">Frete</p>
-                <p className="text-sm font-medium">R$ 15,00</p>
+                <p className="text-xs sm:text-sm text-muted-foreground break-words">Frete</p>
+                <p className="text-xs sm:text-sm font-medium break-words">R$ 15,00</p>
               </div>
               <Separator />
               <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold">Total</p>
-                <p className="text-2xl font-bold text-primary">R$ 2.692</p>
+                <p className="text-base sm:text-lg font-semibold break-words">Total</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-primary break-words">R$ 2.692</p>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-2">
-              <Button variant="primary" className="w-full !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+              <Button variant="primary" className="w-full !bg-primary hover:!bg-primary/90 !text-primary-foreground text-xs sm:text-sm">
                 Finalizar Compra
               </Button>
-              <Button variant="outline" className="w-full !border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+              <Button variant="outline" className="w-full !border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground text-xs sm:text-sm">
                 Continuar Comprando
               </Button>
             </CardFooter>
@@ -815,27 +815,27 @@ export default function Home() {
   }
 
   return (
-    <div className="space-y-10 md:space-y-12">
+    <div className="space-y-10 md:space-y-12 overflow-x-hidden">
       {/* Hero Section */}
-      <div className="text-center space-y-5 max-w-3xl mx-auto">
+      <div className="text-center space-y-5 max-w-3xl mx-auto px-4">
         <GitHubAnnouncement />
         
-        <h1 className="text-5xl md:text-6xl font-bold text-foreground tracking-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight break-words">
           {t.home.title}
         </h1>
         
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-2 break-words">
           {t.home.subtitle}
         </p>
         
-        <div className="flex items-center justify-center gap-4 pt-4 flex-wrap">
+        <div className="flex items-center justify-center gap-2 sm:gap-4 pt-4 flex-wrap px-4">
           <Link to="/docs">
-            <Button variant="primary" size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button variant="primary" size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm sm:text-base">
               {t.home.getStarted}
             </Button>
           </Link>
           <Link to="/components">
-            <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+            <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-sm sm:text-base">
               {t.home.viewComponents}
             </Button>
           </Link>
@@ -843,33 +843,33 @@ export default function Home() {
       </div>
 
       {/* Features Section - Movida para cima */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">{t.home.copyPaste}</CardTitle>
+            <CardTitle className="text-base sm:text-lg break-words">{t.home.copyPaste}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground break-words">
               {t.home.copyPasteDesc}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">{t.home.fullyCustomizable}</CardTitle>
+            <CardTitle className="text-base sm:text-lg break-words">{t.home.fullyCustomizable}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground break-words">
               {t.home.fullyCustomizableDesc}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">{t.home.typescript}</CardTitle>
+            <CardTitle className="text-base sm:text-lg break-words">{t.home.typescript}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground break-words">
               {t.home.typescriptDesc}
             </p>
           </CardContent>
@@ -877,15 +877,15 @@ export default function Home() {
       </div>
 
       {/* Component Examples Section */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center gap-1 border-b border-border">
+      <div className="space-y-6 px-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-1 border-b border-border overflow-x-auto w-full sm:w-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`
-                  px-4 py-2 text-sm font-medium transition-colors
+                  px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-colors whitespace-nowrap
                   border-b-2 -mb-px
                   ${
                     activeTab === tab.id
@@ -898,8 +898,8 @@ export default function Home() {
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">Tema: {currentThemeName}</span>
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">Tema: {currentThemeName}</span>
             <ThemeSelector currentTheme={currentTheme} onThemeChange={setCurrentTheme} />
           </div>
         </div>
