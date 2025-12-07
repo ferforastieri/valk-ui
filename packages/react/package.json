@@ -1,6 +1,6 @@
 {
   "name": "ui-valk",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Valk UI - Modern React Components Library with TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
