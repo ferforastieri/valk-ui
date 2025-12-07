@@ -243,7 +243,7 @@ export default function Changelog() {
       date: '2025-01-15',
       type: 'major',
       changes: [
-        { type: 'added', text: 'Componente Sidebar adicionado' },
+        { type: 'added', text: 'Componente Navigation híbrido (desktop + mobile) adicionado' },
         { type: 'added', text: 'Componente ThemeToggle adicionado' },
         { type: 'added', text: 'Suporte completo a dark mode' },
         { type: 'fixed', text: 'Correção no componente Select' },

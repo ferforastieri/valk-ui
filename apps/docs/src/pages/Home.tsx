@@ -31,11 +31,30 @@ export default function Home() {
   const [selectValue, setSelectValue] = useState<string[]>([])
   const [checkboxChecked, setCheckboxChecked] = useState(false)
   const [toggleChecked, setToggleChecked] = useState(false)
+  
+  // Estados para os checkboxes das tarefas
+  const [taskCheckboxes, setTaskCheckboxes] = useState({
+    todo1: false,
+    todo2: false,
+    todo3: false,
+    progress1: true,
+    progress2: true,
+    done1: true,
+    done2: true,
+  })
+  
+  const handleTaskCheckboxChange = (taskId: keyof typeof taskCheckboxes) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskCheckboxes(prev => ({
+      ...prev,
+      [taskId]: e.target.checked
+    }))
+  }
 
   const tabs = [
     { id: 'examples', label: t.home.examples },
     { id: 'dashboard', label: t.home.dashboard },
     { id: 'tasks', label: t.home.tasks },
+    { id: 'marketplace', label: t.home.marketplace },
   ]
 
   const selectOptions: SelectOption[] = [
@@ -146,10 +165,10 @@ export default function Home() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex flex-wrap gap-2">
-              <StatusBadge status="active" className="!border-primary/60 font-semibold">Ativo</StatusBadge>
-            <StatusBadge status="completed" className="!border-primary/60 font-semibold">Concluído</StatusBadge>
-            <StatusBadge status="pending" className="!border-primary/60 font-semibold">Pendente</StatusBadge>
-            <StatusBadge status="error" className="!border-primary/60 font-semibold">Erro</StatusBadge>
+            <StatusBadge status="active">Ativo</StatusBadge>
+            <StatusBadge status="completed">Concluído</StatusBadge>
+            <StatusBadge status="pending">Pendente</StatusBadge>
+            <StatusBadge status="error">Erro</StatusBadge>
           </div>
           <div className="flex flex-wrap gap-2">
             <Badge variant="default" className="!bg-primary !text-primary-foreground !border-primary">Default</Badge>
@@ -231,7 +250,7 @@ export default function Home() {
                   <p className="text-xs text-muted-foreground">Há 5 minutos</p>
                 </div>
               </div>
-              <StatusBadge status="active" className="!border-primary/60 font-semibold">Ativo</StatusBadge>
+              <StatusBadge status="active">Ativo</StatusBadge>
             </div>
             <Separator />
             <div className="flex items-center justify-between">
@@ -242,7 +261,7 @@ export default function Home() {
                   <p className="text-xs text-muted-foreground">Há 15 minutos</p>
                 </div>
               </div>
-              <StatusBadge status="completed" className="!border-primary/60 font-semibold">Concluído</StatusBadge>
+              <StatusBadge status="completed">Concluído</StatusBadge>
             </div>
             <Separator />
             <div className="flex items-center justify-between">
@@ -253,7 +272,7 @@ export default function Home() {
                   <p className="text-xs text-muted-foreground">Há 1 hora</p>
                 </div>
               </div>
-              <StatusBadge status="pending" className="!border-primary/60 font-semibold">Pendente</StatusBadge>
+              <StatusBadge status="pending">Pendente</StatusBadge>
             </div>
           </CardContent>
         </Card>
@@ -303,40 +322,40 @@ export default function Home() {
             <div className="p-3 border rounded-lg bg-card">
               <div className="flex items-start gap-3">
                 <Checkbox 
-                  checked={false}
-                  onChange={() => {}}
+                  checked={taskCheckboxes.todo1}
+                  onChange={handleTaskCheckboxChange('todo1')}
                 />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Revisar design</p>
                   <p className="text-xs text-muted-foreground">Prioridade alta</p>
                 </div>
-                <Badge variant="outline" className="!border-primary !text-primary">Alta</Badge>
+                <Badge variant="high">Alta</Badge>
               </div>
             </div>
             <div className="p-3 border rounded-lg bg-card">
               <div className="flex items-start gap-3">
                 <Checkbox 
-                  checked={false}
-                  onChange={() => {}}
+                  checked={taskCheckboxes.todo2}
+                  onChange={handleTaskCheckboxChange('todo2')}
                 />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Atualizar documentação</p>
                   <p className="text-xs text-muted-foreground">Prioridade média</p>
                 </div>
-                <Badge variant="secondary">Média</Badge>
+                <Badge variant="medium">Média</Badge>
               </div>
             </div>
             <div className="p-3 border rounded-lg bg-card">
               <div className="flex items-start gap-3">
                 <Checkbox 
-                  checked={false}
-                  onChange={() => {}}
+                  checked={taskCheckboxes.todo3}
+                  onChange={handleTaskCheckboxChange('todo3')}
                 />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Reunião com equipe</p>
                   <p className="text-xs text-muted-foreground">Prioridade baixa</p>
                 </div>
-                <Badge variant="outline" className="!border-primary !text-primary">Baixa</Badge>
+                <Badge variant="low">Baixa</Badge>
               </div>
             </div>
           </CardContent>
@@ -351,8 +370,8 @@ export default function Home() {
             <div className="p-3 border rounded-lg bg-card border-primary/20">
               <div className="flex items-start gap-3">
                 <Checkbox 
-                  checked={true}
-                  onChange={() => {}}
+                  checked={taskCheckboxes.progress1}
+                  onChange={handleTaskCheckboxChange('progress1')}
                 />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Implementar feature</p>
@@ -364,8 +383,8 @@ export default function Home() {
             <div className="p-3 border rounded-lg bg-card border-primary/20">
               <div className="flex items-start gap-3">
                 <Checkbox 
-                  checked={true}
-                  onChange={() => {}}
+                  checked={taskCheckboxes.progress2}
+                  onChange={handleTaskCheckboxChange('progress2')}
                 />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Testes unitários</p>
@@ -386,27 +405,27 @@ export default function Home() {
             <div className="p-3 border rounded-lg bg-card opacity-60">
               <div className="flex items-start gap-3">
                 <Checkbox 
-                  checked={true}
-                  onChange={() => {}}
+                  checked={taskCheckboxes.done1}
+                  onChange={handleTaskCheckboxChange('done1')}
                 />
                 <div className="flex-1">
                   <p className="text-sm font-medium line-through">Setup do projeto</p>
                   <p className="text-xs text-muted-foreground">Concluído há 2 dias</p>
                 </div>
-                <StatusBadge status="completed" className="!border-primary/60 font-semibold">✓</StatusBadge>
+                <StatusBadge status="completed">✓</StatusBadge>
               </div>
             </div>
             <div className="p-3 border rounded-lg bg-card opacity-60">
               <div className="flex items-start gap-3">
                 <Checkbox 
-                  checked={true}
-                  onChange={() => {}}
+                  checked={taskCheckboxes.done2}
+                  onChange={handleTaskCheckboxChange('done2')}
                 />
                 <div className="flex-1">
                   <p className="text-sm font-medium line-through">Configurar CI/CD</p>
                   <p className="text-xs text-muted-foreground">Concluído há 1 semana</p>
                 </div>
-                <StatusBadge status="completed" className="!border-primary/60 font-semibold">✓</StatusBadge>
+                <StatusBadge status="completed">✓</StatusBadge>
               </div>
             </div>
           </CardContent>
@@ -440,6 +459,346 @@ export default function Home() {
     </div>
   )
 
+  const renderMarketplaceContent = () => (
+    <div className="space-y-6">
+      {/* Header com busca e filtros */}
+      <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between">
+        <div className="flex-1 w-full sm:max-w-md">
+          <Input 
+            placeholder="Buscar produtos..." 
+            className="w-full focus:!ring-primary"
+          />
+        </div>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Select
+            options={[
+              { value: 'all', label: 'Todas as categorias' },
+              { value: 'electronics', label: 'Eletrônicos' },
+              { value: 'clothing', label: 'Roupas' },
+              { value: 'books', label: 'Livros' },
+            ]}
+            value={selectValue}
+            onChange={(value: string | string[]) => setSelectValue(Array.isArray(value) ? value : [value])}
+            className="flex-1 sm:flex-none sm:w-48 [&_div.flex]:focus:!ring-primary"
+          />
+        </div>
+      </div>
+
+      {/* Grid de Produtos */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {/* Produto 1 */}
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+          <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-6xl">📱</div>
+          </div>
+          <CardHeader className="flex-shrink-0">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg">Smartphone Pro Max</CardTitle>
+                <CardDescription>128GB, Tela 6.7", 5G</CardDescription>
+              </div>
+              <StatusBadge status="active">Em Estoque</StatusBadge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3 flex-1">
+            <div className="flex items-center gap-2">
+              <Avatar fallback="⭐" size="sm" />
+              <div>
+                <p className="text-sm font-medium">4.8</p>
+                <p className="text-xs text-muted-foreground">234 avaliações</p>
+              </div>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold text-foreground">R$ 2.499</p>
+                <p className="text-sm text-muted-foreground line-through">R$ 2.999</p>
+              </div>
+              <Badge variant="high">-17%</Badge>
+            </div>
+          </CardContent>
+          <CardFooter className="flex gap-2 flex-shrink-0">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+              Adicionar ao Carrinho
+            </Button>
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+              ♡
+            </Button>
+          </CardFooter>
+        </Card>
+
+        {/* Produto 2 */}
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+          <div className="h-48 bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-6xl">👕</div>
+          </div>
+          <CardHeader className="flex-shrink-0">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg">Camiseta Premium</CardTitle>
+                <CardDescription>Algodão 100%, Múltiplas cores</CardDescription>
+              </div>
+              <StatusBadge status="active">Em Estoque</StatusBadge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3 flex-1">
+            <div className="flex items-center gap-2">
+              <Avatar fallback="⭐" size="sm" />
+              <div>
+                <p className="text-sm font-medium">4.6</p>
+                <p className="text-xs text-muted-foreground">89 avaliações</p>
+              </div>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold text-foreground">R$ 89</p>
+                <p className="text-sm text-muted-foreground">Preço único</p>
+              </div>
+              <Badge variant="medium">Popular</Badge>
+            </div>
+          </CardContent>
+          <CardFooter className="flex gap-2 flex-shrink-0">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+              Adicionar ao Carrinho
+            </Button>
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+              ♡
+            </Button>
+          </CardFooter>
+        </Card>
+
+        {/* Produto 3 */}
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+          <div className="h-48 bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-6xl">📚</div>
+          </div>
+          <CardHeader className="flex-shrink-0">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg">Livro: Design Systems</CardTitle>
+                <CardDescription>Edição especial, 400 páginas</CardDescription>
+              </div>
+              <StatusBadge status="pending">Últimas Unidades</StatusBadge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3 flex-1">
+            <div className="flex items-center gap-2">
+              <Avatar fallback="⭐" size="sm" />
+              <div>
+                <p className="text-sm font-medium">4.9</p>
+                <p className="text-xs text-muted-foreground">156 avaliações</p>
+              </div>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold text-foreground">R$ 59</p>
+                <p className="text-sm text-muted-foreground">Edição limitada</p>
+              </div>
+              <Badge variant="low">Novo</Badge>
+            </div>
+          </CardContent>
+          <CardFooter className="flex gap-2 flex-shrink-0">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+              Adicionar ao Carrinho
+            </Button>
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+              ♡
+            </Button>
+          </CardFooter>
+        </Card>
+
+        {/* Produto 4 */}
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+          <div className="h-48 bg-gradient-to-br from-blue-500/20 to-blue-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-6xl">🎧</div>
+          </div>
+          <CardHeader className="flex-shrink-0">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg">Fones Bluetooth</CardTitle>
+                <CardDescription>Cancelamento de ruído, 30h bateria</CardDescription>
+              </div>
+              <StatusBadge status="active">Em Estoque</StatusBadge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3 flex-1">
+            <div className="flex items-center gap-2">
+              <Avatar fallback="⭐" size="sm" />
+              <div>
+                <p className="text-sm font-medium">4.7</p>
+                <p className="text-xs text-muted-foreground">312 avaliações</p>
+              </div>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold text-foreground">R$ 349</p>
+                <p className="text-sm text-muted-foreground line-through">R$ 449</p>
+              </div>
+              <Badge variant="high">-22%</Badge>
+            </div>
+          </CardContent>
+          <CardFooter className="flex gap-2 flex-shrink-0">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+              Adicionar ao Carrinho
+            </Button>
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+              ♡
+            </Button>
+          </CardFooter>
+        </Card>
+
+        {/* Produto 5 */}
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+          <div className="h-48 bg-gradient-to-br from-orange-500/20 to-orange-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-6xl">⌚</div>
+          </div>
+          <CardHeader className="flex-shrink-0">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg">Smartwatch Pro</CardTitle>
+                <CardDescription>Monitor de saúde, GPS, Resistente à água</CardDescription>
+              </div>
+              <StatusBadge status="completed">Mais Vendido</StatusBadge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3 flex-1">
+            <div className="flex items-center gap-2">
+              <Avatar fallback="⭐" size="sm" />
+              <div>
+                <p className="text-sm font-medium">4.8</p>
+                <p className="text-xs text-muted-foreground">567 avaliações</p>
+              </div>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold text-foreground">R$ 899</p>
+                <p className="text-sm text-muted-foreground">Preço especial</p>
+              </div>
+              <Badge variant="medium">Destaque</Badge>
+            </div>
+          </CardContent>
+          <CardFooter className="flex gap-2 flex-shrink-0">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+              Adicionar ao Carrinho
+            </Button>
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+              ♡
+            </Button>
+          </CardFooter>
+        </Card>
+
+        {/* Produto 6 */}
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
+          <div className="h-48 bg-gradient-to-br from-pink-500/20 to-pink-500/5 flex items-center justify-center flex-shrink-0">
+            <div className="text-6xl">💻</div>
+          </div>
+          <CardHeader className="flex-shrink-0">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg">Notebook Ultra</CardTitle>
+                <CardDescription>16GB RAM, SSD 512GB, Intel i7</CardDescription>
+              </div>
+              <StatusBadge status="active">Em Estoque</StatusBadge>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3 flex-1">
+            <div className="flex items-center gap-2">
+              <Avatar fallback="⭐" size="sm" />
+              <div>
+                <p className="text-sm font-medium">4.9</p>
+                <p className="text-xs text-muted-foreground">123 avaliações</p>
+              </div>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-2xl font-bold text-foreground">R$ 4.999</p>
+                <p className="text-sm text-muted-foreground line-through">R$ 5.999</p>
+              </div>
+              <Badge variant="high">-17%</Badge>
+            </div>
+          </CardContent>
+          <CardFooter className="flex gap-2 flex-shrink-0">
+            <Button variant="primary" className="flex-1 !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+              Adicionar ao Carrinho
+            </Button>
+            <Button variant="outline" className="!border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+              ♡
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+
+      {/* Carrinho de Compras */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Carrinho de Compras</CardTitle>
+              <CardDescription>3 itens no carrinho</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3 border rounded-lg bg-card">
+                <Avatar fallback="📱" size="md" className="flex-shrink-0" />
+                <div className="flex-1 min-w-0 w-full sm:w-auto">
+                  <p className="text-sm font-medium truncate">Smartphone Pro Max</p>
+                  <p className="text-xs text-muted-foreground">Quantidade: 1</p>
+                </div>
+                <div className="text-left sm:text-right w-full sm:w-auto">
+                  <p className="text-sm font-bold">R$ 2.499</p>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3 border rounded-lg bg-card">
+                <Avatar fallback="👕" size="md" className="flex-shrink-0" />
+                <div className="flex-1 min-w-0 w-full sm:w-auto">
+                  <p className="text-sm font-medium truncate">Camiseta Premium</p>
+                  <p className="text-xs text-muted-foreground">Quantidade: 2</p>
+                </div>
+                <div className="text-left sm:text-right w-full sm:w-auto">
+                  <p className="text-sm font-bold">R$ 178</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="lg:col-span-1">
+          <Card>
+            <CardHeader>
+              <CardTitle>Resumo do Pedido</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">Subtotal</p>
+                <p className="text-sm font-medium">R$ 2.677</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">Frete</p>
+                <p className="text-sm font-medium">R$ 15,00</p>
+              </div>
+              <Separator />
+              <div className="flex items-center justify-between">
+                <p className="text-lg font-semibold">Total</p>
+                <p className="text-2xl font-bold text-primary">R$ 2.692</p>
+              </div>
+            </CardContent>
+            <CardFooter className="flex flex-col gap-2">
+              <Button variant="primary" className="w-full !bg-primary hover:!bg-primary/90 !text-primary-foreground">
+                Finalizar Compra
+              </Button>
+              <Button variant="outline" className="w-full !border-primary !text-primary hover:!bg-primary hover:!text-primary-foreground">
+                Continuar Comprando
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+    </div>
+  )
+
   const renderContent = () => {
     switch (activeTab) {
       case 'examples':
@@ -448,6 +807,8 @@ export default function Home() {
         return renderDashboardContent()
       case 'tasks':
         return renderTasksContent()
+      case 'marketplace':
+        return renderMarketplaceContent()
       default:
         return renderExamplesContent()
     }

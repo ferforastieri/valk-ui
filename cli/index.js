@@ -155,7 +155,6 @@ const componentsStructure = {
     { value: 'avatar', category: 'layout' },
     { value: 'metric-card', category: 'layout' },
     { value: 'paginated-table', category: 'layout' },
-    { value: 'sidebar', category: 'layout' },
     { value: 'docs-sidebar', category: 'layout' },
     { value: 'navigation', category: 'layout' },
     { value: 'tabs', category: 'layout' },

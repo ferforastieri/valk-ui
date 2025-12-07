@@ -16,6 +16,7 @@ export interface Translations {
     examples: string
     dashboard: string
     tasks: string
+    marketplace: string
     theme: string
     paymentMethod: string
     paymentDescription: string
@@ -117,6 +118,7 @@ export const translations: Record<Language, Translations> = {
       examples: 'Exemplos',
       dashboard: 'Dashboard',
       tasks: 'Tarefas',
+      marketplace: 'Marketplace',
       theme: 'Tema: Neutro',
       paymentMethod: 'Método de Pagamento',
       paymentDescription: 'Todas as transações são seguras e criptografadas',
@@ -216,6 +218,7 @@ export const translations: Record<Language, Translations> = {
       examples: 'Examples',
       dashboard: 'Dashboard',
       tasks: 'Tasks',
+      marketplace: 'Marketplace',
       theme: 'Theme: Neutral',
       paymentMethod: 'Payment Method',
       paymentDescription: 'All transactions are secure and encrypted',
@@ -315,6 +318,7 @@ export const translations: Record<Language, Translations> = {
       examples: 'Ejemplos',
       dashboard: 'Dashboard',
       tasks: 'Tareas',
+      marketplace: 'Marketplace',
       theme: 'Tema: Neutral',
       paymentMethod: 'Método de Pago',
       paymentDescription: 'Todas las transacciones son seguras y encriptadas',

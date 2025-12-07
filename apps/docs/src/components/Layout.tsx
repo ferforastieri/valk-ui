@@ -1,14 +1,11 @@
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, Link as RouterLink } from 'react-router-dom'
-import { Dialog, Transition } from '@headlessui/react'
 import { Navigation, ThemeToggle } from '@/components'
 import { cn } from '@/lib'
 import { useTranslation } from '../contexts/TranslationContext'
 import { useCommandPalette } from './CommandPalette'
 import { 
   MagnifyingGlassIcon,
-  Bars3Icon,
-  XMarkIcon,
   DocumentTextIcon,
   CubeIcon,
   SwatchIcon,
@@ -197,175 +194,84 @@ function LayoutContent({ children }: LayoutProps) {
     <div className="min-h-screen bg-background flex flex-col">
       <Navigation
         items={navigationItems}
-        logo={
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              className="md:hidden flex items-center justify-center w-9 h-9 rounded-md hover:bg-muted transition-colors"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open navigation menu"
-            >
-              <Bars3Icon className="h-5 w-5 text-foreground" />
-            </button>
-            {logo}
-          </div>
-        }
+        logo={logo}
         rightContent={rightContent}
         currentPath={location.pathname}
         LinkComponent={RouterLink}
-      />
-
-      <Transition.Root show={mobileMenuOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50 md:hidden" onClose={setMobileMenuOpen}>
-          <Transition.Child
-            as={Fragment}
-            enter="transition-opacity ease-linear duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-300"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 z-50 flex items-start justify-center pt-16">
-            <Transition.Child
-              as={Fragment}
-              enter="transition ease-out duration-300 transform"
-              enterFrom="-translate-y-full opacity-0"
-              enterTo="translate-y-0 opacity-100"
-              leave="transition ease-in duration-200 transform"
-              leaveFrom="translate-y-0 opacity-100"
-              leaveTo="-translate-y-full opacity-0"
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        mobileMenuFooter={
+          <>
+            <button
+              onClick={() => {
+                setCommandOpen(true)
+                setMobileMenuOpen(false)
+              }}
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-muted-foreground rounded-xl border border-border bg-background hover:bg-muted hover:text-foreground transition-all"
             >
-              <Dialog.Panel 
-                className="relative w-full max-w-md mx-4 bg-background border border-border rounded-2xl shadow-2xl overflow-hidden"
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
-              >
-                <div className="flex items-center justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing">
-                  <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
-                </div>
-
-                <div className="flex items-center justify-between px-6 pb-4 border-b border-border">
-                  <div className="flex items-center gap-3">
-                    <img src="/logo.png" alt="Valk UI" className="h-8 w-8" />
-                    <span className="text-lg font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
-                  </div>
-                  <button
-                    type="button"
-                    className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-muted transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                    aria-label="Close navigation menu"
-                  >
-                    <XMarkIcon className="h-5 w-5 text-foreground" />
-                  </button>
-                </div>
-
-                <nav className="px-4 py-4">
-                  <div className="space-y-1">
-                    {navigationItems.map((item) => {
-                      const isActive = location.pathname === item.href || (item.href !== '/' && location.pathname.startsWith(item.href))
-                      const Icon = item.icon || HomeIcon
-                      return (
-                        <RouterLink
-                          key={item.href}
-                          to={item.href}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className={cn(
-                            'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200',
-                            isActive
-                              ? 'text-foreground bg-accent shadow-sm'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
-                          )}
-                        >
-                          <Icon className={cn(
-                            'h-5 w-5 flex-shrink-0',
-                            isActive ? 'text-foreground' : 'text-muted-foreground'
-                          )} />
-                          <span className="text-sm font-medium">{item.name}</span>
-                          {isActive && (
-                            <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground" />
-                          )}
-                        </RouterLink>
-                      )
-                    })}
-                  </div>
-                </nav>
-
-                <div className="border-t border-border px-4 py-4 space-y-3 bg-muted/30">
-                  <button
-                    onClick={() => {
-                      setCommandOpen(true)
-                      setMobileMenuOpen(false)
-                    }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-muted-foreground rounded-xl border border-border bg-background hover:bg-muted hover:text-foreground transition-all"
-                  >
-                    <MagnifyingGlassIcon className="h-5 w-5" />
-                    <span>{t.nav.search}</span>
-                    <kbd className="ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
-                      <span className="text-xs">⌘</span>K
-                    </kbd>
-                  </button>
-                  <div className="flex items-center gap-2">
-                    <div className="relative flex-1">
-                      <button
-                        onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                        className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-medium rounded-xl border border-border bg-background hover:bg-muted transition-colors"
-                        aria-label="Select language"
-                      >
-                        <span className="text-lg">{currentLanguage.flag}</span>
-                        <span className="text-foreground">{currentLanguage.name}</span>
-                      </button>
-                      {showLanguageMenu && (
-                        <>
-                          <div
-                            className="fixed inset-0 z-10"
-                            onClick={() => setShowLanguageMenu(false)}
-                          />
-                          <div className="absolute bottom-full left-0 mb-2 w-full bg-popover border border-border rounded-xl shadow-lg z-20 overflow-hidden">
-                            {languages.map((lang) => (
-                              <button
-                                key={lang.code}
-                                onClick={() => {
-                                  setLanguage(lang.code)
-                                  setShowLanguageMenu(false)
-                                }}
-                                className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center gap-3 ${
-                                  language === lang.code 
-                                    ? 'bg-accent text-accent-foreground font-medium' 
-                                    : 'text-popover-foreground hover:bg-accent hover:text-accent-foreground'
-                                }`}
-                              >
-                                <span className="text-lg">{lang.flag}</span>
-                                <span>{lang.name}</span>
-                                {language === lang.code && (
-                                  <svg className="ml-auto h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                  </svg>
-                                )}
-                              </button>
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <ThemeToggle
-                      theme={isDark ? 'dark' : 'light'}
-                      onToggle={toggleTheme}
-                      variant="ghost"
-                      size="md"
-                      className="border border-border rounded-xl"
+              <MagnifyingGlassIcon className="h-5 w-5" />
+              <span>{t.nav.search}</span>
+              <kbd className="ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </button>
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <button
+                  onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-medium rounded-xl border border-border bg-background hover:bg-muted transition-colors"
+                  aria-label="Select language"
+                >
+                  <span className="text-lg">{currentLanguage.flag}</span>
+                  <span className="text-foreground">{currentLanguage.name}</span>
+                </button>
+                {showLanguageMenu && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-10"
+                      onClick={() => setShowLanguageMenu(false)}
                     />
-                  </div>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition.Root>
+                    <div className="absolute bottom-full left-0 mb-2 w-full bg-popover border border-border rounded-xl shadow-lg z-20 overflow-hidden">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            setLanguage(lang.code)
+                            setShowLanguageMenu(false)
+                          }}
+                          className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center gap-3 ${
+                            language === lang.code 
+                              ? 'bg-accent text-accent-foreground font-medium' 
+                              : 'text-popover-foreground hover:bg-accent hover:text-accent-foreground'
+                          }`}
+                        >
+                          <span className="text-lg">{lang.flag}</span>
+                          <span>{lang.name}</span>
+                          {language === lang.code && (
+                            <svg className="ml-auto h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+              <ThemeToggle
+                theme={isDark ? 'dark' : 'light'}
+                onToggle={toggleTheme}
+                variant="ghost"
+                size="md"
+                className="border border-border rounded-xl"
+              />
+            </div>
+          </>
+        }
+      />
 
       <main className={cn(
         "flex-1",
