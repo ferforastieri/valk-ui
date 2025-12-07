@@ -308,7 +308,7 @@ async function main() {
     const possibleSourceDirs = [
       path.join(__dirname, '..', 'src', 'components'),
       path.join(__dirname, '..', 'packages', technology, 'src', 'components'),
-      path.join(process.cwd(), 'node_modules', 'valk-ui', 'src', 'components'),
+      path.join(process.cwd(), 'node_modules', 'ui-valk', 'src', 'components'),
       path.join(__dirname, '..', 'node_modules', 'valk-ui', 'packages', technology, 'src', 'components'),
       path.join(process.cwd(), 'node_modules', 'valk-ui', 'packages', technology, 'src', 'components')
     ];
@@ -332,7 +332,7 @@ async function main() {
     const possibleUtilsDirs = [
       path.join(__dirname, '..', 'src', 'lib'),
       path.join(__dirname, '..', 'packages', technology, 'src', 'lib'),
-      path.join(process.cwd(), 'node_modules', 'valk-ui', 'src', 'lib'),
+      path.join(process.cwd(), 'node_modules', 'ui-valk', 'src', 'lib'),
       path.join(__dirname, '..', 'node_modules', 'valk-ui', 'packages', technology, 'src', 'lib'),
       path.join(process.cwd(), 'node_modules', 'valk-ui', 'packages', technology, 'src', 'lib')
     ];
