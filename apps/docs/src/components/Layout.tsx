@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import { useLocation, Link as RouterLink } from 'react-router-dom'
 import { Navigation, ThemeToggle } from '@/components'
 import { cn } from '@/lib'
-import { useTranslation } from '../contexts/TranslationContext'
+import { useTranslation } from 'react-i18next'
 import { useCommandPalette } from './CommandPalette'
 import { 
   MagnifyingGlassIcon,
   DocumentTextIcon,
   CubeIcon,
-  SwatchIcon,
+  CodeBracketIcon,
   ClockIcon,
   HomeIcon,
 } from '@heroicons/react/24/outline'
@@ -24,8 +24,14 @@ function LayoutContent({ children }: LayoutProps) {
   const [touchStart, setTouchStart] = useState<{ y: number } | null>(null)
   const [touchEnd, setTouchEnd] = useState<{ y: number } | null>(null)
   const location = useLocation()
-  const { t, language, setLanguage } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { setOpen: setCommandOpen } = useCommandPalette()
+  
+  const language = (i18n.language || 'pt') as 'pt' | 'en' | 'es'
+  const setLanguage = (lang: 'pt' | 'en' | 'es') => {
+    i18n.changeLanguage(lang)
+    localStorage.setItem('language', lang)
+  }
 
   const minSwipeDistance = 50
 
@@ -85,22 +91,22 @@ function LayoutContent({ children }: LayoutProps) {
       icon: HomeIcon,
     },
     { 
-      name: t.nav.docs, 
+      name: t('nav.docs'), 
       href: '/docs',
       icon: DocumentTextIcon,
     },
     { 
-      name: t.nav.components, 
+      name: t('nav.components'), 
       href: '/components',
       icon: CubeIcon,
     },
     { 
-      name: 'Colors', 
-      href: '/colors',
-      icon: SwatchIcon,
+      name: t('nav.playground'), 
+      href: '/playground',
+      icon: CodeBracketIcon,
     },
     { 
-      name: t.nav.changelog, 
+      name: t('nav.changelog'), 
       href: '/changelog',
       icon: ClockIcon,
     },
@@ -131,7 +137,7 @@ function LayoutContent({ children }: LayoutProps) {
           <div className="absolute left-3 flex items-center pointer-events-none">
             <MagnifyingGlassIcon className="h-4 w-4" />
           </div>
-          <span className="pl-9 pr-2 flex-1 text-left">{t.nav.search}</span>
+          <span className="pl-9 pr-2 flex-1 text-left">{t('nav.search')}</span>
           <kbd className="hidden lg:flex mr-2 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
             <span className="text-xs">⌘</span>K
           </kbd>
@@ -213,7 +219,7 @@ function LayoutContent({ children }: LayoutProps) {
               className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-muted-foreground rounded-xl border border-border bg-background hover:bg-muted hover:text-foreground transition-all"
             >
               <MagnifyingGlassIcon className="h-5 w-5" />
-              <span>{t.nav.search}</span>
+              <span>{t('nav.search')}</span>
               <kbd className="ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
                 <span className="text-xs">⌘</span>K
               </kbd>

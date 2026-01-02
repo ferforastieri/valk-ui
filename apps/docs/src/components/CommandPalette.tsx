@@ -7,7 +7,7 @@ import {
   CodeBracketIcon,
   DocumentTextIcon,
 } from '@heroicons/react/24/outline'
-import { useTranslation } from '../contexts/TranslationContext'
+import { useTranslation } from 'react-i18next'
 
 const CommandPaletteContext = createContext<{
   open: boolean
@@ -61,7 +61,7 @@ function CommandPaletteContent() {
     },
     {
       id: 'docs',
-      title: t.nav.docs,
+      title: t('nav.docs'),
       description: 'View documentation',
       icon: <BookOpenIcon className="h-4 w-4" />,
       keywords: ['docs', 'documentation', 'documentação'],
@@ -72,7 +72,7 @@ function CommandPaletteContent() {
     },
     {
       id: 'components',
-      title: t.nav.components,
+      title: t('nav.components'),
       description: 'Browse components',
       icon: <CodeBracketIcon className="h-4 w-4" />,
       keywords: ['components', 'componentes'],
@@ -83,12 +83,23 @@ function CommandPaletteContent() {
     },
     {
       id: 'changelog',
-      title: t.nav.changelog,
+      title: t('nav.changelog'),
       description: 'View changelog',
       icon: <DocumentTextIcon className="h-4 w-4" />,
       keywords: ['changelog', 'changes', 'mudanças'],
       onSelect: () => {
         navigate('/changelog')
+        setOpen(false)
+      },
+    },
+    {
+      id: 'playground',
+      title: t('nav.playground'),
+      description: 'Test components in real-time',
+      icon: <CodeBracketIcon className="h-4 w-4" />,
+      keywords: ['playground', 'sandbox', 'test', 'experiment', 'experimento'],
+      onSelect: () => {
+        navigate('/playground')
         setOpen(false)
       },
     },
@@ -102,7 +113,7 @@ function CommandPaletteContent() {
       <div className="relative z-50 w-full max-w-lg">
         <Command
           items={commandItems}
-          placeholder={t.nav.search}
+          placeholder={t('nav.search')}
           onSelect={(item) => item.onSelect?.()}
         />
       </div>

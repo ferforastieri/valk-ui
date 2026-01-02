@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { StatusBadge, MetricCard } from '@/components'
 import { SparklesIcon } from '@heroicons/react/24/outline'
-import { useTranslation } from '../contexts/TranslationContext'
+import { useTranslation } from 'react-i18next'
 
 interface GitHubRelease {
   tag_name: string
@@ -105,7 +105,7 @@ export default function Changelog() {
           }
 
           setVersions(getDefaultVersions())
-          setError(t.changelog.noReleasesFound + '. ' + t.changelog.usingDefault)
+          setError(t('changelog.noReleasesFound') + '. ' + t('changelog.usingDefault'))
         } else {
           const sortedVersions = formattedVersions.sort((a, b) => {
             const aParts = a.version.split('.').map(Number)
@@ -272,11 +272,11 @@ export default function Changelog() {
 
   const getBadgeLabel = (type: string) => {
     switch (type) {
-      case 'added': return t.changelog.added
-      case 'fixed': return t.changelog.fixed
-      case 'improved': return t.changelog.improved
-      case 'changed': return t.changelog.changed || 'Changed'
-      case 'removed': return t.changelog.removed || 'Removed'
+      case 'added': return t('changelog.added')
+      case 'fixed': return t('changelog.fixed')
+      case 'improved': return t('changelog.improved')
+      case 'changed': return t('changelog.changed') || 'Changed'
+      case 'removed': return t('changelog.removed') || 'Removed'
       default: return type
     }
   }
@@ -290,11 +290,11 @@ export default function Changelog() {
     return (
       <div className="space-y-8">
         <div className="mb-6">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t.changelog.title}</h1>
-          <p className="text-base md:text-lg text-muted-foreground">{t.changelog.subtitle}</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t('changelog.title')}</h1>
+          <p className="text-base md:text-lg text-muted-foreground">{t('changelog.subtitle')}</p>
         </div>
         <div className="flex items-center justify-center py-12">
-          <div className="text-muted-foreground">{t.changelog.loading}</div>
+          <div className="text-muted-foreground">{t('changelog.loading')}</div>
         </div>
       </div>
     )
@@ -303,34 +303,34 @@ export default function Changelog() {
   return (
     <div className="space-y-8">
       <div className="mb-6">
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t.changelog.title}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t('changelog.title')}</h1>
         <p className="text-base md:text-lg text-muted-foreground">
-          {t.changelog.subtitle}
+          {t('changelog.subtitle')}
         </p>
         {error && (
           <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-md text-sm text-yellow-600 dark:text-yellow-400">
-            {error} {t.changelog.usingDefault}
+            {error} {t('changelog.usingDefault')}
           </div>
         )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <MetricCard
-          title={t.changelog.currentVersion}
+          title={t('changelog.currentVersion')}
           value={versions[0]?.version || '1.0.0'}
-          subtitle={t.changelog.stableRelease}
+          subtitle={t('changelog.stableRelease')}
           variant="blue"
         />
         <MetricCard
-          title={t.changelog.totalVersions}
+          title={t('changelog.totalVersions')}
           value={versions.length.toString()}
-          subtitle={t.changelog.releases}
+          subtitle={t('changelog.releases')}
           variant="success"
         />
         <MetricCard
-          title={t.changelog.lastUpdate}
+          title={t('changelog.lastUpdate')}
           value={versions[0] ? formatDate(versions[0].date) : 'N/A'}
-          subtitle={t.changelog.lastVersion}
+          subtitle={t('changelog.lastVersion')}
           variant="warning"
         />
       </div>
@@ -343,7 +343,7 @@ export default function Changelog() {
                 <SparklesIcon className="h-6 w-6 text-primary" />
                 <h2 className="text-2xl font-bold text-foreground">v{version.version}</h2>
                 <StatusBadge status={version.type === 'major' ? 'completed' : 'active'}>
-                  {version.type === 'major' ? t.changelog.major : version.type === 'minor' ? t.changelog.minor : t.changelog.patch}
+                  {version.type === 'major' ? t('changelog.major') : version.type === 'minor' ? t('changelog.minor') : t('changelog.patch')}
                 </StatusBadge>
               </div>
               <span className="text-sm text-muted-foreground">{formatDate(version.date)}</span>
@@ -365,7 +365,7 @@ export default function Changelog() {
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline inline-flex items-center gap-1"
               >
-                {t.changelog.viewOnGitHub}
+                {t('changelog.viewOnGitHub')}
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>

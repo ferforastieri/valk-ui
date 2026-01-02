@@ -1,6 +1,6 @@
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { DocsSidebar, Card, CardTitle, CardContent } from '@/components'
-import { useTranslation } from '../contexts/TranslationContext'
+import { useTranslation } from 'react-i18next'
 
 export default function Components() {
   const { t } = useTranslation()
@@ -19,7 +19,7 @@ export default function Components() {
       ]
     },
     {
-      title: t.components.feedback,
+      title: t('components.feedback'),
       items: [
         { title: 'Modal', href: '/components/modal' },
         { title: 'Dialog', href: '/components/dialog' },
@@ -32,7 +32,7 @@ export default function Components() {
       ]
     },
     {
-      title: t.components.layout,
+      title: t('components.layout'),
       items: [
         { title: 'Avatar', href: '/components/avatar' },
         { title: 'MetricCard', href: '/components/metriccard' },
@@ -46,7 +46,7 @@ export default function Components() {
       ]
     },
     {
-      title: t.components.charts,
+      title: t('components.charts'),
       items: [
         { title: 'BarChart', href: '/components/barchart' },
         { title: 'DonutChart', href: '/components/donutchart' },
@@ -64,9 +64,9 @@ export default function Components() {
       />
       <div className="flex-1 min-w-0 px-6 py-8 md:px-8 md:py-10 lg:px-10">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t.components.title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t('components.title')}</h1>
           <p className="text-base md:text-lg text-muted-foreground">
-            {t.components.subtitle}
+            {t('components.subtitle')}
           </p>
         </div>
 

@@ -1,6 +1,6 @@
 import { useParams, Link as RouterLink } from 'react-router-dom'
 import { DocsSidebar, Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components'
-import { useTranslation } from '../contexts/TranslationContext'
+import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import ComponentExamples from '../components/ComponentExamples'
 
@@ -22,7 +22,7 @@ export default function ComponentDetail() {
       ]
     },
     {
-      title: t.components.feedback,
+      title: t('components.feedback'),
       items: [
         { title: 'Modal', href: '/components/modal' },
         { title: 'Dialog', href: '/components/dialog' },
@@ -35,7 +35,7 @@ export default function ComponentDetail() {
       ]
     },
     {
-      title: t.components.layout,
+      title: t('components.layout'),
       items: [
         { title: 'Avatar', href: '/components/avatar' },
         { title: 'MetricCard', href: '/components/metriccard' },
@@ -49,7 +49,7 @@ export default function ComponentDetail() {
       ]
     },
     {
-      title: t.components.charts,
+      title: t('components.charts'),
       items: [
         { title: 'BarChart', href: '/components/barchart' },
         { title: 'DonutChart', href: '/components/donutchart' },

@@ -20,8 +20,8 @@ import {
   Separator,
 } from '@/components'
 import type { SelectOption } from '@/components'
-import { useTranslation } from '../contexts/TranslationContext'
-import ThemeSelector, { themes } from '../components/ThemeSelector'
+import { useTranslation } from 'react-i18next'
+import ThemeSelector from '../components/ThemeSelector'
 import GitHubAnnouncement from '../components/GitHubAnnouncement'
 
 export default function Home() {
@@ -50,10 +50,10 @@ export default function Home() {
   }
 
   const tabs = [
-    { id: 'examples', label: t.home.examples },
-    { id: 'dashboard', label: t.home.dashboard },
-    { id: 'tasks', label: t.home.tasks },
-    { id: 'marketplace', label: t.home.marketplace },
+    { id: 'examples', label: t('home.examples') },
+    { id: 'dashboard', label: t('home.dashboard') },
+    { id: 'tasks', label: t('home.tasks') },
+    { id: 'marketplace', label: t('home.marketplace') },
   ]
 
   const selectOptions: SelectOption[] = [
@@ -62,19 +62,17 @@ export default function Home() {
     { value: '3', label: 'Opção 3' },
   ]
 
-  const currentThemeName = themes.find(t => t.value === currentTheme)?.name || 'Blue'
-
   const renderExamplesContent = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {/* Payment Method Card */}
       <Card>
         <CardHeader>
-          <CardTitle>{t.home.paymentMethod}</CardTitle>
-          <CardDescription>{t.home.paymentDescription}</CardDescription>
+          <CardTitle>{t('home.paymentMethod')}</CardTitle>
+          <CardDescription>{t('home.paymentDescription')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Input 
-            label={t.home.nameOnCard} 
+            label={t('home.nameOnCard')} 
             placeholder="John Doe"
             className="w-full focus:!ring-primary"
           />
@@ -93,8 +91,8 @@ export default function Home() {
             <Avatar fallback="MS" size="md" className="border-2 border-background !bg-primary/20 !text-primary" />
             <Avatar fallback="PC" size="md" className="border-2 border-background !bg-primary/20 !text-primary" />
           </div>
-          <CardTitle>{t.home.noTeamMembers}</CardTitle>
-          <CardDescription>{t.home.inviteTeam}</CardDescription>
+          <CardTitle>{t('home.noTeamMembers')}</CardTitle>
+          <CardDescription>{t('home.inviteTeam')}</CardDescription>
         </CardHeader>
         <CardFooter>
           <Button variant="primary" size="sm" className="w-full !bg-primary hover:!bg-primary/90 !text-primary-foreground">Convidar</Button>
@@ -115,11 +113,11 @@ export default function Home() {
               }
             />
           </div>
-          <CardTitle>{t.home.twoFactorAuth}</CardTitle>
-          <CardDescription>{t.home.twoFactorDescription}</CardDescription>
+          <CardTitle>{t('home.twoFactorAuth')}</CardTitle>
+          <CardDescription>{t('home.twoFactorDescription')}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button variant="primary" size="sm" className="!bg-primary hover:!bg-primary/90 !text-primary-foreground">{t.home.enable}</Button>
+          <Button variant="primary" size="sm" className="!bg-primary hover:!bg-primary/90 !text-primary-foreground">{t('home.enable')}</Button>
         </CardContent>
       </Card>
 
@@ -814,96 +812,137 @@ export default function Home() {
   }
 
   return (
-    <div className="space-y-10 md:space-y-12 overflow-x-hidden">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="text-center space-y-5 max-w-3xl mx-auto px-4">
-        <GitHubAnnouncement />
-        
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight break-words">
-          {t.home.title}
-        </h1>
-        
-        <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-2 break-words">
-          {t.home.subtitle}
-        </p>
-        
-        <div className="flex items-center justify-center gap-2 sm:gap-4 pt-4 flex-wrap px-4">
-          <Link to="/docs">
-            <Button variant="primary" size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm sm:text-base">
-              {t.home.getStarted}
-            </Button>
-          </Link>
-          <Link to="/components">
-            <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-sm sm:text-base">
-              {t.home.viewComponents}
-            </Button>
-          </Link>
+      <div className="w-full border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-12 md:pt-2 md:pb-16">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="mb-4">
+              <GitHubAnnouncement />
+            </div>
+            
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-foreground mb-4 leading-tight">
+              {t('home.title')}
+            </h1>
+            
+            <p className="text-xl sm:text-2xl text-muted-foreground mb-8 leading-relaxed">
+              {t('home.subtitle')}
+            </p>
+            
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link to="/docs">
+                <Button 
+                  variant="primary" 
+                  size="lg" 
+                  className="!bg-primary hover:!bg-primary/90 !text-primary-foreground px-8 py-6 text-base font-semibold"
+                >
+                  {t('home.getStarted')}
+                </Button>
+              </Link>
+              <Link to="/components">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="!border-2 !border-primary/40 !text-primary hover:!bg-primary hover:!text-primary-foreground px-8 py-6 text-base font-semibold"
+                >
+                  {t('home.viewComponents')}
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Features Section - Movida para cima */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base sm:text-lg break-words">{t.home.copyPaste}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs sm:text-sm text-muted-foreground break-words">
-              {t.home.copyPasteDesc}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base sm:text-lg break-words">{t.home.fullyCustomizable}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs sm:text-sm text-muted-foreground break-words">
-              {t.home.fullyCustomizableDesc}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base sm:text-lg break-words">{t.home.typescript}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs sm:text-sm text-muted-foreground break-words">
-              {t.home.typescriptDesc}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Component Examples Section */}
-      <div className="space-y-6 px-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-1 border-b border-border overflow-x-auto w-full sm:w-auto">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`
-                  px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-colors whitespace-nowrap
-                  border-b-2 -mb-px
-                  ${
-                    activeTab === tab.id
-                      ? 'border-primary text-foreground'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
-                  }
-                `}
-              >
-                {tab.label}
-              </button>
-            ))}
+      {/* Features Section - Timeline Vertical */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="space-y-10">
+          <div className="flex gap-6 md:gap-8 items-start">
+            <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/20">
+              <svg className="w-7 h-7 md:w-8 md:h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div className="flex-1 pt-1">
+              <h3 className="text-xl md:text-2xl font-bold mb-2">{t('home.copyPaste')}</h3>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                {t('home.copyPasteDesc')}
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">Tema: {currentThemeName}</span>
-            <ThemeSelector currentTheme={currentTheme} onThemeChange={setCurrentTheme} />
+
+          <div className="flex gap-6 md:gap-8 items-start">
+            <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/20">
+              <svg className="w-7 h-7 md:w-8 md:h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+              </svg>
+            </div>
+            <div className="flex-1 pt-1">
+              <h3 className="text-xl md:text-2xl font-bold mb-2">{t('home.fullyCustomizable')}</h3>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                {t('home.fullyCustomizableDesc')}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-6 md:gap-8 items-start">
+            <div className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/20">
+              <svg className="w-7 h-7 md:w-8 md:h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </div>
+            <div className="flex-1 pt-1">
+              <h3 className="text-xl md:text-2xl font-bold mb-2">{t('home.typescript')}</h3>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                {t('home.typescriptDesc')}
+              </p>
+            </div>
           </div>
         </div>
+      </div>
 
-        {renderContent()}
+      {/* Component Examples Section - Showcase Style */}
+      <div className="border-y border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-black mb-2">{t('home.showcase')}</h2>
+                <p className="text-lg md:text-xl text-muted-foreground">{t('home.showcaseDescription')}</p>
+              </div>
+              
+              <div className="flex items-center gap-4 px-4 py-2 bg-background rounded-xl border border-border">
+                <span className="text-sm font-medium text-muted-foreground">Tema:</span>
+                <ThemeSelector currentTheme={currentTheme} onThemeChange={setCurrentTheme} />
+              </div>
+            </div>
+
+            {/* Tabs em formato de botões grandes */}
+            <div className="flex flex-wrap gap-3">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`
+                    px-5 py-2.5 rounded-xl text-sm md:text-base font-semibold transition-all border-2
+                    ${
+                      activeTab === tab.id
+                        ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                        : 'bg-background text-muted-foreground border-border hover:border-primary/50 hover:text-foreground'
+                    }
+                  `}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Conteúdo dos Exemplos */}
+          <div className="bg-background rounded-2xl p-6 md:p-8 border border-border shadow-xl">
+            {renderContent()}
+          </div>
+        </div>
       </div>
     </div>
   )
