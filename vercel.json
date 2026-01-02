@@ -11,7 +11,7 @@
       }
     },
     {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|gif|webp|woff|woff2|ttf|eot))",
+      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|gif|webp|woff|woff2|ttf|eot|json|webmanifest))",
       "dest": "/$1"
     },
     {
