@@ -121,15 +121,15 @@ function LayoutContent({ children }: LayoutProps) {
   const currentLanguage = languages.find(lang => lang.code === language) || languages[0]
 
   const logo = (
-    <RouterLink to="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+    <RouterLink to="/" className="flex items-center gap-2 min-w-0" onClick={() => setMobileMenuOpen(false)}>
       <img src="/logo.png" alt="Valk UI" className="h-8 w-8 flex-shrink-0" />
-      <span className="text-xl font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
+      <span className="text-xl font-bold text-foreground whitespace-nowrap hidden sm:inline" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
     </RouterLink>
   )
 
   const rightContent = (
-    <div className="flex items-center gap-2">
-      <div className="hidden md:flex items-center">
+    <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-shrink-0">
+      <div className="hidden xl:flex items-center">
         <button
           onClick={() => setCommandOpen(true)}
           className="relative w-64 h-9 rounded-md border border-border bg-background text-sm text-muted-foreground flex items-center hover:bg-muted transition-colors"
@@ -137,19 +137,28 @@ function LayoutContent({ children }: LayoutProps) {
           <div className="absolute left-3 flex items-center pointer-events-none">
             <MagnifyingGlassIcon className="h-4 w-4" />
           </div>
-          <span className="pl-9 pr-2 flex-1 text-left">{t('nav.search')}</span>
-          <kbd className="hidden lg:flex mr-2 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
+          <span className="pl-9 pr-2 flex-1 text-left truncate">{t('nav.search')}</span>
+          <kbd className="hidden 2xl:flex mr-2 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
             <span className="text-xs">⌘</span>K
           </kbd>
         </button>
       </div>
-      <div className="relative">
+      <div className="hidden md:flex items-center">
+        <button
+          onClick={() => setCommandOpen(true)}
+          className="relative w-10 h-9 rounded-md border border-border bg-background flex items-center justify-center hover:bg-muted transition-colors xl:hidden"
+          aria-label="Search"
+        >
+          <MagnifyingGlassIcon className="h-4 w-4 text-muted-foreground" />
+        </button>
+      </div>
+      <div className="relative flex-shrink-0">
         <button
           onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-          className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-md hover:bg-muted transition-colors"
+          className="flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md hover:bg-muted transition-colors"
           aria-label="Select language"
         >
-          <span className="text-base">{currentLanguage.flag}</span>
+          <span className="text-base flex-shrink-0">{currentLanguage.flag}</span>
           <span className="text-sm font-medium text-foreground hidden sm:inline">{currentLanguage.name}</span>
         </button>
         {showLanguageMenu && (

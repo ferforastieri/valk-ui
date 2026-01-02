@@ -53,7 +53,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
       const Icon = item.icon
       
       const baseClasses = cn(
-        'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200',
+        'flex items-center gap-2 lg:gap-3 px-2 lg:px-4 py-2 lg:py-3 rounded-xl transition-all duration-200 whitespace-nowrap flex-shrink-0',
         isActive
           ? 'text-foreground bg-accent shadow-sm'
           : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
@@ -81,7 +81,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
             className={baseClasses}
           >
             {Icon && <Icon className={iconClasses} />}
-            <span className={cn('text-sm font-medium', isMobile ? '' : 'hidden md:inline')}>{item.name}</span>
+            <span className={cn('text-sm font-medium', isMobile ? '' : 'hidden xl:inline')}>{item.name}</span>
             {isActive && (
               <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground" />
             )}
@@ -96,7 +96,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
           className={baseClasses}
         >
           {Icon && <Icon className={iconClasses} />}
-          <span className={cn('text-sm font-medium', isMobile ? '' : 'hidden md:inline')}>{item.name}</span>
+          <span className={cn('text-sm font-medium', isMobile ? '' : 'hidden xl:inline')}>{item.name}</span>
           {isActive && (
             <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground" />
           )}
@@ -114,25 +114,25 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
           )}
           {...props}
         >
-          <div className="flex h-14 items-center justify-between px-4 md:px-6">
-            <div className="flex items-center gap-6 md:gap-8">
+          <div className="flex h-14 items-center justify-between px-4 md:px-6 min-w-0">
+            <div className="flex items-center gap-3 sm:gap-4 md:gap-6 lg:gap-8 min-w-0 flex-1">
               {showMobileMenu && (
                 <button
                   type="button"
-                  className="md:hidden flex items-center justify-center w-9 h-9 rounded-md hover:bg-muted transition-colors"
+                  className="md:hidden flex items-center justify-center w-9 h-9 rounded-md hover:bg-muted transition-colors flex-shrink-0"
                   onClick={() => setMobileOpen(true)}
                   aria-label="Open navigation menu"
                 >
                   <Bars3Icon className="h-5 w-5 text-foreground" />
                 </button>
               )}
-              {logo && <div className="flex items-center">{logo}</div>}
-              <div className="hidden md:flex items-center gap-2">
+              {logo && <div className="flex items-center min-w-0 flex-shrink-0">{logo}</div>}
+              <div className="hidden md:flex items-center gap-1 lg:gap-2 min-w-0">
                 {items.map((item) => renderNavItem(item, false))}
               </div>
             </div>
             {rightContent && (
-              <div className="flex items-center">
+              <div className="flex items-center min-w-0 flex-shrink-0 ml-2">
                 {rightContent}
               </div>
             )}
