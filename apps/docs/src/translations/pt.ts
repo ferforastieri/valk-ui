@@ -31,7 +31,7 @@ export default {
     fullyCustomizableDesc: 'Cada componente é construído com Tailwind CSS e pode ser facilmente modificado para se adequar ao seu design. O código é seu.',
     typescript: 'TypeScript',
     typescriptDesc: 'Construído com TypeScript para oferecer melhor experiência de desenvolvimento, autocompletar inteligente e segurança de tipos.',
-    showcase: 'Showcase',
+    showcase: 'Vitrine',
     showcaseDescription: 'Explore exemplos interativos dos componentes',
   },
   docs: {

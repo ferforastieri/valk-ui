@@ -17,6 +17,7 @@ import {
   Card as PlaygroundCard,
   CardHeader as PlaygroundCardHeader,
   CardTitle as PlaygroundCardTitle,
+  CardDescription as PlaygroundCardDescription,
   CardContent as PlaygroundCardContent,
   CardFooter as PlaygroundCardFooter,
   StatusBadge,
@@ -27,8 +28,6 @@ import {
   Separator,
   Accordion,
 } from '@/components'
-import type { AccordionItemProps } from '@/components'
-import type { SelectOption } from '@/components'
 import { themes } from '../components/ThemeSelector'
 
 const defaultCode = `function Example() {
@@ -51,35 +50,21 @@ const defaultCode = `function Example() {
 
 const examples = [
   {
-    name: 'Botão Simples',
-    code: `function Example() {
-  return (
-    <div className="p-4 space-x-2">
-      <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="ghost">Ghost</Button>
-      <div className="mt-4 p-4 bg-primary text-primary-foreground rounded-lg">
-        <p>Este elemento usa bg-primary e text-primary-foreground</p>
-      </div>
-      <Badge variant="primary" className="mt-2">Badge Primary</Badge>
-    </div>
-  )
-}`,
-  },
-  {
-    name: 'Card com Formulário',
+    name: 'Método de Pagamento',
     code: `function Example() {
   return (
     <div className="p-4 max-w-md">
       <Card>
         <CardHeader>
-          <CardTitle>Login</CardTitle>
+          <CardTitle>Método de Pagamento</CardTitle>
+          <CardDescription>Todas as transações são seguras e criptografadas</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Input label="Email" type="email" placeholder="seu@email.com" />
-          <Input label="Senha" type="password" placeholder="••••••••" />
-          <Button variant="primary" className="w-full">Entrar</Button>
+          <Input label="Nome no Cartão" placeholder="John Doe" />
+          <div className="flex gap-2">
+            <Button variant="primary" size="sm">Salvar</Button>
+            <Button variant="outline" size="sm">Cancelar</Button>
+          </div>
         </CardContent>
       </Card>
     </div>
@@ -87,43 +72,51 @@ const examples = [
 }`,
   },
   {
-    name: 'Badges e Status',
+    name: 'Membros da Equipe',
     code: `function Example() {
   return (
-    <div className="p-4 space-y-4">
-      <div className="flex gap-2 flex-wrap">
-        <StatusBadge status="completed">Concluído</StatusBadge>
-        <StatusBadge status="active">Ativo</StatusBadge>
-        <StatusBadge status="pending">Pendente</StatusBadge>
-        <Badge>Badge</Badge>
-      </div>
-      <ProgressBar value={65} />
+    <div className="p-4 max-w-md">
+      <Card>
+        <CardHeader>
+          <div className="flex -space-x-2 mb-4">
+            <Avatar fallback="JD" size="md" className="border-2 border-background bg-primary/20 text-primary" />
+            <Avatar fallback="MS" size="md" className="border-2 border-background bg-primary/20 text-primary" />
+            <Avatar fallback="PC" size="md" className="border-2 border-background bg-primary/20 text-primary" />
+          </div>
+          <CardTitle>Sem Membros da Equipe</CardTitle>
+          <CardDescription>Convide sua equipe para</CardDescription>
+        </CardHeader>
+        <CardFooter>
+          <Button variant="primary" size="sm" className="w-full">Convidar</Button>
+        </CardFooter>
+      </Card>
     </div>
   )
 }`,
   },
   {
-    name: 'Avatar e Métricas',
+    name: 'Autenticação de Dois Fatores',
     code: `function Example() {
   return (
-    <div className="p-4 space-y-4">
-      <div className="flex gap-4">
-        <Avatar src="https://i.pravatar.cc/150?img=1" alt="User" />
-        <Avatar src="https://i.pravatar.cc/150?img=2" alt="User" />
-        <Avatar src="https://i.pravatar.cc/150?img=3" alt="User" />
-      </div>
-      <Separator />
-      <div className="grid grid-cols-3 gap-4">
-        <MetricCard title="Usuários" value="1,234" subtitle="Total" />
-        <MetricCard title="Vendas" value="R$ 45k" subtitle="Este mês" />
-        <MetricCard title="Crescimento" value="+12%" subtitle="vs mês anterior" />
-      </div>
+    <div className="p-4 max-w-md">
+      <Card>
+        <CardHeader>
+          <div className="mb-4">
+            <Input placeholder="https://" />
+          </div>
+          <CardTitle>Autenticação de dois fatores</CardTitle>
+          <CardDescription>Verifique via email ou número de telefone.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button variant="primary" size="sm">Habilitar</Button>
+        </CardContent>
+      </Card>
     </div>
   )
 }`,
   },
   {
-    name: 'Formulário Completo',
+    name: 'Formulário',
     code: `function Example() {
   const [checked, setChecked] = React.useState(false)
   const [toggled, setToggled] = React.useState(false)
@@ -136,18 +129,51 @@ const examples = [
   ]
 
   return (
-    <div className="p-4 max-w-lg">
+    <div className="p-4 max-w-md">
       <Card>
         <CardHeader>
-          <CardTitle>Formulário de Contato</CardTitle>
+          <CardTitle>Formulário</CardTitle>
+          <CardDescription>Exemplo de formulário completo</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Input label="Nome" placeholder="Seu nome" />
-          <Input label="Email" type="email" placeholder="seu@email.com" />
-          <Select label="Assunto" options={options} value={selectValue} onChange={(values) => setSelectValue(values || [])} />
-          <Checkbox label="Aceito os termos" checked={checked} onChange={(e) => setChecked(e.target.checked)} />
-          <Toggle label="Receber notificações" checked={toggled} onChange={(e) => setToggled(e.target.checked)} />
+          <Input label="Email" placeholder="email@example.com" />
+          <Select label="País" options={options} value={selectValue} onChange={(values) => setSelectValue(values || [])} />
+          <div className="space-y-3">
+            <Checkbox label="Aceito os termos" checked={checked} onChange={(e) => setChecked(e.target.checked)} />
+            <Toggle label="Receber notificações" checked={toggled} onChange={(e) => setToggled(e.target.checked)} />
+          </div>
+        </CardContent>
+        <CardFooter>
           <Button variant="primary" className="w-full">Enviar</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  )
+}`,
+  },
+  {
+    name: 'Status',
+    code: `function Example() {
+  return (
+    <div className="p-4 max-w-md">
+      <Card>
+        <CardHeader>
+          <CardTitle>Status</CardTitle>
+          <CardDescription>Diferentes estados</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex flex-wrap gap-2">
+            <StatusBadge status="active">Ativo</StatusBadge>
+            <StatusBadge status="completed">Concluído</StatusBadge>
+            <StatusBadge status="pending">Pendente</StatusBadge>
+            <StatusBadge status="error">Erro</StatusBadge>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="default" className="bg-primary text-primary-foreground border-primary">Default</Badge>
+            <Badge variant="secondary">Secondary</Badge>
+            <Badge variant="outline" className="border-primary text-primary">Outline</Badge>
+          </div>
+          <ProgressBar value={65} color="blue" showLabel />
         </CardContent>
       </Card>
     </div>
@@ -155,25 +181,187 @@ const examples = [
 }`,
   },
   {
-    name: 'Cards em Grid',
+    name: 'Botões',
+    code: `function Example() {
+  return (
+    <div className="p-4 max-w-md">
+      <Card>
+        <CardHeader>
+          <CardTitle>Botões</CardTitle>
+          <CardDescription>Diferentes variantes</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            <Button variant="primary">Primary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+          </div>
+          <Separator />
+          <div className="flex flex-wrap gap-2">
+            <Button variant="primary" size="sm">Small</Button>
+            <Button variant="primary" size="md">Medium</Button>
+            <Button variant="primary" size="lg">Large</Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}`,
+  },
+  {
+    name: 'Métricas',
     code: `function Example() {
   return (
     <div className="p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <MetricCard title="Total de Vendas" value="R$ 125.430" subtitle="+12.5% vs mês anterior" variant="blue" className="border-primary bg-gradient-to-br from-primary to-primary/90 text-primary-foreground" />
+        <MetricCard title="Novos Usuários" value="1.234" subtitle="+8.2% vs mês anterior" variant="success" />
+        <MetricCard title="Taxa de Conversão" value="3.24%" subtitle="+0.5% vs mês anterior" variant="warning" />
+        <MetricCard title="Taxa de Rejeição" value="2.1%" subtitle="-1.2% vs mês anterior" variant="default" />
+      </div>
+    </div>
+  )
+}`,
+  },
+  {
+    name: 'Atividades Recentes',
+    code: `function Example() {
+  return (
+    <div className="p-4 max-w-md">
+      <Card>
+        <CardHeader>
+          <CardTitle>Atividades Recentes</CardTitle>
+          <CardDescription>Últimas 24 horas</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Avatar fallback="JD" size="sm" className="bg-primary/20 text-primary" />
+              <div>
+                <p className="text-sm font-medium">João fez login</p>
+                <p className="text-xs text-muted-foreground">Há 5 minutos</p>
+              </div>
+            </div>
+            <StatusBadge status="active">Ativo</StatusBadge>
+          </div>
+          <Separator />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Avatar fallback="MS" size="sm" className="bg-primary/20 text-primary" />
+              <div>
+                <p className="text-sm font-medium">Maria atualizou perfil</p>
+                <p className="text-xs text-muted-foreground">Há 15 minutos</p>
+              </div>
+            </div>
+            <StatusBadge status="completed">Concluído</StatusBadge>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}`,
+  },
+  {
+    name: 'Progresso do Projeto',
+    code: `function Example() {
+  return (
+    <div className="p-4 max-w-md">
+      <Card>
+        <CardHeader>
+          <CardTitle>Progresso do Projeto</CardTitle>
+          <CardDescription>Status atual</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <div className="flex justify-between text-sm mb-2">
+              <span>Design</span>
+              <span>75%</span>
+            </div>
+            <ProgressBar value={75} color="blue" showLabel />
+          </div>
+          <div>
+            <div className="flex justify-between text-sm mb-2">
+              <span>Desenvolvimento</span>
+              <span>45%</span>
+            </div>
+            <ProgressBar value={45} color="green" showLabel />
+          </div>
+          <div>
+            <div className="flex justify-between text-sm mb-2">
+              <span>Testes</span>
+              <span>20%</span>
+            </div>
+            <ProgressBar value={20} color="yellow" showLabel />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}`,
+  },
+  {
+    name: 'Tarefas',
+    code: `function Example() {
+  const [todo1, setTodo1] = React.useState(false)
+  const [progress1, setProgress1] = React.useState(true)
+  const [done1, setDone1] = React.useState(true)
+
+  return (
+    <div className="p-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Card 1</CardTitle>
+            <CardTitle>Para Fazer</CardTitle>
+            <CardDescription>3 tarefas</CardDescription>
           </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">Conteúdo do card 1</p>
+          <CardContent className="space-y-3">
+            <div className="p-3 border rounded-lg bg-card">
+              <div className="flex items-start gap-3">
+                <Checkbox checked={todo1} onChange={(e) => setTodo1(e.target.checked)} />
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Revisar design</p>
+                  <p className="text-xs text-muted-foreground">Prioridade alta</p>
+                </div>
+                <Badge variant="high">Alta</Badge>
+              </div>
+            </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Card 2</CardTitle>
+            <CardTitle>Em Progresso</CardTitle>
+            <CardDescription>2 tarefas</CardDescription>
           </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">Conteúdo do card 2</p>
+          <CardContent className="space-y-3">
+            <div className="p-3 border rounded-lg bg-card border-primary/20">
+              <div className="flex items-start gap-3">
+                <Checkbox checked={progress1} onChange={(e) => setProgress1(e.target.checked)} />
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Implementar feature</p>
+                  <p className="text-xs text-muted-foreground">60% completo</p>
+                  <ProgressBar value={60} color="blue" className="mt-2" />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Concluído</CardTitle>
+            <CardDescription>5 tarefas</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="p-3 border rounded-lg bg-card opacity-60">
+              <div className="flex items-start gap-3">
+                <Checkbox checked={done1} onChange={(e) => setDone1(e.target.checked)} />
+                <div className="flex-1">
+                  <p className="text-sm font-medium line-through">Setup do projeto</p>
+                  <p className="text-xs text-muted-foreground">Concluído há 2 dias</p>
+                </div>
+                <StatusBadge status="completed">✓</StatusBadge>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -182,90 +370,83 @@ const examples = [
 }`,
   },
   {
-    name: 'Inputs e Validação',
+    name: 'Nova Tarefa',
     code: `function Example() {
+  const [selectValue, setSelectValue] = React.useState([])
+  
+  const options = [
+    { value: 'high', label: 'Alta' },
+    { value: 'medium', label: 'Média' },
+    { value: 'low', label: 'Baixa' },
+  ]
+
   return (
-    <div className="p-4 max-w-md space-y-4">
-      <Input label="Nome completo" placeholder="Digite seu nome" />
-      <Input label="Email" type="email" placeholder="seu@email.com" />
-      <Input label="Telefone" type="tel" placeholder="(00) 00000-0000" />
-      <div className="flex gap-2">
-        <Button variant="primary">Salvar</Button>
-        <Button variant="outline">Cancelar</Button>
-      </div>
+    <div className="p-4 max-w-md">
+      <Card>
+        <CardHeader>
+          <CardTitle>Nova Tarefa</CardTitle>
+          <CardDescription>Adicione uma nova tarefa à lista</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Input label="Título" placeholder="Digite o título da tarefa" />
+          <Input label="Descrição" placeholder="Digite a descrição" />
+          <Select label="Prioridade" options={options} value={selectValue} onChange={(values) => setSelectValue(values || [])} />
+        </CardContent>
+        <CardFooter>
+          <Button variant="primary" className="w-full">Adicionar Tarefa</Button>
+        </CardFooter>
+      </Card>
     </div>
   )
 }`,
   },
   {
-    name: 'Progresso e Métricas',
+    name: 'Produto',
     code: `function Example() {
   return (
-    <div className="p-4 space-y-6">
-      <div className="space-y-2">
-        <div className="flex justify-between text-sm">
-          <span>Progresso</span>
-          <span>65%</span>
+    <div className="p-4 max-w-sm">
+      <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+        <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+          <div className="text-6xl">📱</div>
         </div>
-        <ProgressBar value={65} />
-      </div>
-      <div className="grid grid-cols-3 gap-4">
-        <MetricCard title="Total" value="1,234" variant="default" />
-        <MetricCard title="Ativos" value="856" variant="success" />
-        <MetricCard title="Pendentes" value="378" variant="warning" />
-      </div>
-    </div>
-  )
-}`,
-  },
-  {
-    name: 'Badges e Tags',
-    code: `function Example() {
-  return (
-    <div className="p-4 space-y-4">
-      <div className="flex gap-2 flex-wrap">
-        <Badge variant="default">Default</Badge>
-        <Badge variant="primary">Primary</Badge>
-        <Badge variant="secondary">Secondary</Badge>
-        <Badge variant="destructive">Destructive</Badge>
-      </div>
-      <div className="flex gap-2 flex-wrap">
-        <StatusBadge status="completed">Concluído</StatusBadge>
-        <StatusBadge status="active">Ativo</StatusBadge>
-        <StatusBadge status="pending">Pendente</StatusBadge>
-        <StatusBadge status="error">Erro</StatusBadge>
-      </div>
-    </div>
-  )
-}`,
-  },
-  {
-    name: 'Avatar Group',
-    code: `function Example() {
-  return (
-    <div className="p-4 space-y-4">
-      <div className="flex -space-x-2">
-        <Avatar src="https://i.pravatar.cc/150?img=1" alt="User 1" />
-        <Avatar src="https://i.pravatar.cc/150?img=2" alt="User 2" />
-        <Avatar src="https://i.pravatar.cc/150?img=3" alt="User 3" />
-        <Avatar src="https://i.pravatar.cc/150?img=4" alt="User 4" />
-      </div>
-      <Separator />
-      <div className="flex gap-4">
-        <Avatar src="https://i.pravatar.cc/150?img=5" alt="User" />
-        <div>
-          <p className="font-semibold">João Silva</p>
-          <p className="text-sm text-muted-foreground">Desenvolvedor</p>
-        </div>
-      </div>
+        <CardHeader>
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1">
+              <CardTitle>Smartphone Pro Max</CardTitle>
+              <CardDescription>128GB, Tela 6.7", 5G</CardDescription>
+            </div>
+            <StatusBadge status="active">Em Estoque</StatusBadge>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Avatar fallback="⭐" size="sm" />
+            <div>
+              <p className="text-sm font-medium">4.8</p>
+              <p className="text-xs text-muted-foreground">234 avaliações</p>
+            </div>
+          </div>
+          <Separator />
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-2xl font-bold">R$ 2.499</p>
+              <p className="text-sm text-muted-foreground line-through">R$ 2.999</p>
+            </div>
+            <Badge variant="high">-17%</Badge>
+          </div>
+        </CardContent>
+        <CardFooter className="flex gap-2">
+          <Button variant="primary" className="flex-1">Adicionar ao Carrinho</Button>
+          <Button variant="outline">♡</Button>
+        </CardFooter>
+      </Card>
     </div>
   )
 }`,
   },
 ]
 
-// Função para criar escopo com tema dinâmico
-const createScope = (theme: typeof themes[0]) => ({
+const createScope = (_theme: typeof themes[0]) => ({
   React,
   useState: React.useState,
   useEffect: React.useEffect,
@@ -277,6 +458,7 @@ const createScope = (theme: typeof themes[0]) => ({
   Card: PlaygroundCard,
   CardHeader: PlaygroundCardHeader,
   CardTitle: PlaygroundCardTitle,
+  CardDescription: PlaygroundCardDescription,
   CardContent: PlaygroundCardContent,
   CardFooter: PlaygroundCardFooter,
   StatusBadge,
@@ -287,7 +469,6 @@ const createScope = (theme: typeof themes[0]) => ({
   Separator,
 })
 
-// Cores completas do Tailwind com todos os tons
 const tailwindColors = {
   slate: {
     50: { hsl: '210 40% 98%', hex: '#f8fafc', rgb: '248 250 252' },
@@ -586,67 +767,88 @@ export default function Playground() {
   const { showToast } = useToast()
   const { t } = useTranslation()
 
-  // Não aplicar tema globalmente - apenas no preview container
-
-  // Aplicar tema no document.documentElement (igual na Home)
   useEffect(() => {
     const theme = themes.find(t => t.value === currentTheme) || themes[0]
     
-    // Aplicar no document.documentElement (elemento <html>) igual na Home
-    const root = document.documentElement
-    root.style.setProperty('--primary', theme.primary)
-    root.style.setProperty('--primary-foreground', theme.primaryForeground)
+    const rootStyles = getComputedStyle(document.documentElement)
+    const getCSSVar = (varName: string) => rootStyles.getPropertyValue(varName).trim()
     
-    // Função para aplicar CSS variables em um elemento e seus filhos
     const applyToElement = (element: Element) => {
       const htmlEl = element as HTMLElement
+      
       htmlEl.style.setProperty('--primary', theme.primary)
       htmlEl.style.setProperty('--primary-foreground', theme.primaryForeground)
       
-      // Aplicar recursivamente em todos os filhos
-      Array.from(element.children).forEach(child => {
-        applyToElement(child)
+      htmlEl.style.setProperty('--background', getCSSVar('--background') || '0 0% 100%')
+      htmlEl.style.setProperty('--foreground', getCSSVar('--foreground') || '222.2 84% 4.9%')
+      htmlEl.style.setProperty('--card', getCSSVar('--card') || '0 0% 100%')
+      htmlEl.style.setProperty('--card-foreground', getCSSVar('--card-foreground') || '222.2 84% 4.9%')
+      htmlEl.style.setProperty('--popover', getCSSVar('--popover') || '0 0% 100%')
+      htmlEl.style.setProperty('--popover-foreground', getCSSVar('--popover-foreground') || '222.2 84% 4.9%')
+      htmlEl.style.setProperty('--secondary', getCSSVar('--secondary') || '210 40% 96%')
+      htmlEl.style.setProperty('--secondary-foreground', getCSSVar('--secondary-foreground') || '222.2 84% 4.9%')
+      htmlEl.style.setProperty('--muted', getCSSVar('--muted') || '210 40% 96%')
+      htmlEl.style.setProperty('--muted-foreground', getCSSVar('--muted-foreground') || '215.4 16.3% 46.9%')
+      htmlEl.style.setProperty('--accent', getCSSVar('--accent') || '210 40% 96%')
+      htmlEl.style.setProperty('--accent-foreground', getCSSVar('--accent-foreground') || '222.2 84% 4.9%')
+      htmlEl.style.setProperty('--destructive', getCSSVar('--destructive') || '0 84.2% 60.2%')
+      htmlEl.style.setProperty('--destructive-foreground', getCSSVar('--destructive-foreground') || '210 40% 98%')
+      htmlEl.style.setProperty('--border', getCSSVar('--border') || '214.3 31.8% 91.4%')
+      htmlEl.style.setProperty('--input', getCSSVar('--input') || '214.3 31.8% 91.4%')
+      htmlEl.style.setProperty('--ring', theme.primary)
+      htmlEl.style.setProperty('--radius', getCSSVar('--radius') || '0.5rem')
+      
+      const allDescendants = element.querySelectorAll('*')
+      allDescendants.forEach(descendant => {
+        const descEl = descendant as HTMLElement
+        descEl.style.setProperty('--primary', theme.primary)
+        descEl.style.setProperty('--primary-foreground', theme.primaryForeground)
+        descEl.style.setProperty('--ring', theme.primary)
       })
     }
     
-    // Aplicar em TODOS os elementos da página
-    const applyToAllElements = () => {
-      const allElements = document.querySelectorAll('*')
-      allElements.forEach((el) => {
-        const htmlEl = el as HTMLElement
-        htmlEl.style.setProperty('--primary', theme.primary)
-        htmlEl.style.setProperty('--primary-foreground', theme.primaryForeground)
-      })
+    const applyToPreviewContainer = () => {
+      const previewContainer = document.querySelector('[data-preview-container]')
+      if (previewContainer) {
+        applyToElement(previewContainer)
+        
+        const allElements = previewContainer.querySelectorAll('*')
+        allElements.forEach(el => {
+          const htmlEl = el as HTMLElement
+          htmlEl.style.setProperty('--primary', theme.primary)
+          htmlEl.style.setProperty('--primary-foreground', theme.primaryForeground)
+          htmlEl.style.setProperty('--ring', theme.primary)
+        })
+      }
     }
     
-    // Aplicar imediatamente
-    applyToAllElements()
+    applyToPreviewContainer()
     
-    // Usar MutationObserver para aplicar quando novos elementos forem adicionados
     const previewContainer = document.querySelector('[data-preview-container]')
     if (previewContainer) {
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              applyToElement(node as Element)
-            }
-          })
-        })
+      const observer = new MutationObserver(() => {
+        applyToPreviewContainer()
       })
       
       observer.observe(previewContainer, {
         childList: true,
         subtree: true,
+        attributes: false,
+        characterData: false,
       })
       
-      // Aplicar novamente após delays para pegar elementos renderizados pelo LivePreview
-      setTimeout(applyToAllElements, 100)
-      setTimeout(applyToAllElements, 300)
-      setTimeout(applyToAllElements, 500)
+      const timeouts = [
+        setTimeout(applyToPreviewContainer, 50),
+        setTimeout(applyToPreviewContainer, 100),
+        setTimeout(applyToPreviewContainer, 200),
+        setTimeout(applyToPreviewContainer, 300),
+        setTimeout(applyToPreviewContainer, 500),
+        setTimeout(applyToPreviewContainer, 1000),
+      ]
       
       return () => {
         observer.disconnect()
+        timeouts.forEach(timeout => clearTimeout(timeout))
       }
     }
   }, [currentTheme])
@@ -712,7 +914,7 @@ export default function Playground() {
     }
   }
 
-  const copyColor = (colorName: string, shade: string, colorValue: { hsl: string; hex: string; rgb: string }) => {
+  const copyColor = (_colorName: string, _shade: string, colorValue: { hsl: string; hex: string; rgb: string }) => {
     const text = formatColor(colorValue, selectedColorFormat)
     navigator.clipboard.writeText(text).then(() => {
       showToast({
@@ -725,7 +927,6 @@ export default function Playground() {
 
   return (
     <div className="space-y-6">
-      {/* Header com Instruções */}
       <div className="mb-6">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
           {t('playground.title')}
@@ -738,14 +939,12 @@ export default function Playground() {
         </p>
       </div>
 
-      {/* Editor e Preview */}
       <LiveProvider 
         code={code} 
         scope={createScope(themes.find(t => t.value === currentTheme) || themes[0])}
         key={`provider-${selectedExample || 'default'}-${currentTheme}`}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Editor */}
           <Card className="flex flex-col">
             <CardHeader className="border-b">
               <div className="flex flex-col gap-4">
@@ -771,15 +970,14 @@ export default function Playground() {
                     </button>
                   </div>
                 </div>
-                {/* Select de Exemplos e Tema */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Select
                     label={t('playground.examples')}
                     options={examples.map((ex) => ({ value: ex.name, label: ex.name }))}
                     value={selectedExample || ''}
-                    onChange={(value) => {
+                    onChange={(value: string | string[]) => {
                       const exampleName = Array.isArray(value) ? value[0] : value
-                      if (exampleName) {
+                      if (exampleName && typeof exampleName === 'string') {
                         handleExampleChange(exampleName)
                       }
                     }}
@@ -790,9 +988,9 @@ export default function Playground() {
                     label={t('playground.theme')}
                     options={themes.map((theme) => ({ value: theme.value, label: theme.name }))}
                     value={currentTheme || ''}
-                    onChange={(value) => {
+                    onChange={(value: string | string[]) => {
                       const themeValue = Array.isArray(value) ? value[0] : value
-                      if (themeValue) {
+                      if (themeValue && typeof themeValue === 'string') {
                         setCurrentTheme(themeValue)
                       }
                     }}
@@ -804,6 +1002,7 @@ export default function Playground() {
             </CardHeader>
             <CardContent className="flex-1 p-0">
               <LiveEditor
+                key={`editor-${selectedExample || 'default'}-${code.substring(0, 20)}`}
                 style={{
                   fontFamily: 'monospace',
                   fontSize: '14px',
@@ -819,7 +1018,6 @@ export default function Playground() {
             </CardContent>
           </Card>
 
-          {/* Preview */}
           <Card className="flex flex-col">
             <CardHeader className="border-b">
               <CardTitle className="flex items-center gap-2">
@@ -837,14 +1035,16 @@ export default function Playground() {
                 style={{
                   '--primary': themes.find(t => t.value === currentTheme)?.primary || themes[0].primary,
                   '--primary-foreground': themes.find(t => t.value === currentTheme)?.primaryForeground || themes[0].primaryForeground,
+                  '--ring': themes.find(t => t.value === currentTheme)?.primary || themes[0].primary,
                 } as React.CSSProperties}
               >
                 <div 
-                  key={`preview-wrapper-${currentTheme}`}
+                  key={`preview-wrapper-${selectedExample || 'default'}-${currentTheme}`}
                   className="w-full"
                   style={{
                     '--primary': themes.find(t => t.value === currentTheme)?.primary || themes[0].primary,
                     '--primary-foreground': themes.find(t => t.value === currentTheme)?.primaryForeground || themes[0].primaryForeground,
+                    '--ring': themes.find(t => t.value === currentTheme)?.primary || themes[0].primary,
                   } as React.CSSProperties}
                 >
                   <LivePreview />
@@ -855,7 +1055,6 @@ export default function Playground() {
         </div>
       </LiveProvider>
 
-      {/* Cores */}
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -886,7 +1085,6 @@ export default function Playground() {
           <Accordion
             type="multiple"
             items={Object.entries(tailwindColors).map(([colorName, shades]) => {
-              // Pegar algumas cores representativas para o preview (50, 300, 500, 700, 950)
               const previewShades = ['50', '300', '500', '700', '950']
               const previewColors = previewShades.map(shade => ({
                 shade,
@@ -931,14 +1129,13 @@ export default function Playground() {
                     ))}
                   </div>
                 ),
-                defaultOpen: false, // Todos fechados por padrão
+                defaultOpen: false,
               }
             })}
           />
         </CardContent>
       </Card>
 
-      {/* Modal de Confirmação de Reset */}
       <Dialog
         isOpen={showResetModal}
         onClose={() => setShowResetModal(false)}
