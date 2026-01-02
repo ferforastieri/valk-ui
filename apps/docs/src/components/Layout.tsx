@@ -123,7 +123,7 @@ function LayoutContent({ children }: LayoutProps) {
   const logo = (
     <RouterLink to="/" className="flex items-center gap-2 min-w-0" onClick={() => setMobileMenuOpen(false)}>
       <img src="/logo.png" alt="Valk UI" className="h-8 w-8 flex-shrink-0" />
-      <span className="text-xl font-bold text-foreground whitespace-nowrap hidden sm:inline" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
+      <span className="text-xl font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
     </RouterLink>
   )
 
