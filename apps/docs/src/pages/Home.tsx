@@ -64,7 +64,6 @@ export default function Home() {
 
   const renderExamplesContent = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* Payment Method Card */}
       <Card>
         <CardHeader>
           <CardTitle>{t('home.paymentMethod')}</CardTitle>
@@ -83,7 +82,6 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      {/* Team Members Card */}
       <Card>
         <CardHeader>
             <div className="flex -space-x-2 mb-4">
@@ -99,7 +97,6 @@ export default function Home() {
         </CardFooter>
       </Card>
 
-      {/* Two-factor Authentication Card */}
       <Card>
         <CardHeader>
           <div className="mb-4">
@@ -121,7 +118,6 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      {/* Form Example */}
       <Card>
         <CardHeader>
           <CardTitle>Formulário</CardTitle>
@@ -154,7 +150,6 @@ export default function Home() {
         </CardFooter>
       </Card>
 
-      {/* Status Badges */}
       <Card>
         <CardHeader>
           <CardTitle>Status</CardTitle>
@@ -176,7 +171,6 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      {/* Buttons Example */}
       <Card>
         <CardHeader>
           <CardTitle>Botões</CardTitle>
@@ -202,7 +196,6 @@ export default function Home() {
 
   const renderDashboardContent = () => (
     <div className="space-y-6">
-      {/* Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <MetricCard
           title="Total de Vendas"
@@ -231,7 +224,6 @@ export default function Home() {
         />
       </div>
 
-      {/* Charts and Data */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -458,7 +450,6 @@ export default function Home() {
 
   const renderMarketplaceContent = () => (
     <div className="space-y-6 w-full overflow-x-hidden">
-      {/* Header com busca e filtros */}
       <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between w-full">
         <div className="flex-1 w-full min-w-0 sm:max-w-md">
           <Input 
@@ -481,9 +472,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Grid de Produtos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full">
-        {/* Produto 1 */}
         <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
           <div className="h-32 sm:h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center flex-shrink-0">
             <div className="text-4xl sm:text-6xl">📱</div>
@@ -524,7 +513,6 @@ export default function Home() {
           </CardFooter>
         </Card>
 
-        {/* Produto 2 */}
         <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
           <div className="h-32 sm:h-48 bg-gradient-to-br from-green-500/20 to-green-500/5 flex items-center justify-center flex-shrink-0">
             <div className="text-4xl sm:text-6xl">👕</div>
@@ -565,7 +553,6 @@ export default function Home() {
           </CardFooter>
         </Card>
 
-        {/* Produto 3 */}
         <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
           <div className="h-32 sm:h-48 bg-gradient-to-br from-purple-500/20 to-purple-500/5 flex items-center justify-center flex-shrink-0">
             <div className="text-4xl sm:text-6xl">📚</div>
@@ -606,7 +593,6 @@ export default function Home() {
           </CardFooter>
         </Card>
 
-        {/* Produto 4 */}
         <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
           <div className="h-32 sm:h-48 bg-gradient-to-br from-blue-500/20 to-blue-500/5 flex items-center justify-center flex-shrink-0">
             <div className="text-4xl sm:text-6xl">🎧</div>
@@ -647,7 +633,6 @@ export default function Home() {
           </CardFooter>
         </Card>
 
-        {/* Produto 5 */}
         <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
           <div className="h-32 sm:h-48 bg-gradient-to-br from-orange-500/20 to-orange-500/5 flex items-center justify-center flex-shrink-0">
             <div className="text-4xl sm:text-6xl">⌚</div>
@@ -688,7 +673,6 @@ export default function Home() {
           </CardFooter>
         </Card>
 
-        {/* Produto 6 */}
         <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full w-full">
           <div className="h-32 sm:h-48 bg-gradient-to-br from-pink-500/20 to-pink-500/5 flex items-center justify-center flex-shrink-0">
             <div className="text-4xl sm:text-6xl">💻</div>
@@ -730,7 +714,6 @@ export default function Home() {
         </Card>
       </div>
 
-      {/* Carrinho de Compras */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
         <div className="lg:col-span-2 w-full">
           <Card>
@@ -813,7 +796,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
       <div className="w-full border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-12 md:pt-2 md:pb-16">
           <div className="max-w-3xl mx-auto text-center">
@@ -853,7 +835,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Features Section - Timeline Vertical */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="space-y-10">
           <div className="flex gap-6 md:gap-8 items-start">
@@ -900,10 +881,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Component Examples Section - Showcase Style */}
       <div className="border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-          {/* Header */}
           <div className="mb-8">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
               <div>
@@ -917,7 +896,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tabs em formato de botões grandes */}
             <div className="flex flex-wrap gap-3">
               {tabs.map((tab) => (
                 <button
@@ -938,7 +916,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Conteúdo dos Exemplos */}
           <div className="bg-background rounded-2xl p-6 md:p-8 border border-border shadow-xl">
             {renderContent()}
           </div>

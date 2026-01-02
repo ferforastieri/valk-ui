@@ -13,7 +13,6 @@ export default function Docs() {
         </p>
       </div>
 
-      {/* Aviso de Customização */}
       <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 md:p-6">
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 mt-0.5">
@@ -30,7 +29,6 @@ export default function Docs() {
         </div>
       </div>
 
-      {/* Instalação */}
       <section className="bg-card border rounded-lg p-4 md:p-6 space-y-5">
         <h2 className="text-2xl font-bold text-foreground">{t('docs.installation')}</h2>
         
@@ -74,7 +72,6 @@ export default function Docs() {
 
       </section>
 
-      {/* Uso Básico */}
       <section className="bg-card border rounded-lg p-6 space-y-6">
         <h2 className="text-2xl font-bold text-foreground">{t('docs.basicUsage')}</h2>
         
@@ -98,7 +95,6 @@ export default function Docs() {
 
       </section>
 
-      {/* Requisitos */}
       <section className="bg-card border rounded-lg p-6 space-y-6">
         <h2 className="text-2xl font-bold text-foreground">{t('docs.requirements')}</h2>
         

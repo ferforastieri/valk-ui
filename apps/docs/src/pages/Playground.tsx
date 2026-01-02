@@ -1085,13 +1085,13 @@ export default function Playground() {
           <Accordion
             type="multiple"
             items={Object.entries(tailwindColors).map(([colorName, shades]) => {
-              const previewShades = ['50', '300', '500', '700', '950']
+              const previewShades: Array<'50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '950'> = ['50', '300', '500', '700', '950']
               const previewColors = previewShades.map(shade => ({
                 shade,
-                color: shades[shade as keyof typeof shades]
+                color: shades[shade]
               })).filter(item => item.color)
               
-              return {
+              return {  
                 value: colorName,
                 trigger: (
                   <div className="flex items-center gap-3 w-full">
