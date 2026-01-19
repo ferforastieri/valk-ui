@@ -4,6 +4,7 @@ import { Navigation, ThemeToggle } from '@/components'
 import { cn } from '@/lib'
 import { useTranslation } from 'react-i18next'
 import { useCommandPalette } from './CommandPalette'
+import Footer from './Footer'
 import { 
   MagnifyingGlassIcon,
   DocumentTextIcon,
@@ -294,6 +295,8 @@ function LayoutContent({ children }: LayoutProps) {
       )}>
         {children}
       </main>
+
+      <Footer />
     </div>
   )
 }

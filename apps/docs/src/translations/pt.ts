@@ -116,5 +116,11 @@ export default {
     exampleLoadedDesc: 'Exemplo "{name}" carregado com sucesso',
     resetSuccess: 'Código resetado para o padrão',
   },
+  footer: {
+    product: 'Produto',
+    resources: 'Recursos',
+    legal: 'Legal',
+    allRightsReserved: 'Todos os direitos reservados.',
+  },
 }
 
