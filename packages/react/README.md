@@ -7,115 +7,115 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=for-the-badge&logo=typescript)
 ![React](https://img.shields.io/badge/React-18%20%7C%2019-blue?style=for-the-badge&logo=react)
 
-**Biblioteca moderna de componentes UI para React com TypeScript**
+**Modern UI component library for React with TypeScript**
 
-[Documentação](#-documentação) • [Instalação](#-instalação) • [Componentes](#-componentes-disponíveis) • [CLI](#-usando-o-cli)
+[Documentation](#-documentation) • [Installation](#-installation) • [Components](#-available-components) • [CLI](#-using-the-cli)
 
 </div>
 
 ---
 
-## ✨ Características
+## ✨ Features
 
-- 🎨 **Design Moderno**: Componentes bonitos e consistentes com Tailwind CSS
-- ⚛️ **React 18 & 19**: Suporte para React 18 e React 19
-- 📘 **TypeScript**: Totalmente tipado e pronto para produção
-- 🌙 **Dark Mode**: Suporte nativo a modo escuro
-- 📦 **CLI Interativo**: Instale apenas os componentes que você precisa
-- 🎯 **Zero Dependências Pesadas**: Componentes leves e performáticos
-- ♿ **Acessível**: Construído com acessibilidade em mente
-- 🔧 **Customizável**: Fácil de personalizar e estender
+- 🎨 **Modern Design**: Beautiful and consistent components with Tailwind CSS
+- ⚛️ **React 18 & 19**: Support for React 18 and React 19
+- 📘 **TypeScript**: Fully typed and production-ready
+- 🌙 **Dark Mode**: Native dark mode support
+- 📦 **Interactive CLI**: Install only the components you need
+- 🎯 **Zero Heavy Dependencies**: Lightweight and performant components
+- ♿ **Accessible**: Built with accessibility in mind
+- 🔧 **Customizable**: Easy to customize and extend
 
-## 🚀 Instalação
+## 🚀 Installation
 
-### Instalar o pacote
+### Install the package
 
 ```bash
 npm install ui-valk
-# ou
+# or
 pnpm add ui-valk
-# ou
+# or
 yarn add ui-valk
 ```
 
-### Instalar dependências peer
+### Install peer dependencies
 
 ```bash
 npm install react react-dom @heroicons/react @headlessui/react
 ```
 
-Para componentes de gráficos (opcional):
+For chart components (optional):
 ```bash
 npm install chart.js react-chartjs-2
 ```
 
-## 📦 Usando o CLI
+## 📦 Using the CLI
 
-O Valk UI inclui um CLI interativo para instalar componentes diretamente no seu projeto:
+Valk UI includes an interactive CLI to install components directly into your project:
 
 ```bash
 npx ui-valk
 ```
 
-O CLI permite:
-- ✅ Escolher idioma (PT, EN, ES)
-- ✅ Instalar por categoria ou individualmente
-- ✅ Definir diretório de instalação personalizado
-- ✅ Configuração automática do Tailwind CSS
+The CLI allows you to:
+- ✅ Choose language (PT, EN, ES)
+- ✅ Install by category or individually
+- ✅ Set custom installation directory
+- ✅ Automatic Tailwind CSS configuration
 
-## 🎨 Componentes Disponíveis
+## 🎨 Available Components
 
-### 📝 Formulários (`forms/`)
+### 📝 Forms (`forms/`)
 
-- **Button** - Botões com múltiplas variantes (primary, secondary, outline, ghost, destructive) e tamanhos
-- **Input** - Campos de entrada com suporte a ícones, labels e validação
-- **Select** - Seletor customizado com busca e modo múltiplo
-- **Checkbox** - Checkbox customizado com label e descrição
-- **Toggle** - Switch toggle com diferentes tamanhos
-- **DatePicker** - Seletor de data com calendário interativo
+- **Button** - Buttons with multiple variants (primary, secondary, outline, ghost, destructive) and sizes
+- **Input** - Input fields with icon support, labels, and validation
+- **Select** - Custom selector with search and multiple mode
+- **Checkbox** - Custom checkbox with label and description
+- **Toggle** - Switch toggle with different sizes
+- **DatePicker** - Date selector with interactive calendar
 
 ### 💬 Feedback (`feedback/`)
 
-- **Modal** - Modal responsivo com diferentes tamanhos
-- **Dialog** - Diálogo acessível com overlay
-- **Toast** - Sistema de notificações toast
-- **ToastContext** - Context provider para toasts
-- **StatusBadge** - Badges para indicar status
-- **Badge** - Badge genérico customizável
-- **ProgressBar** - Barra de progresso com diferentes cores
-- **DropdownMenu** - Menu dropdown acessível
-- **Command** - Command palette (busca de comandos)
-- **ThemeToggle** - Toggle para alternar tema claro/escuro
+- **Modal** - Responsive modal with different sizes
+- **Dialog** - Accessible dialog with overlay
+- **Toast** - Toast notification system
+- **ToastContext** - Context provider for toasts
+- **StatusBadge** - Badges to indicate status
+- **Badge** - Generic customizable badge
+- **ProgressBar** - Progress bar with different colors
+- **DropdownMenu** - Accessible dropdown menu
+- **Command** - Command palette (command search)
+- **ThemeToggle** - Toggle to switch light/dark theme
 
 ### 📐 Layout (`layout/`)
 
-- **Card** - Card com header, content e footer
-- **Avatar** - Avatar com fallback para iniciais
-- **MetricCard** - Card para exibir métricas e KPIs
-- **PaginatedTable** - Tabela paginada com busca e ordenação
-- **Navigation** - Componente de navegação
-- **Sidebar** - Sidebar colapsável
-- **Tabs** - Sistema de abas
-- **Accordion** - Accordion expansível
-- **Separator** - Separador visual
-- **Sheet** - Painel lateral (drawer)
-- **DocsSidebar** - Sidebar para documentação
+- **Card** - Card with header, content and footer
+- **Avatar** - Avatar with fallback to initials
+- **MetricCard** - Card to display metrics and KPIs
+- **PaginatedTable** - Paginated table with search and sorting
+- **Navigation** - Navigation component
+- **Sidebar** - Collapsible sidebar
+- **Tabs** - Tab system
+- **Accordion** - Expandable accordion
+- **Separator** - Visual separator
+- **Sheet** - Side panel (drawer)
+- **DocsSidebar** - Sidebar for documentation
 
-### 📊 Gráficos (`charts/`)
+### 📊 Charts (`charts/`)
 
-- **BarChart** - Gráfico de barras comparativo
-- **DonutChart** - Gráfico de rosca (donut)
-- **LineChart** - Gráfico de linha temporal
+- **BarChart** - Comparative bar chart
+- **DonutChart** - Donut chart
+- **LineChart** - Temporal line chart
 
-## 🎯 Uso Básico
+## 🎯 Basic Usage
 
-### Importar componentes
+### Import components
 
 ```tsx
 import { Button, Input, Modal, Card } from 'ui-valk'
 ```
 
-### Exemplo completo
+### Complete example
 
 ```tsx
 import { Button, Input, Modal, Card, CardHeader, CardTitle, CardContent } from 'ui-valk'
@@ -127,7 +127,7 @@ function App() {
     <div className="p-8">
       <Card>
         <CardHeader>
-          <CardTitle>Bem-vindo ao Valk UI</CardTitle>
+          <CardTitle>Welcome to Valk UI</CardTitle>
         </CardHeader>
         <CardContent>
           <Input 
@@ -140,7 +140,7 @@ function App() {
             size="lg"
             onClick={() => setIsOpen(true)}
           >
-            Abrir Modal
+            Open Modal
           </Button>
         </CardContent>
       </Card>
@@ -148,36 +148,36 @@ function App() {
       <Modal 
         isOpen={isOpen} 
         onClose={() => setIsOpen(false)} 
-        title="Título do Modal"
+        title="Modal Title"
       >
-        <p>Conteúdo do modal aqui</p>
+        <p>Modal content here</p>
       </Modal>
     </div>
   )
 }
 ```
 
-## 🛠️ Requisitos
+## 🛠️ Requirements
 
 - **React**: ^18.0.0 || ^19.0.0
 - **React DOM**: ^18.0.0 || ^19.0.0
-- **TypeScript**: ^5.0.0 (recomendado)
+- **TypeScript**: ^5.0.0 (recommended)
 - **Tailwind CSS**: ^3.0.0
 - **Node.js**: ^18.0.0
 
-### Dependências Peer
+### Peer Dependencies
 
-- `@heroicons/react`: ^2.0.0 (para ícones)
-- `@headlessui/react`: ^2.0.0 (para componentes acessíveis)
-- `react-router-dom`: ^7.0.0 (opcional, para navegação)
+- `@heroicons/react`: ^2.0.0 (for icons)
+- `@headlessui/react`: ^2.0.0 (for accessible components)
+- `react-router-dom`: ^7.0.0 (optional, for navigation)
 
-### Dependências Opcionais
+### Optional Dependencies
 
-- `chart.js`: ^4.0.0 e `react-chartjs-2`: ^5.0.0 (para componentes de gráficos)
+- `chart.js`: ^4.0.0 and `react-chartjs-2`: ^5.0.0 (for chart components)
 
-## ⚙️ Configuração do Tailwind CSS
+## ⚙️ Tailwind CSS Configuration
 
-O Valk UI requer Tailwind CSS. Adicione ao seu `tailwind.config.js`:
+Valk UI requires Tailwind CSS. Add to your `tailwind.config.js`:
 
 ```js
 module.exports = {
@@ -187,14 +187,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // Suas customizações
+      // Your customizations
     },
   },
   plugins: [],
 }
 ```
 
-E importe o CSS no seu arquivo principal:
+And import the CSS in your main file:
 
 ```css
 @tailwind base;
@@ -202,34 +202,34 @@ E importe o CSS no seu arquivo principal:
 @tailwind utilities;
 ```
 
-## 📖 Documentação Completa
+## 📖 Complete Documentation
 
-Para documentação completa com exemplos, acesse:
-- [Documentação Online](https://valk-ui.dev) (em breve)
+For complete documentation with examples, visit:
+- [Online Documentation](https://valk-ui.dev) (coming soon)
 - [GitHub Repository](https://github.com/ferforastieri/valk-ui)
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-Contribuições são bem-vindas! Por favor:
+Contributions are welcome! Please:
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📝 Licença
+## 📝 License
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Agradecimentos
+## 🙏 Acknowledgments
 
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário
-- [Heroicons](https://heroicons.com/) - Ícones SVG
-- [Chart.js](https://www.chartjs.org/) - Biblioteca de gráficos
-- [Headless UI](https://headlessui.com/) - Componentes acessíveis
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Heroicons](https://heroicons.com/) - SVG icons
+- [Chart.js](https://www.chartjs.org/) - Chart library
+- [Headless UI](https://headlessui.com/) - Accessible components
 
-## 📧 Suporte
+## 📧 Support
 
 - **Issues**: [GitHub Issues](https://github.com/ferforastieri/valk-ui/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/ferforastieri/valk-ui/discussions)
@@ -238,9 +238,8 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 <div align="center">
 
-Feito com ❤️ por [Fernando Forastieri](https://github.com/ferforastieri)
+Made with ❤️ by [Fernando Forastieri](https://github.com/ferforastieri)
 
-⭐ Se este projeto foi útil para você, considere dar uma estrela!
+⭐ If this project was useful to you, consider giving it a star!
 
 </div>
-
