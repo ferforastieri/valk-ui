@@ -108,7 +108,7 @@ function CommandPaletteContent() {
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh]">
+    <div className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-16 md:justify-end md:pr-6">
       <div className="fixed inset-0 bg-black/50" onClick={() => setOpen(false)} />
       <div className="relative z-50 w-full max-w-lg">
         <Command
