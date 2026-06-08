@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "valk-ui": "./cli/index.js"
+    "valk-ui": "cli/index.js"
   },
   "files": [
     "dist",
