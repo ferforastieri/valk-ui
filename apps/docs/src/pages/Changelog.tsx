@@ -47,21 +47,6 @@ export default function Changelog() {
           (release) => !release.draft && !release.prerelease
         )
 
-        const today = new Date().toISOString().split('T')[0]
-        const cutoffDate = '2026-01-02'
-        
-        const fixedDates: Record<string, string> = {
-          '1.0.0': '2025-11-28',
-          '1.0.1': '2025-11-28',
-          '1.0.2': '2025-11-28',
-          '1.1.0': '2025-12-01',
-          '1.2.0': '2025-12-06',
-          '1.3.0': '2025-12-07',
-          '1.4.0': '2025-12-07',
-          '1.4.1': '2025-12-07',
-          '1.4.2': '2025-12-07',
-        }
-
         const formattedVersions: Version[] = publishedReleases.map((release) => {
           const version = release.tag_name.replace(/^v/, '')
           const versionParts = version.split('.')
@@ -74,9 +59,7 @@ export default function Changelog() {
 
           const changes = parseReleaseBody(release.body || release.name || '')
           
-          const releaseDate = new Date(release.published_at).toISOString().split('T')[0]
-          const useFixedDate = today <= cutoffDate && fixedDates[version]
-          const displayDate = useFixedDate ? fixedDates[version] : releaseDate
+          const displayDate = new Date(release.published_at).toISOString().split('T')[0]
 
           return {
             version,
