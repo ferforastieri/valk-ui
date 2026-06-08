@@ -2,5 +2,5 @@ export * from './forms'
 export * from './feedback'
 export * from './layout'
 export * from './charts'
+export * from './icons'
 export { cn } from '../lib'
-

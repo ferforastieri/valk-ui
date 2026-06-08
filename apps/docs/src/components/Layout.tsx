@@ -12,7 +12,7 @@ import {
   CodeBracketIcon,
   ClockIcon,
   HomeIcon,
-} from '@heroicons/react/24/outline'
+} from '@/components'
 
 interface LayoutProps {
   children: React.ReactNode

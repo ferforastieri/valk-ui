@@ -1,5 +1,5 @@
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
-import { forwardRef, useState, useEffect, useRef } from 'react'
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons'
+import { forwardRef, useState, useEffect } from 'react'
 import { cn } from '../../lib'
 import { Button } from './button'
 
@@ -16,9 +16,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     const dateId = id || label?.toLowerCase().replace(/\s+/g, '-')
     const [displayValue, setDisplayValue] = useState('')
     const [inputValue, setInputValue] = useState('')
-    const [isOpen, setIsOpen] = useState(false)
     const [currentMonth, setCurrentMonth] = useState(new Date())
-    const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
       if (value) {
@@ -32,19 +30,6 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
         setInputValue('')
       }
     }, [value])
-
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-          setIsOpen(false)
-        }
-      }
-
-      if (isOpen) {
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-      }
-    }, [isOpen])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const input = e.target.value.replace(/\D/g, '')
@@ -78,7 +63,9 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       setDisplayValue(`${day}/${month}/${year}`)
       setInputValue(isoDate)
       onChange?.(isoDate)
-      setIsOpen(false)
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur()
+      }
     }
 
     const renderCalendar = () => {
@@ -120,7 +107,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     }
 
     return (
-      <div className="space-y-2" ref={containerRef}>
+      <div className="space-y-2">
         {label && (
           <label
             htmlFor={dateId}
@@ -129,13 +116,20 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             {label}
           </label>
         )}
-        <div className="relative">
+        <div className="group/date-picker relative" data-date-picker-root>
           <input
             type="text"
             id={dateId}
             placeholder="dd/mm/aaaa"
             value={displayValue}
             onChange={handleInputChange}
+            onMouseDown={(event) => {
+              const root = event.currentTarget.closest('[data-date-picker-root]')
+              if (root && document.activeElement instanceof HTMLElement && root.contains(document.activeElement)) {
+                event.preventDefault()
+                document.activeElement.blur()
+              }
+            }}
             className={cn(
               'flex h-10 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground',
               'focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent',
@@ -150,15 +144,18 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           />
           <button
             type="button"
-            onClick={() => setIsOpen(!isOpen)}
+            onMouseDown={(event) => {
+              const root = event.currentTarget.closest('[data-date-picker-root]')
+              if (root && document.activeElement instanceof HTMLElement && root.contains(document.activeElement)) {
+                event.preventDefault()
+                document.activeElement.blur()
+              }
+            }}
             className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <CalendarIcon className="h-4 w-4" />
           </button>
-        </div>
-        
-        {isOpen && (
-          <div className="absolute z-50 mt-1 w-64 rounded-xl border border-border bg-popover shadow-lg right-0">
+          <div className="absolute z-50 right-0 top-full mt-1 hidden w-64 rounded-xl border border-border bg-popover shadow-lg group-has-[:focus-within]/date-picker:block">
             <div className="flex items-center justify-between border-b border-border p-2">
               <Button
                 variant="ghost"
@@ -203,7 +200,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               </div>
             </div>
           </div>
-        )}
+        </div>
         
         {error && (
           <p className="text-sm text-destructive">{error}</p>
@@ -216,4 +213,3 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
 DatePicker.displayName = 'DatePicker'
 
 export { DatePicker }
-

@@ -41,12 +41,7 @@ yarn add ui-valk
 ### Install peer dependencies
 
 ```bash
-npm install react react-dom @heroicons/react @headlessui/react
-```
-
-For chart components (optional):
-```bash
-npm install chart.js react-chartjs-2
+npm install react
 ```
 
 ## 📦 Using the CLI
@@ -160,20 +155,13 @@ function App() {
 ## 🛠️ Requirements
 
 - **React**: ^18.0.0 || ^19.0.0
-- **React DOM**: ^18.0.0 || ^19.0.0
 - **TypeScript**: ^5.0.0 (recommended)
 - **Tailwind CSS**: ^3.0.0
 - **Node.js**: ^18.0.0
 
 ### Peer Dependencies
 
-- `@heroicons/react`: ^2.0.0 (for icons)
-- `@headlessui/react`: ^2.0.0 (for accessible components)
-- `react-router-dom`: ^7.0.0 (optional, for navigation)
-
-### Optional Dependencies
-
-- `chart.js`: ^4.0.0 and `react-chartjs-2`: ^5.0.0 (for chart components)
+- `react`: ^18.0.0 || ^19.0.0
 
 ## ⚙️ Tailwind CSS Configuration
 
@@ -205,7 +193,7 @@ And import the CSS in your main file:
 ## 📖 Complete Documentation
 
 For complete documentation with examples, visit:
-- [Online Documentation](https://valk-ui.dev) (coming soon)
+- [Online Documentation](https://valkui.vercel.app/)
 - [GitHub Repository](https://github.com/ferforastieri/valk-ui)
 
 ## 🤝 Contributing
@@ -224,10 +212,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Heroicons](https://heroicons.com/) - SVG icons
-- [Chart.js](https://www.chartjs.org/) - Chart library
-- [Headless UI](https://headlessui.com/) - Accessible components
+- [Tailwind CSS](https://valkui.vercel.app/) - Utility-first CSS framework
 
 ## 📧 Support
 

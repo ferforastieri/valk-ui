@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { StatusBadge, MetricCard } from '@/components'
-import { SparklesIcon } from '@heroicons/react/24/outline'
+import { SparklesIcon } from '@/components'
 import { useTranslation } from 'react-i18next'
 
 interface GitHubRelease {

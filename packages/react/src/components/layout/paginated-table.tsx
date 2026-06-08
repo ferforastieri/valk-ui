@@ -1,6 +1,6 @@
 import { forwardRef, useState, useEffect, useRef } from 'react'
 import { cn } from '../../lib'
-import { ChevronLeftIcon, ChevronRightIcon, MagnifyingGlassIcon, ArrowDownTrayIcon, XMarkIcon, ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
+import { ChevronLeftIcon, ChevronRightIcon, MagnifyingGlassIcon, ArrowDownTrayIcon, XMarkIcon, ChevronUpIcon, ChevronDownIcon } from '../icons'
 
 export interface Column<T extends Record<string, string | number | boolean | null | undefined> = Record<string, string | number | boolean | null | undefined>> {
   key: string
@@ -425,4 +425,3 @@ const PaginatedTable = forwardRef<HTMLDivElement, PaginatedTableProps>(
 PaginatedTable.displayName = 'PaginatedTable'
 
 export { PaginatedTable }
-

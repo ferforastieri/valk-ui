@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from '@heroicons/react/24/outline'
+import { CheckCircleIcon } from '@/components'
 import { useTranslation } from 'react-i18next'
 
 export default function Docs() {
@@ -124,4 +124,3 @@ export default function Docs() {
     </div>
   )
 }
-

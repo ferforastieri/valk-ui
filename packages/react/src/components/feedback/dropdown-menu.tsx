@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import { cn } from '../../lib'
 
 export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -11,44 +11,14 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> 
 
 const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
   ({ className, trigger, children, align = 'left', side = 'bottom', onOpenChange, ...props }, ref) => {
-    const [isOpen, setIsOpen] = useState(false)
-    const menuRef = useRef<HTMLDivElement>(null)
-    const triggerRef = useRef<HTMLDivElement>(null)
-
-    const handleOpenChange = (open: boolean) => {
-      setIsOpen(open)
-      onOpenChange?.(open)
-    }
-
     const triggerWithState = React.isValidElement(trigger)
       ? React.cloneElement(trigger, {
           className: cn(
             trigger.props.className,
-            isOpen && 'bg-accent'
+            'group-has-[:focus-within]/dropdown:bg-accent'
           )
         } as any)
       : trigger
-
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (
-          menuRef.current &&
-          triggerRef.current &&
-          !menuRef.current.contains(event.target as Node) &&
-          !triggerRef.current.contains(event.target as Node)
-        ) {
-          handleOpenChange(false)
-        }
-      }
-
-      if (isOpen) {
-        document.addEventListener('mousedown', handleClickOutside)
-      }
-
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside)
-      }
-    }, [isOpen])
 
     const alignClasses = {
       left: 'left-0',
@@ -66,7 +36,9 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
         return React.cloneElement(child, {
           onClick: (e: React.MouseEvent) => {
             child.props.onClick?.(e)
-            handleOpenChange(false)
+            if (document.activeElement instanceof HTMLElement) {
+              document.activeElement.blur()
+            }
           }
         } as any)
       }
@@ -74,22 +46,29 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     })
 
     return (
-      <div ref={ref} className={cn('relative inline-block', className)} {...props}>
-        <div ref={triggerRef} onClick={() => handleOpenChange(!isOpen)}>
+      <div
+        ref={ref}
+        className={cn('group/dropdown relative inline-block', className)}
+        onFocus={() => onOpenChange?.(true)}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            onOpenChange?.(false)
+          }
+        }}
+        {...props}
+      >
+        <div tabIndex={0}>
           {triggerWithState}
         </div>
-        {isOpen && (
           <div
-            ref={menuRef}
             className={cn(
-              'absolute z-50 min-w-[11rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
+              'absolute z-50 hidden min-w-[11rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md group-has-[:focus-within]/dropdown:block',
               alignClasses[align],
               sideClasses[side]
             )}
           >
             {childrenWithClose}
           </div>
-        )}
       </div>
     )
   }

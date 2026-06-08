@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, forwardRef } from 'react'
 import { cn } from '../../lib'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon } from '../icons'
 
 export interface CommandItem {
   id: string
@@ -136,4 +136,3 @@ const Command = forwardRef<HTMLDivElement, CommandProps>(
 Command.displayName = 'Command'
 
 export { Command }
-

@@ -1,5 +1,5 @@
-import { CheckIcon } from '@heroicons/react/24/outline'
-import { forwardRef, useState } from 'react'
+import { CheckIcon } from '../icons'
+import { forwardRef } from 'react'
 import { cn } from '../../lib'
 
 export interface CheckboxProps
@@ -26,19 +26,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     ref
   ) => {
     const checkboxId = id || label?.toLowerCase().replace(/\s+/g, '-')
-    const [internalChecked, setInternalChecked] = useState(
-      props.defaultChecked || false
-    )
-
-    const isChecked =
-      controlledChecked !== undefined ? controlledChecked : internalChecked
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (controlledChecked === undefined) {
-        setInternalChecked(e.target.checked)
-      }
-      onChange?.(e)
-    }
 
     return (
       <div className="space-y-2">
@@ -50,29 +37,24 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             <input
               type="checkbox"
               id={checkboxId}
-              className="sr-only"
+              className="peer sr-only"
               ref={ref}
-              checked={isChecked}
-              onChange={handleChange}
+              checked={controlledChecked}
+              onChange={onChange}
               {...props}
             />
             <div
               className={cn(
                 'w-5 h-5 rounded border-2 transition-all duration-200 flex items-center justify-center pointer-events-none',
-                !isChecked && 'border-border bg-background',
-                isChecked && 'bg-primary border-primary',
+                'border-border bg-background peer-checked:bg-primary peer-checked:border-primary peer-checked:[&>svg]:opacity-100',
                 'focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2',
                 props.disabled && 'opacity-50',
-                error && !isChecked && 'border-destructive',
-                error && isChecked && 'bg-destructive border-destructive',
+                error && 'border-destructive peer-checked:bg-destructive peer-checked:border-destructive',
                 className
               )}
             >
               <CheckIcon
-                className={cn(
-                  'w-3 h-3 text-primary-foreground transition-opacity duration-200',
-                  isChecked ? 'opacity-100' : 'opacity-0'
-                )}
+                className="w-3 h-3 text-primary-foreground opacity-0 transition-opacity duration-200"
               />
             </div>
           </label>
@@ -119,4 +101,3 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 Checkbox.displayName = 'Checkbox'
 
 export { Checkbox }
-

@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '../../lib'
 
 export interface ToggleProps
@@ -9,16 +9,8 @@ export interface ToggleProps
 }
 
 const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
-  ({ className, label, description, size = 'md', id, checked, onChange, ...props }, ref) => {
+  ({ className, label, description, size = 'md', id, ...props }, ref) => {
     const toggleId = id || label?.toLowerCase().replace(/\s+/g, '-')
-    const [isChecked, setIsChecked] = useState(checked || false)
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setIsChecked(e.target.checked)
-      onChange?.(e)
-    }
-
-    const isActive = checked !== undefined ? checked : isChecked
 
     return (
       <div className="flex items-center space-x-3">
@@ -30,18 +22,16 @@ const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
             size === 'md' && 'w-11 h-6', 
             size === 'lg' && 'w-14 h-7',
             'border-border bg-muted',
+            'has-[:checked]:bg-foreground has-[:checked]:border-foreground',
             props.disabled && 'opacity-50 cursor-not-allowed',
-            isActive && 'bg-foreground border-foreground',
             className
           )}
         >
           <input
             type="checkbox"
             id={toggleId}
-            className="sr-only"
+            className="peer sr-only"
             ref={ref}
-            checked={isActive}
-            onChange={handleChange}
             {...props}
           />
           <div
@@ -51,9 +41,9 @@ const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
               size === 'md' && 'w-5 h-5',
               size === 'lg' && 'w-6 h-6',
               'left-0.5',
-              isActive && size === 'sm' && 'translate-x-4',
-              isActive && size === 'md' && 'translate-x-5',
-              isActive && size === 'lg' && 'translate-x-7'
+              size === 'sm' && 'peer-checked:translate-x-4',
+              size === 'md' && 'peer-checked:translate-x-5',
+              size === 'lg' && 'peer-checked:translate-x-7'
             )}
           />
         </label>
@@ -91,4 +81,3 @@ const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
 Toggle.displayName = 'Toggle'
 
 export { Toggle }
-

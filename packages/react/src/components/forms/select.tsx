@@ -1,5 +1,5 @@
-import { ChevronDownIcon, XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import { forwardRef, useState, useRef, useEffect } from 'react'
+import { ChevronDownIcon, XMarkIcon, MagnifyingGlassIcon } from '../icons'
+import { forwardRef, useState, useEffect } from 'react'
 import { cn } from '../../lib'
 
 export interface SelectOption {
@@ -39,11 +39,8 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     id,
     required = false
   }, ref) => {
-    const [isOpen, setIsOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedValues, setSelectedValues] = useState<string[]>([])
-    const selectRef = useRef<HTMLDivElement>(null)
-    const inputRef = useRef<HTMLInputElement>(null)
     
     const selectId = id || label?.toLowerCase().replace(/\s+/g, '-')
 
@@ -66,21 +63,14 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       selectedValues.includes(option.value)
     )
 
-    const handleToggle = () => {
-      if (!disabled) {
-        setIsOpen(!isOpen)
-        if (!isOpen && searchable) {
-          setTimeout(() => inputRef.current?.focus(), 0)
-        }
-      }
-    }
-
     const handleSelect = (optionValue: string) => {
       if (mode === 'single') {
         setSelectedValues([optionValue])
         onChange?.(optionValue)
-        setIsOpen(false)
         setSearchTerm('')
+        if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur()
+        }
       } else {
         const newValues = selectedValues.includes(optionValue)
           ? selectedValues.filter(v => v !== optionValue)
@@ -101,20 +91,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       onChange?.(mode === 'single' ? '' : [])
     }
 
-
-    
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-          setIsOpen(false)
-          setSearchTerm('')
-        }
-      }
-
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
-
     return (
       <div className="space-y-2 w-full" ref={ref}>
         {label && (
@@ -127,17 +103,34 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
           </label>
         )}
         
-        <div className="relative w-full" ref={selectRef}>
+        <div
+          className="group/select relative w-full"
+          data-select-root
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setSearchTerm('')
+            }
+          }}
+        >
           <div
+            tabIndex={disabled ? undefined : 0}
             className={cn(
               'flex h-10 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground cursor-pointer transition-all duration-200',
               'focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent',
               'disabled:cursor-not-allowed disabled:opacity-50',
               error && 'border-destructive focus:ring-destructive',
-              isOpen && 'ring-2 ring-foreground border-transparent',
+              'group-has-[:focus-within]/select:ring-2 group-has-[:focus-within]/select:ring-foreground group-has-[:focus-within]/select:border-transparent',
+              disabled && 'pointer-events-none opacity-50',
               className
             )}
-            onClick={handleToggle}
+            onMouseDown={(event) => {
+              if ((event.target as HTMLElement).closest('[data-select-action]')) return
+              const root = event.currentTarget.closest('[data-select-root]')
+              if (root && document.activeElement instanceof HTMLElement && root.contains(document.activeElement)) {
+                event.preventDefault()
+                document.activeElement.blur()
+              }
+            }}
           >
             <div className="flex-1 flex items-center gap-2 min-w-0">
               {selectedOptions.length === 0 ? (
@@ -156,6 +149,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                       {option.label}
                       <button
                         type="button"
+                        data-select-action
                         onClick={(e) => {
                           e.stopPropagation()
                           handleRemove(option.value)
@@ -179,6 +173,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               {selectedValues.length > 0 && (
                 <button
                   type="button"
+                  data-select-action
                   onClick={(e) => {
                     e.stopPropagation()
                     handleClear()
@@ -189,22 +184,17 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                 </button>
               )}
               <ChevronDownIcon 
-                className={cn(
-                  "h-4 w-4 text-muted-foreground transition-transform duration-200",
-                  isOpen && "rotate-180"
-                )} 
+                className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-has-[:focus-within]/select:rotate-180"
               />
             </div>
           </div>
 
-          {isOpen && (
-            <div className="absolute z-50 w-full mt-1 bg-popover border border-border rounded-xl shadow-lg max-h-60 overflow-hidden mb-2">
+            <div className="absolute z-50 mt-1 hidden w-full max-h-60 overflow-hidden rounded-xl border border-border bg-popover shadow-lg mb-2 group-has-[:focus-within]/select:block">
               {searchable && (
                 <div className="p-3 border-b border-border min-w-0">
                   <div className="flex items-center gap-2 min-w-0">
                     <MagnifyingGlassIcon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                     <input
-                      ref={inputRef}
                       type="text"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
@@ -255,7 +245,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                 )}
               </div>
             </div>
-          )}
         </div>
         
         {error && (
@@ -269,4 +258,3 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 Select.displayName = 'Select'
 
 export { Select }
-

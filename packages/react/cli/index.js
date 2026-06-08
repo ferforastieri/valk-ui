@@ -1,10 +1,137 @@
 #!/usr/bin/env node
 
-const inquirer = require('inquirer');
-const fs = require('fs-extra');
+const fs = require('fs/promises');
 const path = require('path');
-const chalk = require('chalk');
+const readline = require('readline/promises');
+const { stdin: input, stdout: output } = require('process');
 const translations = require('./translations');
+
+const rl = readline.createInterface({ input, output });
+
+function color(code) {
+  const paint = (value) => `\x1b[${code}m${value}\x1b[0m`;
+  paint.bold = (value) => `\x1b[${code};1m${value}\x1b[0m`;
+  return paint;
+}
+
+const terminal = {
+  blue: color(34),
+  cyan: color(36),
+  gray: color(90),
+  green: color(32),
+  red: color(31),
+  yellow: color(33),
+};
+
+async function pathExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function ensureDir(dirPath) {
+  await fs.mkdir(dirPath, { recursive: true });
+}
+
+async function copy(source, target) {
+  await fs.cp(source, target, { recursive: true });
+}
+
+async function askList(question) {
+  console.log(question.message);
+  question.choices.forEach((choice, index) => {
+    console.log(`  ${index + 1}. ${choice.name}`);
+  });
+
+  while (true) {
+    const answer = (await rl.question('> ')).trim();
+    const selectedIndex = Number(answer || '1') - 1;
+    const selected = question.choices[selectedIndex];
+
+    if (selected) {
+      return selected.value;
+    }
+
+    console.log(terminal.yellow('Invalid option. Try again.'));
+  }
+}
+
+async function askCheckbox(question) {
+  console.log(question.message);
+  question.choices.forEach((choice, index) => {
+    console.log(`  ${index + 1}. ${choice.name}`);
+  });
+  console.log(terminal.gray('  Use comma-separated numbers, or "all".'));
+
+  while (true) {
+    const answer = (await rl.question('> ')).trim().toLowerCase();
+
+    if (answer === 'all') {
+      return question.choices.map((choice) => choice.value);
+    }
+
+    const selectedValues = answer
+      .split(',')
+      .map((item) => Number(item.trim()) - 1)
+      .filter((index) => Number.isInteger(index) && question.choices[index])
+      .map((index) => question.choices[index].value);
+
+    if (selectedValues.length > 0 || answer === '') {
+      return selectedValues;
+    }
+
+    console.log(terminal.yellow('Invalid option. Try again.'));
+  }
+}
+
+async function askInput(question) {
+  while (true) {
+    const suffix = question.default ? ` (${question.default})` : '';
+    const answer = await rl.question(`${question.message}${suffix}: `);
+    const value = answer.trim() || question.default || '';
+    const validation = question.validate ? question.validate(value) : true;
+
+    if (validation === true) {
+      return value;
+    }
+
+    console.log(terminal.yellow(validation));
+  }
+}
+
+async function askConfirm(question) {
+  const defaultText = question.default ? 'Y/n' : 'y/N';
+  const answer = (await rl.question(`${question.message} (${defaultText}): `)).trim().toLowerCase();
+
+  if (!answer) {
+    return Boolean(question.default);
+  }
+
+  return answer === 'y' || answer === 'yes' || answer === 's' || answer === 'sim';
+}
+
+const prompts = {
+  async prompt(questions) {
+    const answers = {};
+
+    for (const question of questions) {
+      if (question.type === 'list') {
+        answers[question.name] = await askList(question);
+      } else if (question.type === 'checkbox') {
+        answers[question.name] = await askCheckbox(question);
+      } else if (question.type === 'confirm') {
+        answers[question.name] = await askConfirm(question);
+      } else {
+        answers[question.name] = await askInput(question);
+      }
+    }
+
+    return answers;
+  },
+};
 
 async function setupTailwindConfig(projectRoot, componentsPath, t) {
   const tailwindConfigPath = path.join(projectRoot, 'tailwind.config.js');
@@ -15,7 +142,7 @@ async function setupTailwindConfig(projectRoot, componentsPath, t) {
     ? relativeComponentsPath 
     : `./${relativeComponentsPath}/**/*.{js,ts,jsx,tsx}`;
 
-  if (await fs.pathExists(tailwindConfigPath)) {
+  if (await pathExists(tailwindConfigPath)) {
     const existingConfig = await fs.readFile(tailwindConfigPath, 'utf8');
     
     if (existingConfig.includes('border:') && existingConfig.includes('background:')) {
@@ -31,13 +158,13 @@ async function setupTailwindConfig(projectRoot, componentsPath, t) {
           }
         );
         await fs.writeFile(tailwindConfigPath, updatedConfig);
-        console.log(chalk.green(`✓ ${t.tailwindConfigUpdated}`));
+        console.log(terminal.green(`✓ ${t.tailwindConfigUpdated}`));
       } else {
-        console.log(chalk.gray(`  ${t.tailwindConfigExists}`));
+        console.log(terminal.gray(`  ${t.tailwindConfigExists}`));
       }
     } else {
-      console.log(chalk.yellow(`⚠️  ${t.tailwindConfigExistsButIncomplete}`));
-      console.log(chalk.gray(`  ${t.manualConfigRequired}`));
+      console.log(terminal.yellow(`⚠️  ${t.tailwindConfigExistsButIncomplete}`));
+      console.log(terminal.gray(`  ${t.manualConfigRequired}`));
     }
   } else {
     let configContent = await fs.readFile(tailwindConfigTemplate, 'utf8');
@@ -50,7 +177,7 @@ async function setupTailwindConfig(projectRoot, componentsPath, t) {
   ]`
     );
     await fs.writeFile(tailwindConfigPath, configContent);
-    console.log(chalk.green(`✓ ${t.tailwindConfigCreated}`));
+    console.log(terminal.green(`✓ ${t.tailwindConfigCreated}`));
   }
 }
 
@@ -65,7 +192,7 @@ async function setupGlobalCSS(projectRoot, t) {
 
   let cssFile = null;
   for (const file of possibleCssFiles) {
-    if (await fs.pathExists(file)) {
+    if (await pathExists(file)) {
       cssFile = file;
       break;
     }
@@ -78,7 +205,7 @@ async function setupGlobalCSS(projectRoot, t) {
     const existingContent = await fs.readFile(cssFile, 'utf8');
     
     if (existingContent.includes('--background:') && existingContent.includes('--foreground:')) {
-      console.log(chalk.gray(`  ${t.cssFileExists}`));
+      console.log(terminal.gray(`  ${t.cssFileExists}`));
     } else {
       if (!existingContent.includes('@tailwind base')) {
         const updatedContent = `@tailwind base;
@@ -89,7 +216,7 @@ ${existingContent}
 
 ${templateContent.split('@tailwind').slice(1).join('@tailwind')}`;
         await fs.writeFile(cssFile, updatedContent);
-        console.log(chalk.green(`✓ ${t.cssFileUpdated}`));
+        console.log(terminal.green(`✓ ${t.cssFileUpdated}`));
       } else {
         const layerBaseMatch = existingContent.match(/@layer base\s*\{[^}]*\}/);
         if (layerBaseMatch) {
@@ -98,19 +225,19 @@ ${templateContent.split('@tailwind').slice(1).join('@tailwind')}`;
             `@layer base {\n${templateContent.match(/@layer base\s*\{([\s\S]*)\}/)[1]}`
           );
           await fs.writeFile(cssFile, updatedContent);
-          console.log(chalk.green(`✓ ${t.cssFileUpdated}`));
+          console.log(terminal.green(`✓ ${t.cssFileUpdated}`));
         } else {
           const updatedContent = existingContent + '\n\n' + templateContent.split('@tailwind').slice(1).join('@tailwind');
           await fs.writeFile(cssFile, updatedContent);
-          console.log(chalk.green(`✓ ${t.cssFileUpdated}`));
+          console.log(terminal.green(`✓ ${t.cssFileUpdated}`));
         }
       }
     }
   } else {
     const defaultCssPath = path.join(projectRoot, 'src', 'index.css');
     await fs.writeFile(defaultCssPath, templateContent);
-    console.log(chalk.green(`✓ ${t.cssFileCreated}`));
-    console.log(chalk.yellow(`  ${t.importCssInMain}: import './index.css'`));
+    console.log(terminal.green(`✓ ${t.cssFileCreated}`));
+    console.log(terminal.yellow(`  ${t.importCssInMain}: import './index.css'`));
   }
 }
 
@@ -172,7 +299,7 @@ function getComponents(lang) {
 }
 
 async function main() {
-  const { language } = await inquirer.prompt([
+  const { language } = await prompts.prompt([
     {
       type: 'list',
       name: 'language',
@@ -192,9 +319,9 @@ async function main() {
   const components = getComponents(language);
   const categoryKeys = Object.keys(componentsStructure);
 
-  console.log(chalk.blue.bold(`\n🎨 ${t.title}\n`));
+  console.log(terminal.blue.bold(`\n🎨 ${t.title}\n`));
 
-  const { installMode } = await inquirer.prompt([
+  const { installMode } = await prompts.prompt([
     {
       type: 'list',
       name: 'installMode',
@@ -215,7 +342,7 @@ async function main() {
     });
   } else if (installMode === 'category') {
     const categories = Object.keys(components);
-    const { selectedCategories } = await inquirer.prompt([
+    const { selectedCategories } = await prompts.prompt([
       {
         type: 'checkbox',
         name: 'selectedCategories',
@@ -242,7 +369,7 @@ async function main() {
       });
     });
 
-    const { selected } = await inquirer.prompt([
+    const { selected } = await prompts.prompt([
       {
         type: 'checkbox',
         name: 'selected',
@@ -259,13 +386,13 @@ async function main() {
   }
 
   if (selectedComponents.length === 0) {
-    console.log(chalk.yellow(`\n⚠️  ${t.noComponentsSelected}\n`));
+    console.log(terminal.yellow(`\n⚠️  ${t.noComponentsSelected}\n`));
     return;
   }
 
   const defaultPath = './src/components/ui';
     
-  const { installPath } = await inquirer.prompt([
+  const { installPath } = await prompts.prompt([
     {
       type: 'input',
       name: 'installPath',
@@ -281,14 +408,14 @@ async function main() {
   ]);
 
   const compCount = selectedComponents.length;
-  console.log(chalk.green(`\n📦 ${t.selectedComponents} (${compCount}):`));
+  console.log(terminal.green(`\n📦 ${t.selectedComponents} (${compCount}):`));
   selectedComponents.forEach(comp => {
     const compName = typeof comp === 'object' ? comp.value : comp;
-    console.log(chalk.gray(`   - ${compName}`));
+    console.log(terminal.gray(`   - ${compName}`));
   });
-  console.log(chalk.cyan(`\n📁 ${t.path}: ${installPath}\n`));
+  console.log(terminal.cyan(`\n📁 ${t.path}: ${installPath}\n`));
 
-  const { confirm } = await inquirer.prompt([
+  const { confirm } = await prompts.prompt([
     {
       type: 'confirm',
       name: 'confirm',
@@ -298,11 +425,11 @@ async function main() {
   ]);
 
   if (!confirm) {
-    console.log(chalk.yellow(`\n❌ ${t.installCancelled}\n`));
+    console.log(terminal.yellow(`\n❌ ${t.installCancelled}\n`));
     return;
   }
 
-  console.log(chalk.blue(`\n🚀 ${t.installing}\n`));
+  console.log(terminal.blue(`\n🚀 ${t.installing}\n`));
 
   try {
     const possibleSourceDirs = [
@@ -315,7 +442,7 @@ async function main() {
     
     let sourceDir = null;
     for (const dir of possibleSourceDirs) {
-      if (await fs.pathExists(dir)) {
+      if (await pathExists(dir)) {
         sourceDir = dir;
         break;
       }
@@ -327,7 +454,7 @@ async function main() {
     
     const targetDir = path.resolve(installPath);
     
-    await fs.ensureDir(targetDir);
+    await ensureDir(targetDir);
 
     const possibleUtilsDirs = [
       path.join(__dirname, '..', 'src', 'lib'),
@@ -339,7 +466,7 @@ async function main() {
     
     let utilsSource = null;
     for (const dir of possibleUtilsDirs) {
-      if (await fs.pathExists(dir)) {
+      if (await pathExists(dir)) {
         utilsSource = dir;
         break;
       }
@@ -347,8 +474,8 @@ async function main() {
     
     if (utilsSource) {
       const utilsTarget = path.resolve(installPath, '..', 'lib');
-      await fs.copy(utilsSource, utilsTarget);
-      console.log(chalk.green(`✓ ${t.utilsCopied}`));
+      await copy(utilsSource, utilsTarget);
+      console.log(terminal.green(`✓ ${t.utilsCopied}`));
     }
 
     const installedComponents = [];
@@ -374,16 +501,16 @@ async function main() {
       const sourceFile = path.join(sourceCategoryDir, componentFile);
       
       const targetCategoryDir = compCategory ? path.join(targetDir, compCategory) : targetDir;
-      await fs.ensureDir(targetCategoryDir);
+      await ensureDir(targetCategoryDir);
       const targetFile = path.join(targetCategoryDir, componentFile);
 
-      if (await fs.pathExists(sourceFile)) {
-        await fs.copy(sourceFile, targetFile);
+      if (await pathExists(sourceFile)) {
+        await copy(sourceFile, targetFile);
         const categoryLabel = compCategory || t.root;
-        console.log(chalk.green(`✓ ${compValue} ${t.componentInstalled} ${categoryLabel}`));
+        console.log(terminal.green(`✓ ${compValue} ${t.componentInstalled} ${categoryLabel}`));
         installedComponents.push({ value: compValue, category: compCategory });
       } else {
-        console.log(chalk.red(`✗ ${compValue} ${t.componentNotFound} ${sourceCategoryDir}`));
+        console.log(terminal.red(`✗ ${compValue} ${t.componentNotFound} ${sourceCategoryDir}`));
       }
     }
 
@@ -407,7 +534,7 @@ async function main() {
 
       await fs.writeFile(indexPath, indexContent + '\n');
       const categoryLabel = category === 'root' ? t.root : category;
-      console.log(chalk.green(`✓ ${t.indexCreated} ${categoryLabel}`));
+      console.log(terminal.green(`✓ ${t.indexCreated} ${categoryLabel}`));
     }
 
     const mainIndexPath = path.join(targetDir, 'index.ts');
@@ -426,17 +553,19 @@ async function main() {
       .join('\n');
 
     await fs.writeFile(mainIndexPath, mainIndexContent + '\n');
-    console.log(chalk.green(`✓ ${t.mainIndexCreated}`));
+    console.log(terminal.green(`✓ ${t.mainIndexCreated}`));
 
     await setupTailwindConfig(process.cwd(), targetDir, t);
     
     await setupGlobalCSS(process.cwd(), t);
 
-    console.log(chalk.green.bold(`\n✅ ${t.installComplete} ${installedComponents.length} ${t.componentsInstalled}\n`));
+    console.log(terminal.green.bold(`\n✅ ${t.installComplete} ${installedComponents.length} ${t.componentsInstalled}\n`));
   } catch (error) {
-    console.error(chalk.red(`\n❌ ${t.installError}`), error.message);
+    console.error(terminal.red(`\n❌ ${t.installError}`), error.message);
     process.exit(1);
   }
 }
 
-main().catch(console.error);
+main()
+  .catch(console.error)
+  .finally(() => rl.close());

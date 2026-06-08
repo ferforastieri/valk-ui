@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { XMarkIcon, CheckCircleIcon, ExclamationCircleIcon, InformationCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon, CheckCircleIcon, ExclamationCircleIcon, InformationCircleIcon, XCircleIcon } from '../icons'
 import { cn } from '../../lib'
 
 export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {

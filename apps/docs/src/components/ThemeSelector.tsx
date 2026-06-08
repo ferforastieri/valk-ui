@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { DropdownMenu, DropdownMenuItem } from '@/components'
 import { cn } from '@/lib'
-import { CheckIcon } from '@heroicons/react/24/solid'
+import { CheckIcon } from '@/components'
 
 export interface ThemeColor {
   name: string
@@ -93,4 +93,3 @@ export default function ThemeSelector({ currentTheme, onThemeChange }: ThemeSele
     </DropdownMenu>
   )
 }
-

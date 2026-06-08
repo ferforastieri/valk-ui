@@ -1,5 +1,5 @@
-import { forwardRef, useState, ReactNode } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
+import { forwardRef, ReactNode, useId } from 'react'
+import { ChevronDownIcon } from '../icons'
 import { cn } from '../../lib'
 
 export interface AccordionItemProps {
@@ -17,55 +17,35 @@ export interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
   ({ className, items, type = 'single', defaultValue, ...props }, ref) => {
-    const [openItems, setOpenItems] = useState<string[]>(() => {
-      if (defaultValue) {
-        return Array.isArray(defaultValue) ? defaultValue : [defaultValue]
-      }
-      return items.filter(item => item.defaultOpen).map(item => item.value)
-    })
-
-    const toggleItem = (value: string) => {
-      setOpenItems(prev => {
-        if (type === 'single') {
-          return prev.includes(value) ? [] : [value]
-        }
-        return prev.includes(value)
-          ? prev.filter(item => item !== value)
-          : [...prev, value]
-      })
-    }
+    const accordionName = useId()
+    const defaultOpenItems = defaultValue
+      ? Array.isArray(defaultValue) ? defaultValue : [defaultValue]
+      : items.filter(item => item.defaultOpen).map(item => item.value)
 
     return (
       <div ref={ref} className={cn('space-y-2', className)} {...props}>
         {items.map((item) => {
-          const isOpen = openItems.includes(item.value)
           return (
-            <div
+            <details
               key={item.value}
-              className="rounded-xl border border-border bg-popover overflow-hidden shadow-sm transition-all duration-200"
+              className="group/accordion rounded-xl border border-border bg-popover overflow-hidden shadow-sm transition-all duration-200"
+              {...(type === 'single' ? { name: accordionName } : {})}
+              {...(defaultOpenItems.includes(item.value) ? { open: true } : {})}
             >
-              <button
-                type="button"
-                onClick={() => toggleItem(item.value)}
-                className="w-full flex items-center justify-between p-4 text-left hover:bg-accent transition-colors"
-                aria-expanded={isOpen}
+              <summary
+                className="w-full flex cursor-pointer list-none items-center justify-between p-4 text-left hover:bg-accent transition-colors [&::-webkit-details-marker]:hidden"
               >
                 <span className="font-medium text-popover-foreground">
                   {item.trigger}
                 </span>
                 <ChevronDownIcon
-                  className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform duration-200',
-                    isOpen && 'transform rotate-180'
-                  )}
+                  className="h-5 w-5 text-muted-foreground transition-transform duration-200 group-open/accordion:rotate-180"
                 />
-              </button>
-              {isOpen && (
-                <div className="px-4 pb-4 pt-0 text-sm text-popover-foreground">
-                  {item.content}
-                </div>
-              )}
-            </div>
+              </summary>
+              <div className="px-4 pb-4 pt-0 text-sm text-popover-foreground">
+                {item.content}
+              </div>
+            </details>
           )
         })}
       </div>
@@ -76,4 +56,3 @@ const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
 Accordion.displayName = 'Accordion'
 
 export { Accordion }
-

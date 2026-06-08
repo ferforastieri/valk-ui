@@ -1,18 +1,5 @@
-import React, { forwardRef, useState, useRef } from 'react'
+import React, { forwardRef } from 'react'
 import { cn } from '../../lib'
-import { Doughnut } from 'react-chartjs-2'
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from 'chart.js'
-
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend
-)
 
 export interface DonutChartData {
   label: string
@@ -30,56 +17,10 @@ export interface DonutChartProps
 
 const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
   ({ className, title, data, showMagnifier = false, ...props }, ref) => {
-    const [tooltip, setTooltip] = useState<{ visible: boolean; x: number; y: number; content: string; color: string }>({
-      visible: false,
-      x: 0,
-      y: 0,
-      content: '',
-      color: '#000000'
-    })
-    const chartRef = useRef<ChartJS<'doughnut'> | null>(null)
-    
-    const percentage = data[0]?.percentage || 0
-    const remainingPercentage = 100 - percentage
-    
-    const chartData = {
-      labels: [data[0]?.label || '', 'Restante'],
-      datasets: [
-        {
-          data: [percentage, remainingPercentage],
-          backgroundColor: [
-            data[0]?.color || '#0066B3',
-            'rgba(229, 231, 235, 0.3)' 
-          ],
-          borderColor: [
-            data[0]?.color || '#0066B3',
-            'rgba(229, 231, 235, 0.3)'
-          ],
-          borderWidth: 0,
-          borderRadius: 8, 
-        }
-      ]
-    }
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          enabled: false
-        }
-      },
-      cutout: '70%',
-      rotation: -90,
-      circumference: 180,
-    }
-
-    const formatValue = (value: number) => {
-      return new Intl.NumberFormat('pt-BR').format(value)
-    }
+    const item = data[0]
+    const percentage = Math.max(0, Math.min(100, item?.percentage || 0))
+    const color = item?.color || '#0066B3'
+    const value = new Intl.NumberFormat('pt-BR').format(item?.value || 0)
 
     return (
       <div
@@ -95,65 +36,40 @@ const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
             {title}
           </h3>
         </div>
-        
+
         <div className="flex flex-col items-center justify-center flex-1">
-          <div className="relative flex-shrink-0 w-full max-w-[200px]" style={{ height: '150px' }}>
-            <Doughnut 
-              ref={chartRef}
-              data={chartData} 
-              options={options}
-              onMouseMove={(e: React.MouseEvent<HTMLCanvasElement>) => {
-                if (!chartRef.current) return
-                const elements = (chartRef.current as ChartJS<'doughnut'>).getElementsAtEventForMode(e.nativeEvent, 'nearest', { intersect: true }, true)
-                
-                if (elements.length > 0 && elements[0].index === 0) {
-                  const item = data[0]
-                  setTooltip({
-                    visible: true,
-                    x: e.clientX,
-                    y: e.clientY - 50,
-                    content: `${item.label}: ${formatValue(item.value)} (${item.percentage}%)`,
-                    color: item.color
-                  })
-                } else {
-                  setTooltip({ visible: false, x: 0, y: 0, content: '', color: '#000000' })
-                }
-              }}
-              onMouseLeave={() => {
-                setTooltip({ visible: false, x: 0, y: 0, content: '', color: '#000000' })
-              }}
-            />
+          <div className="group relative flex-shrink-0 w-full max-w-[200px]" style={{ height: '150px' }}>
+            <svg viewBox="0 0 200 120" className="h-full w-full overflow-visible" role="img" aria-label={`${item?.label || title}: ${percentage}%`}>
+              <path
+                d="M 25 100 A 75 75 0 0 1 175 100"
+                fill="none"
+                stroke="rgba(229, 231, 235, 0.3)"
+                strokeWidth="24"
+                strokeLinecap="round"
+                pathLength={100}
+              />
+              <path
+                d="M 25 100 A 75 75 0 0 1 175 100"
+                fill="none"
+                stroke={color}
+                strokeWidth="24"
+                strokeLinecap="round"
+                pathLength={100}
+                strokeDasharray={`${percentage} 100`}
+              />
+            </svg>
             <div className="absolute inset-0 flex items-end justify-center pointer-events-none pb-2">
-              <span 
-                className="text-xl sm:text-2xl font-bold"
-                style={{ color: data[0]?.color }}
-              >
-                {data[0]?.percentage}%
+              <span className="text-xl sm:text-2xl font-bold" style={{ color }}>
+                {percentage}%
               </span>
             </div>
+            {showMagnifier && item && (
+              <div className="pointer-events-none absolute left-1/2 top-4 z-10 hidden -translate-x-1/2 rounded-md border bg-popover px-3 py-2 text-xs text-popover-foreground shadow-lg group-hover:block">
+                <span className="font-medium">{item.label}</span>: {value} ({percentage}%)
+              </div>
+            )}
           </div>
         </div>
-        
-        {tooltip.visible && (
-          <div
-            style={{
-              position: 'fixed',
-              left: tooltip.x,
-              top: tooltip.y,
-              zIndex: 99999999,
-              backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              color: 'black',
-              padding: '8px 12px',
-              borderRadius: '6px',
-              fontSize: '12px',
-              pointerEvents: 'none',
-              border: `2px solid ${tooltip.color}`,
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-            }}
-          >
-            {tooltip.content}
-          </div>
-        )}
       </div>
     )
   }
@@ -162,4 +78,3 @@ const DonutChart = forwardRef<HTMLDivElement, DonutChartProps>(
 DonutChart.displayName = 'DonutChart'
 
 export { DonutChart }
-

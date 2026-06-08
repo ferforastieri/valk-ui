@@ -1,5 +1,5 @@
 import { Fragment, ReactNode } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon } from '../icons'
 
 export interface SheetProps {
   isOpen: boolean
@@ -67,4 +67,3 @@ export function Sheet({
     </div>
   )
 }
-

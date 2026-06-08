@@ -1,5 +1,5 @@
 import { Fragment, ReactNode } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon } from '../icons'
 
 export interface DialogProps {
   isOpen: boolean
@@ -69,4 +69,3 @@ export function Dialog({
     </div>
   )
 }
-

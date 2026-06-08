@@ -1,6 +1,5 @@
-import { forwardRef, Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline'
+import { forwardRef, useState } from 'react'
+import { XMarkIcon, Bars3Icon } from '../icons'
 import { cn } from '../../lib'
 
 export interface NavigationItem {
@@ -139,65 +138,48 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
           </div>
         </nav>
 
-        {showMobileMenu && (
-          <Transition.Root show={mobileOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-50 md:hidden" onClose={setMobileOpen}>
-              <Transition.Child
-                as={Fragment}
-                enter="transition-opacity ease-linear duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity ease-linear duration-300"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+        {showMobileMenu && mobileOpen && (
+          <div className="relative z-50 md:hidden" role="dialog" aria-modal="true">
+            <button
+              type="button"
+              className="fixed inset-0 bg-background/80 backdrop-blur-sm"
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close navigation menu"
+            />
+
+            <div className="fixed inset-0 z-50 flex items-start justify-center pt-16">
+              <div
+                className="relative w-full max-w-md mx-4 bg-background border border-border rounded-2xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
               >
-                <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" />
-              </Transition.Child>
+                <div className="flex items-center justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing">
+                  <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
+                </div>
 
-              <div className="fixed inset-0 z-50 flex items-start justify-center pt-16">
-                <Transition.Child
-                  as={Fragment}
-                  enter="transition ease-out duration-300 transform"
-                  enterFrom="-translate-y-full opacity-0"
-                  enterTo="translate-y-0 opacity-100"
-                  leave="transition ease-in duration-200 transform"
-                  leaveFrom="translate-y-0 opacity-100"
-                  leaveTo="-translate-y-full opacity-0"
-                >
-                  <Dialog.Panel 
-                    className="relative w-full max-w-md mx-4 bg-background border border-border rounded-2xl shadow-2xl overflow-hidden"
-                    onTouchStart={onTouchStart}
-                    onTouchMove={onTouchMove}
-                    onTouchEnd={onTouchEnd}
+                <div className="flex items-center justify-between px-6 pb-4 border-b border-border">
+                  <div className="flex items-center gap-3">
+                    {logo}
+                  </div>
+                  <button
+                    type="button"
+                    className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-muted transition-colors"
+                    onClick={() => setMobileOpen(false)}
+                    aria-label="Close navigation menu"
                   >
-                    <div className="flex items-center justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing">
-                      <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
-                    </div>
+                    <XMarkIcon className="h-5 w-5 text-foreground" />
+                  </button>
+                </div>
 
-                    <div className="flex items-center justify-between px-6 pb-4 border-b border-border">
-                      <div className="flex items-center gap-3">
-                        {logo}
-                      </div>
-                      <button
-                        type="button"
-                        className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-muted transition-colors"
-                        onClick={() => setMobileOpen(false)}
-                        aria-label="Close navigation menu"
-                      >
-                        <XMarkIcon className="h-5 w-5 text-foreground" />
-                      </button>
-                    </div>
-
-                    <nav className="px-4 py-4">
-                      <div className="space-y-1">
-                        {items.map((item) => renderNavItem(item, true))}
-                      </div>
-                    </nav>
-                  </Dialog.Panel>
-                </Transition.Child>
+                <nav className="px-4 py-4">
+                  <div className="space-y-1">
+                    {items.map((item) => renderNavItem(item, true))}
+                  </div>
+                </nav>
               </div>
-            </Dialog>
-          </Transition.Root>
+            </div>
+          </div>
         )}
       </>
     )

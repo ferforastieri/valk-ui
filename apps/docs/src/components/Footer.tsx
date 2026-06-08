@@ -5,7 +5,7 @@ import {
   CubeIcon,
   CodeBracketIcon,
   ClockIcon,
-} from '@heroicons/react/24/outline'
+} from '@/components'
 
 export default function Footer() {
   const { t } = useTranslation()
@@ -70,4 +70,3 @@ export default function Footer() {
     </footer>
   )
 }
-

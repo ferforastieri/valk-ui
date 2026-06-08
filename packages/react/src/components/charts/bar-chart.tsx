@@ -1,24 +1,5 @@
-import React, { forwardRef, useRef, useState } from 'react'
+import React, { forwardRef } from 'react'
 import { cn } from '../../lib'
-import { Bar } from 'react-chartjs-2'
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js'
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-)
 
 export interface BarChartData {
   label: string
@@ -38,15 +19,6 @@ export interface BarChartProps
 
 const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
   ({ className, title, data, maxValue, showLegend = true, colorScheme = 'blue-green', isCurrency = false, ...props }, ref) => {
-    const [tooltip, setTooltip] = useState<{ visible: boolean; x: number; y: number; content: string; color: string }>({
-      visible: false,
-      x: 0,
-      y: 0,
-      content: '',
-      color: '#000000'
-    })
-    const chartRef = useRef<ChartJS<'bar'> | null>(null)
-    
     const colors = {
       'blue-green': {
         previous: '#3b82f6',
@@ -59,15 +31,9 @@ const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
     }
 
     const currentColors = colors[colorScheme]
-    
-    const previousValue = parseFloat(data.previousPeriod.toString()) || 0
-    const selectedValue = parseFloat(data.selectedPeriod.toString()) || 0
-    
-    const validPrevious = isNaN(previousValue) || !isFinite(previousValue) ? 0 : previousValue
-    const validSelected = isNaN(selectedValue) || !isFinite(selectedValue) ? 0 : selectedValue
-    
-    const calculatedMax = Math.max(validPrevious, validSelected) * 1.2
-    const finalMaxValue = maxValue || (calculatedMax > 0 ? calculatedMax : 100)
+    const previousValue = Number.isFinite(Number(data.previousPeriod)) ? Number(data.previousPeriod) : 0
+    const selectedValue = Number.isFinite(Number(data.selectedPeriod)) ? Number(data.selectedPeriod) : 0
+    const finalMaxValue = maxValue || Math.max(previousValue, selectedValue, 1) * 1.2
 
     const formatValue = (value: number) => {
       if (isCurrency) {
@@ -79,88 +45,10 @@ const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
       return value.toFixed(0)
     }
 
-    const chartData = {
-      labels: [title],
-      datasets: [
-        {
-          label: 'Período Anterior',
-          data: [validPrevious],
-          backgroundColor: currentColors.previous,
-          borderColor: currentColors.previous,
-          borderWidth: 1,
-          borderRadius: 4,
-        },
-        {
-          label: 'Período Selecionado',
-          data: [validSelected],
-          backgroundColor: currentColors.selected,
-          borderColor: currentColors.selected,
-          borderWidth: 1,
-          borderRadius: 4,
-        }
-      ]
-    }
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: false,
-      layout: {
-        padding: {
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0
-        }
-      },
-      interaction: {
-        intersect: false,
-        mode: 'index' as const
-      },
-      plugins: {
-        legend: {
-          display: showLegend,
-          position: 'bottom' as const,
-          align: 'start' as const,
-          labels: {
-            usePointStyle: true,
-            padding: 15,
-            font: {
-              size: 12
-            }
-          }
-        },
-        tooltip: {
-          enabled: false
-        }
-      },
-      scales: {
-        x: {
-          display: false,
-          grid: {
-            display: false
-          },
-          ticks: {
-            display: false
-          }
-        },
-        y: {
-          beginAtZero: true,
-          max: finalMaxValue,
-          grid: {
-            display: true,
-            color: 'rgba(0, 0, 0, 0.1)'
-          },
-          ticks: {
-            callback: function(value: string | number) {
-              const numValue = typeof value === 'string' ? parseFloat(value) : value
-              if (isNaN(numValue) || !isFinite(numValue)) return '0'
-              return formatValue(numValue)
-            },
-            maxTicksLimit: 6
-          }
-        }
-      }
-    }
+    const bars = [
+      { label: 'Período Anterior', value: previousValue, color: currentColors.previous },
+      { label: 'Período Selecionado', value: selectedValue, color: currentColors.selected },
+    ]
 
     return (
       <div
@@ -174,60 +62,36 @@ const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
         <h3 className="flex-shrink-0 mb-2 font-semibold leading-tight break-words text-foreground sm:mb-3 text-sm sm:text-base">
           {title}
         </h3>
-        
-        <div className="flex-1 h-[200px] 2xl:h-[270px] overflow-visible">
-          <Bar 
-            ref={chartRef}
-            data={chartData} 
-            options={options}
-            onMouseMove={(e: React.MouseEvent<HTMLCanvasElement>) => {
-              if (!chartRef.current) return;
-              
-              const elements = (chartRef.current as ChartJS<'bar'>).getElementsAtEventForMode(e.nativeEvent, 'nearest', { intersect: true }, true);
-              
-              if (elements.length > 0) {
-                const element = elements[0];
-                const datasetIndex = element.datasetIndex;
-                const rawValue = datasetIndex === 0 ? data.previousPeriod : data.selectedPeriod;
-                const value = formatValue(rawValue);
-                const label = datasetIndex === 0 ? 'Período Anterior' : 'Período Selecionado';
-                const color = datasetIndex === 0 ? currentColors.previous : currentColors.selected;
-                
-                setTooltip({
-                  visible: true,
-                  x: e.clientX,
-                  y: e.clientY - 50,
-                  content: `${label}: ${value}`,
-                  color: color
-                });
-              } else {
-                setTooltip({ visible: false, x: 0, y: 0, content: '', color: '#000000' });
-              }
-            }}
-            onMouseLeave={() => {
-              setTooltip({ visible: false, x: 0, y: 0, content: '', color: '#000000' });
-            }}
-          />
+
+        <div className="flex flex-1 items-end justify-center gap-8 border-l border-b border-border/60 px-6 pb-4 pt-6">
+          {bars.map((bar) => {
+            const height = `${Math.max(2, Math.min(100, (bar.value / finalMaxValue) * 100))}%`
+            return (
+              <div key={bar.label} className="group relative flex h-full w-14 items-end justify-center">
+                <div
+                  className="w-full rounded-t-md transition-all duration-300 group-hover:opacity-85"
+                  style={{ height, backgroundColor: bar.color }}
+                  aria-label={`${bar.label}: ${formatValue(bar.value)}`}
+                />
+                <div
+                  className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 hidden -translate-x-1/2 whitespace-nowrap rounded-md border bg-popover px-3 py-2 text-xs text-popover-foreground shadow-lg group-hover:block"
+                  style={{ borderColor: bar.color }}
+                >
+                  {bar.label}: {formatValue(bar.value)}
+                </div>
+              </div>
+            )
+          })}
         </div>
-        
-        {tooltip.visible && (
-          <div
-            style={{
-              position: 'fixed',
-              left: tooltip.x,
-              top: tooltip.y,
-              zIndex: 99999999,
-              backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              color: 'black',
-              padding: '8px 12px',
-              borderRadius: '6px',
-              fontSize: '12px',
-              pointerEvents: 'none',
-              border: `2px solid ${tooltip.color}`,
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-            }}
-          >
-            {tooltip.content}
+
+        {showLegend && (
+          <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground">
+            {bars.map((bar) => (
+              <div key={bar.label} className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: bar.color }} />
+                {bar.label}
+              </div>
+            ))}
           </div>
         )}
       </div>
@@ -238,4 +102,3 @@ const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
 BarChart.displayName = 'BarChart'
 
 export { BarChart }
-

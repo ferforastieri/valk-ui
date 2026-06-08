@@ -54,7 +54,7 @@ O CLI interativo permite:
 
 ## 📖 Documentação
 
-Acesse a documentação completa em: [https://valk-ui.dev](https://valk-ui.dev)
+Acesse a documentação completa em: [https://valkui.vercel.app/](https://valkui.vercel.app/)
 
 Ou execute localmente:
 
@@ -95,6 +95,7 @@ npm run dev
 valk-ui/
 ├── packages/
 │   ├── react/              # Componentes React/TypeScript
+│   │   ├── cli/             # CLI publicado pelo pacote
 │   │   ├── src/
 │   │   │   ├── components/  # Componentes organizados por categoria
 │   │   │   │   ├── forms/
@@ -103,14 +104,12 @@ valk-ui/
 │   │   │   │   └── charts/
 │   │   │   └── lib/         # Utilitários (cn, etc)
 │   │   └── package.json
+├── apps/
 │   └── docs/                # Site de documentação
 │       ├── src/
 │       │   ├── pages/       # Páginas do site
 │       │   └── components/  # Componentes do site
 │       └── package.json
-├── cli/                     # CLI interativo
-│   ├── index.js
-│   └── translations.js
 └── package.json             # Workspace root
 ```
 
@@ -148,10 +147,6 @@ function App() {
 
 ### React
 - `react` ^18.0.0
-- `react-dom` ^18.0.0
-- `@heroicons/react` ^2.0.0 (para ícones)
-- `chart.js` ^4.0.0 e `react-chartjs-2` ^5.0.0 (para gráficos)
-- `clsx` e `tailwind-merge` (para utilitários)
 
 
 ## 🤝 Contribuindo
@@ -170,14 +165,12 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ## 🙏 Agradecimentos
 
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário
-- [Heroicons](https://heroicons.com/) - Ícones SVG
-- [Chart.js](https://www.chartjs.org/) - Biblioteca de gráficos
-- [shadcn/ui](https://ui.shadcn.com/) - Inspiração para a estrutura
+- [Tailwind CSS](https://valkui.vercel.app/) - Framework CSS utilitário
+- [shadcn/ui](https://valkui.vercel.app/) - Inspiração para a estrutura
 
 ## 📧 Contato
 
-- **Website**: [https://valk-ui.dev](https://valk-ui.dev)
+- **Website**: [https://valkui.vercel.app/](https://valkui.vercel.app/)
 - **Issues**: [GitHub Issues](https://github.com/ferforastieri/valk-ui/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/ferforastieri/valk-ui/discussions)
 

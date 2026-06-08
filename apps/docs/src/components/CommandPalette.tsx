@@ -6,7 +6,7 @@ import {
   BookOpenIcon,
   CodeBracketIcon,
   DocumentTextIcon,
-} from '@heroicons/react/24/outline'
+} from '@/components'
 import { useTranslation } from 'react-i18next'
 
 const CommandPaletteContext = createContext<{

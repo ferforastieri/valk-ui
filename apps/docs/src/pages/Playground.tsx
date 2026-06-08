@@ -6,7 +6,7 @@ import {
   ClipboardIcon,
   ArrowPathIcon,
   SwatchIcon,
-} from '@heroicons/react/24/outline'
+} from '@/components'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 import {
   Button,

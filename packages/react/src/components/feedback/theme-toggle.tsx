@@ -1,4 +1,4 @@
-import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
+import { MoonIcon, SunIcon } from '../icons'
 import { cn } from '../../lib'
 
 export interface ThemeToggleProps {
@@ -59,4 +59,3 @@ export function ThemeToggle({
     </button>
   )
 }
-
