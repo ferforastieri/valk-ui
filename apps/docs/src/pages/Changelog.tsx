@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 interface GitHubRelease {
   tag_name: string
   name: string
+  created_at: string
   published_at: string
   body: string
   prerelease: boolean
@@ -59,7 +60,7 @@ export default function Changelog() {
 
           const changes = parseReleaseBody(release.body || release.name || '')
           
-          const displayDate = new Date(release.published_at).toISOString().split('T')[0]
+          const displayDate = new Date(release.created_at || release.published_at).toISOString().split('T')[0]
 
           return {
             version,
