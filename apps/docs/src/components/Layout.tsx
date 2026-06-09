@@ -73,6 +73,10 @@ function LayoutContent({ children }: LayoutProps) {
     }
   }, [])
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [location.pathname])
+
   const toggleTheme = () => {
     const newDark = !isDark
     setIsDark(newDark)

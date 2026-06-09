@@ -21,7 +21,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-border bg-background">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-10 py-8 md:py-10">
+      <div className="w-full px-4 md:px-6 py-8 md:py-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           {/* Brand */}
           <div className="flex items-center gap-3">
