@@ -82,7 +82,7 @@ const DocsSidebar = forwardRef<HTMLElement, DocsSidebarProps>(
         {...props}
       >
         <nav className="flex-1 overflow-y-auto">
-          <div className="px-4 py-4">
+          <div className="px-4 pb-4 pt-0">
             {sections.map((section, sectionIndex) => (
               <div key={sectionIndex} className={cn(sectionIndex > 0 && 'mt-6')}>
                 {section.title && (

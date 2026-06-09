@@ -52,3 +52,33 @@
     color: hsl(var(--foreground));
   }
 }
+
+@layer utilities {
+  @keyframes valk-logo-float {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-8px) rotate(1deg);
+    }
+  }
+
+  @keyframes valk-ring-pulse {
+    0%, 100% {
+      opacity: 0.35;
+      transform: scale(0.92);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.04);
+    }
+  }
+
+  .animate-valk-logo {
+    animation: valk-logo-float 6s ease-in-out infinite;
+  }
+
+  .animate-valk-ring {
+    animation: valk-ring-pulse 5s ease-in-out infinite;
+  }
+}

@@ -796,11 +796,23 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="w-full border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-12 md:pt-2 md:pb-16">
+      <div className="relative w-full overflow-hidden border-b border-border">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,hsl(var(--primary)/0.16),transparent_36%),linear-gradient(180deg,hsl(var(--primary)/0.06),transparent_62%)]" />
+        <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full border border-primary/15 animate-valk-ring" />
+        <div className="absolute left-1/2 top-24 h-48 w-48 -translate-x-1/2 rounded-full border border-primary/20 animate-valk-ring [animation-delay:900ms]" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 md:pt-10 md:pb-20">
           <div className="max-w-3xl mx-auto text-center">
             <div className="mb-4">
               <GitHubAnnouncement />
+            </div>
+
+            <div className="relative mx-auto mb-6 flex h-32 w-32 items-center justify-center sm:h-40 sm:w-40">
+              <div className="absolute inset-3 rounded-full bg-primary/10 blur-xl" />
+              <img
+                src="/logo.png"
+                alt="Valk UI"
+                className="relative h-full w-full animate-valk-logo drop-shadow-[0_18px_36px_hsl(var(--primary)/0.25)]"
+              />
             </div>
             
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-foreground mb-4 leading-tight">
@@ -890,7 +902,7 @@ export default function Home() {
                 <p className="text-lg md:text-xl text-muted-foreground">{t('home.showcaseDescription')}</p>
               </div>
               
-              <div className="flex items-center gap-4 px-4 py-2 bg-background rounded-xl border border-border">
+              <div className="flex items-center gap-3">
                 <span className="text-sm font-medium text-muted-foreground">Tema:</span>
                 <ThemeSelector currentTheme={currentTheme} onThemeChange={setCurrentTheme} />
               </div>
