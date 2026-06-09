@@ -81,12 +81,8 @@ const DocsSidebar = forwardRef<HTMLElement, DocsSidebarProps>(
         )}
         {...props}
       >
-        <div className="border-b border-border px-5 py-4">
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">Componentes</p>
-          <p className="mt-1 text-sm text-muted-foreground">Navegue pela biblioteca</p>
-        </div>
         <nav className="flex-1 overflow-y-auto">
-          <div className="px-4 py-5">
+          <div className="px-4 py-4">
             {sections.map((section, sectionIndex) => (
               <div key={sectionIndex} className={cn(sectionIndex > 0 && 'mt-6')}>
                 {section.title && (

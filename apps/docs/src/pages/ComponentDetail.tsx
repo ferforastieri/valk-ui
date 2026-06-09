@@ -69,7 +69,7 @@ export default function ComponentDetail() {
         currentPath={location.pathname}
         LinkComponent={RouterLink}
       />
-      <div className="flex-1 min-w-0 px-6 py-8 md:px-8 md:py-10 lg:px-10">
+      <div className="flex-1 min-w-0 px-6 pb-8 pt-4 md:px-8 md:pb-10 md:pt-6 lg:px-10">
         <div className="mb-8">
           <RouterLink
             to="/components"

@@ -329,8 +329,8 @@ export default function Components() {
         currentPath={location.pathname}
         LinkComponent={RouterLink}
       />
-      <main className="flex-1 min-w-0 px-6 py-8 md:px-8 md:py-10 lg:px-10">
-        <header className="mb-10 border-b border-border pb-8">
+      <main className="flex-1 min-w-0 px-6 pb-8 pt-4 md:px-8 md:pb-10 md:pt-6 lg:px-10">
+        <header className="mb-8 border-b border-border pb-6">
           <div className="max-w-3xl">
             <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
               {totalComponents} componentes
