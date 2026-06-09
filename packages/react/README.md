@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Valk UI](https://img.shields.io/badge/Valk%20UI-v1.4.5-blue?style=for-the-badge)
+![Valk UI](https://img.shields.io/badge/Valk%20UI-v1.4.6-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=for-the-badge&logo=typescript)
 ![React](https://img.shields.io/badge/React-18%20%7C%2019-blue?style=for-the-badge&logo=react)
@@ -78,6 +78,7 @@ The CLI allows you to:
 - **StatusBadge** - Badges to indicate status
 - **Badge** - Generic customizable badge
 - **ProgressBar** - Progress bar with different colors
+- **Skeleton** - Loading placeholder for async states
 - **DropdownMenu** - Accessible dropdown menu
 - **Command** - Command palette (command search)
 - **ThemeToggle** - Toggle to switch light/dark theme

@@ -22,7 +22,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="w-full px-4 py-5 md:px-6 md:py-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:items-center md:text-left">
           {/* Brand */}
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-3">
@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div className="flex flex-wrap items-center justify-start gap-4 md:gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:justify-start md:gap-5">
             {navigation.map((item) => {
               const Icon = item.icon
               return (

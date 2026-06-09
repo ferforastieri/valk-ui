@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { StatusBadge, MetricCard } from '@/components'
+import { StatusBadge, MetricCard, Skeleton } from '@/components'
 import { SparklesIcon } from '@/components'
 import { useTranslation } from 'react-i18next'
 
@@ -70,62 +70,26 @@ export default function Changelog() {
           }
         })
 
-        if (formattedVersions.length === 0) {
-          try {
-            const tagsResponse = await fetch('https://api.github.com/repos/ferforastieri/valk-ui/tags?per_page=30', {
-              headers: {
-                Accept: 'application/vnd.github.v3+json',
-              },
-            })
-
-            if (tagsResponse.ok) {
-              const tags = await tagsResponse.json()
-              const tagVersions: Version[] = tags.slice(0, 10).map((tag: any) => {
-                const version = tag.name.replace(/^v/, '')
-                const versionParts = version.split('.')
-                const minor = parseInt(versionParts[1]) || 0
-                const patch = parseInt(versionParts[2]) || 0
-                
-                const type: 'major' | 'minor' | 'patch' = 
-                  minor === 0 && patch === 0 ? 'major' :
-                  patch === 0 ? 'minor' : 'patch'
-
-                return {
-                  version,
-                  date: new Date().toISOString().split('T')[0],
-                  type,
-                  changes: [{ type: 'added' as const, text: `Release ${version}` }],
-                }
-              })
-
-              if (tagVersions.length > 0) {
-                setVersions(tagVersions)
-                setLoading(false)
-                return
-              }
-            }
-          } catch (tagsError) {
+        const sortedVersions = formattedVersions.sort((a, b) => {
+          const aParts = a.version.split('.').map(Number)
+          const bParts = b.version.split('.').map(Number)
+          for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
+            const aVal = aParts[i] || 0
+            const bVal = bParts[i] || 0
+            if (bVal !== aVal) return bVal - aVal
           }
+          return new Date(b.date).getTime() - new Date(a.date).getTime()
+        })
 
-          setVersions(getDefaultVersions())
-          setError(t('changelog.noReleasesFound') + '. ' + t('changelog.usingDefault'))
-        } else {
-          const sortedVersions = formattedVersions.sort((a, b) => {
-            const aParts = a.version.split('.').map(Number)
-            const bParts = b.version.split('.').map(Number)
-            for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
-              const aVal = aParts[i] || 0
-              const bVal = bParts[i] || 0
-              if (bVal !== aVal) return bVal - aVal
-            }
-            return new Date(b.date).getTime() - new Date(a.date).getTime()
-          })
-          setVersions(sortedVersions)
+        setVersions(sortedVersions)
+
+        if (sortedVersions.length === 0) {
+          setError(t('changelog.noReleasesFound'))
         }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Unknown error'
         setError(`Failed to load changelog from GitHub: ${errorMessage}`)
-        setVersions(getDefaultVersions())
+        setVersions([])
       } finally {
         setLoading(false)
       }
@@ -240,30 +204,6 @@ export default function Changelog() {
       : [{ type: 'added' as const, text: 'Release notes available on GitHub' }]
   }
 
-  const getDefaultVersions = (): Version[] => [
-    {
-      version: '1.0.0',
-      date: '2025-01-15',
-      type: 'major',
-      changes: [
-        { type: 'added', text: 'Componente Navigation híbrido (desktop + mobile) adicionado' },
-        { type: 'added', text: 'Componente ThemeToggle adicionado' },
-        { type: 'added', text: 'Suporte completo a dark mode' },
-        { type: 'fixed', text: 'Correção no componente Select' },
-      ]
-    },
-    {
-      version: '0.9.0',
-      date: '2025-01-10',
-      type: 'minor',
-      changes: [
-        { type: 'added', text: 'Novo componente PaginatedTable' },
-        { type: 'added', text: 'Componentes de gráficos (BarChart, DonutChart, LineChart)' },
-        { type: 'improved', text: 'Melhorias na responsividade' },
-      ]
-    },
-  ]
-
   const getBadgeColor = (type: string) => {
     switch (type) {
       case 'added': return 'completed'
@@ -296,8 +236,15 @@ export default function Changelog() {
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{t('changelog.title')}</h1>
           <p className="text-base md:text-lg text-muted-foreground">{t('changelog.subtitle')}</p>
         </div>
-        <div className="flex items-center justify-center py-12">
-          <div className="text-muted-foreground">{t('changelog.loading')}</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Skeleton className="h-32 rounded-xl" />
+          <Skeleton className="h-32 rounded-xl" />
+          <Skeleton className="h-32 rounded-xl" />
+        </div>
+        <div className="space-y-6">
+          <Skeleton className="h-24 rounded-xl" />
+          <Skeleton className="h-32 rounded-xl" />
+          <Skeleton className="h-28 rounded-xl" />
         </div>
       </div>
     )
@@ -312,7 +259,7 @@ export default function Changelog() {
         </p>
         {error && (
           <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-md text-sm text-yellow-600 dark:text-yellow-400">
-            {error} {t('changelog.usingDefault')}
+            {error}
           </div>
         )}
       </div>
@@ -320,7 +267,7 @@ export default function Changelog() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <MetricCard
           title={t('changelog.currentVersion')}
-          value={versions[0]?.version || '1.0.0'}
+          value={versions[0]?.version || 'N/A'}
           subtitle={t('changelog.stableRelease')}
           variant="blue"
         />

@@ -11,7 +11,7 @@ export default function ComponentDetail() {
 
   const sidebarSections = [
     {
-      title: 'Forms',
+      title: t('components.forms'),
       items: [
         { title: 'Button', href: '/components/button' },
         { title: 'Input', href: '/components/input' },
@@ -29,6 +29,7 @@ export default function ComponentDetail() {
         { title: 'StatusBadge', href: '/components/statusbadge' },
         { title: 'Badge', href: '/components/badge' },
         { title: 'ProgressBar', href: '/components/progressbar' },
+        { title: 'Skeleton', href: '/components/skeleton' },
         { title: 'DropdownMenu', href: '/components/dropdownmenu' },
         { title: 'Command', href: '/components/command' },
         { title: 'ThemeToggle', href: '/components/themetoggle' },
@@ -76,16 +77,16 @@ export default function ComponentDetail() {
             className="mb-3 inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-accent/50 hover:text-primary"
           >
             <span aria-hidden="true">←</span>
-            Voltar para componentes
+            {t('components.back')}
           </RouterLink>
           <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-primary">
-            Componente
+            {t('components.component')}
           </p>
           <h1 className="mb-1 text-3xl font-bold leading-tight text-foreground md:text-4xl">
             {componentDisplayName}
           </h1>
           <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            Documentação, exemplos de uso e instalação do componente {componentDisplayName}.
+            {t('components.detailSubtitle', { name: componentDisplayName })}
           </p>
         </div>
 

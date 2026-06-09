@@ -20,6 +20,7 @@ import {
   Select,
   Separator,
   Sheet,
+  Skeleton,
   StatusBadge,
   Tabs,
   TabsList,
@@ -41,6 +42,7 @@ type PreviewType =
   | 'statusbadge'
   | 'badge'
   | 'progressbar'
+  | 'skeleton'
   | 'dropdownmenu'
   | 'command'
   | 'themetoggle'
@@ -129,6 +131,14 @@ function ComponentPreview({ type }: { type: PreviewType }) {
       )
     case 'progressbar':
       return <ProgressBar value={72} className="w-44" />
+    case 'skeleton':
+      return (
+        <div className="w-52 space-y-3">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-40" />
+        </div>
+      )
     case 'dropdownmenu':
       return (
         <DropdownMenu trigger={<Button size="sm" variant="outline">Menu</Button>}>
@@ -294,56 +304,57 @@ export default function Components() {
   const sidebarSections: ComponentSection[] = [
     {
       id: 'forms',
-      title: 'Forms',
-      description: 'Controles para entrada, escolha e confirmação.',
+      title: t('components.forms'),
+      description: t('components.sectionDescriptions.forms'),
       items: [
-        { title: 'Button', href: '/components/button', description: 'Ações principais, secundárias e discretas.', preview: 'button' },
-        { title: 'Input', href: '/components/input', description: 'Campos de texto com label, erro e ícones.', preview: 'input' },
-        { title: 'Select', href: '/components/select', description: 'Seleção única ou múltipla com busca.', preview: 'select' },
-        { title: 'Checkbox', href: '/components/checkbox', description: 'Escolhas booleanas com estado claro.', preview: 'checkbox' },
-        { title: 'Toggle', href: '/components/toggle', description: 'Alternância rápida para preferências.', preview: 'toggle' },
-        { title: 'DatePicker', href: '/components/datepicker', description: 'Seleção de data compacta e acessível.', preview: 'datepicker' },
+        { title: 'Button', href: '/components/button', description: t('components.descriptions.button'), preview: 'button' },
+        { title: 'Input', href: '/components/input', description: t('components.descriptions.input'), preview: 'input' },
+        { title: 'Select', href: '/components/select', description: t('components.descriptions.select'), preview: 'select' },
+        { title: 'Checkbox', href: '/components/checkbox', description: t('components.descriptions.checkbox'), preview: 'checkbox' },
+        { title: 'Toggle', href: '/components/toggle', description: t('components.descriptions.toggle'), preview: 'toggle' },
+        { title: 'DatePicker', href: '/components/datepicker', description: t('components.descriptions.datepicker'), preview: 'datepicker' },
       ]
     },
     {
       id: 'feedback',
       title: t('components.feedback'),
-      description: 'Respostas visuais para estados, ações e fluxos.',
+      description: t('components.sectionDescriptions.feedback'),
       items: [
-        { title: 'Modal', href: '/components/modal', description: 'Camada focada para decisões importantes.', preview: 'modal' },
-        { title: 'Dialog', href: '/components/dialog', description: 'Confirmações e mensagens contextuais.', preview: 'dialog' },
-        { title: 'StatusBadge', href: '/components/statusbadge', description: 'Estados operacionais em leitura rápida.', preview: 'statusbadge' },
-        { title: 'Badge', href: '/components/badge', description: 'Marcadores pequenos para rótulos e filtros.', preview: 'badge' },
-        { title: 'ProgressBar', href: '/components/progressbar', description: 'Progresso linear para tarefas e etapas.', preview: 'progressbar' },
-        { title: 'DropdownMenu', href: '/components/dropdownmenu', description: 'Menus de ação compactos.', preview: 'dropdownmenu' },
-        { title: 'Command', href: '/components/command', description: 'Busca de comandos e navegação rápida.', preview: 'command' },
-        { title: 'ThemeToggle', href: '/components/themetoggle', description: 'Alternância visual entre temas.', preview: 'themetoggle' },
+        { title: 'Modal', href: '/components/modal', description: t('components.descriptions.modal'), preview: 'modal' },
+        { title: 'Dialog', href: '/components/dialog', description: t('components.descriptions.dialog'), preview: 'dialog' },
+        { title: 'StatusBadge', href: '/components/statusbadge', description: t('components.descriptions.statusbadge'), preview: 'statusbadge' },
+        { title: 'Badge', href: '/components/badge', description: t('components.descriptions.badge'), preview: 'badge' },
+        { title: 'ProgressBar', href: '/components/progressbar', description: t('components.descriptions.progressbar'), preview: 'progressbar' },
+        { title: 'Skeleton', href: '/components/skeleton', description: t('components.descriptions.skeleton'), preview: 'skeleton' },
+        { title: 'DropdownMenu', href: '/components/dropdownmenu', description: t('components.descriptions.dropdownmenu'), preview: 'dropdownmenu' },
+        { title: 'Command', href: '/components/command', description: t('components.descriptions.command'), preview: 'command' },
+        { title: 'ThemeToggle', href: '/components/themetoggle', description: t('components.descriptions.themetoggle'), preview: 'themetoggle' },
       ]
     },
     {
       id: 'layout',
       title: t('components.layout'),
-      description: 'Estruturas para organizar conteúdo e navegação.',
+      description: t('components.sectionDescriptions.layout'),
       items: [
-        { title: 'Avatar', href: '/components/avatar', description: 'Identidade visual para pessoas e entidades.', preview: 'avatar' },
-        { title: 'MetricCard', href: '/components/metriccard', description: 'Indicadores compactos para dashboards.', preview: 'metriccard' },
-        { title: 'PaginatedTable', href: '/components/paginatedtable', description: 'Tabela com busca, ordenação e paginação.', preview: 'paginatedtable' },
-        { title: 'Accordion', href: '/components/accordion', description: 'Conteúdo expansível com hierarquia clara.', preview: 'accordion' },
-        { title: 'Card', href: '/components/card', description: 'Superfície para itens e blocos de conteúdo.', preview: 'card' },
-        { title: 'Separator', href: '/components/separator', description: 'Divisão sutil entre grupos de informação.', preview: 'separator' },
-        { title: 'Sheet', href: '/components/sheet', description: 'Painel lateral para fluxos complementares.', preview: 'sheet' },
-        { title: 'Navigation', href: '/components/navigation', description: 'Navegação responsiva para aplicações.', preview: 'navigation' },
-        { title: 'Tabs', href: '/components/tabs', description: 'Alternância entre visões relacionadas.', preview: 'tabs' },
+        { title: 'Avatar', href: '/components/avatar', description: t('components.descriptions.avatar'), preview: 'avatar' },
+        { title: 'MetricCard', href: '/components/metriccard', description: t('components.descriptions.metriccard'), preview: 'metriccard' },
+        { title: 'PaginatedTable', href: '/components/paginatedtable', description: t('components.descriptions.paginatedtable'), preview: 'paginatedtable' },
+        { title: 'Accordion', href: '/components/accordion', description: t('components.descriptions.accordion'), preview: 'accordion' },
+        { title: 'Card', href: '/components/card', description: t('components.descriptions.card'), preview: 'card' },
+        { title: 'Separator', href: '/components/separator', description: t('components.descriptions.separator'), preview: 'separator' },
+        { title: 'Sheet', href: '/components/sheet', description: t('components.descriptions.sheet'), preview: 'sheet' },
+        { title: 'Navigation', href: '/components/navigation', description: t('components.descriptions.navigation'), preview: 'navigation' },
+        { title: 'Tabs', href: '/components/tabs', description: t('components.descriptions.tabs'), preview: 'tabs' },
       ]
     },
     {
       id: 'charts',
       title: t('components.charts'),
-      description: 'Visualizações simples para dados essenciais.',
+      description: t('components.sectionDescriptions.charts'),
       items: [
-        { title: 'BarChart', href: '/components/barchart', description: 'Comparação direta entre categorias.', preview: 'barchart' },
-        { title: 'DonutChart', href: '/components/donutchart', description: 'Proporções e distribuição em anel.', preview: 'donutchart' },
-        { title: 'LineChart', href: '/components/linechart', description: 'Tendências e evolução ao longo do tempo.', preview: 'linechart' },
+        { title: 'BarChart', href: '/components/barchart', description: t('components.descriptions.barchart'), preview: 'barchart' },
+        { title: 'DonutChart', href: '/components/donutchart', description: t('components.descriptions.donutchart'), preview: 'donutchart' },
+        { title: 'LineChart', href: '/components/linechart', description: t('components.descriptions.linechart'), preview: 'linechart' },
       ]
     },
   ]
@@ -352,10 +363,10 @@ export default function Components() {
     <div className="space-y-8">
       <div className="mb-6 border-b border-border pb-4">
         <h1 className="text-3xl font-bold leading-tight text-foreground">
-          Biblioteca de componentes
+          {t('components.libraryTitle')}
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Explore os componentes disponíveis e abra qualquer item para ver exemplos, instalação e uso.
+          {t('components.librarySubtitle')}
         </p>
       </div>
 
@@ -383,7 +394,7 @@ export default function Components() {
                 <p className="text-sm text-muted-foreground">{section.description}</p>
               </div>
               <span className="text-sm text-muted-foreground">
-                {section.items.length} itens
+                {t('components.itemCount', { count: section.items.length })}
               </span>
             </div>
 

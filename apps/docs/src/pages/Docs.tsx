@@ -21,9 +21,9 @@ export default function Docs() {
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground mb-2">Todos os componentes são customizáveis</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-2">{t('docs.customNoticeTitle')}</h3>
             <p className="text-sm text-muted-foreground">
-              Recomendamos fortemente que você customize os componentes para se adequarem ao seu design. Todos os componentes são copiados para o seu projeto, então você tem controle total sobre o código e pode modificá-los conforme necessário.
+              {t('docs.customNoticeDescription')}
             </p>
           </div>
         </div>

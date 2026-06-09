@@ -27,6 +27,7 @@ import {
   CardFooter,
   Separator,
   Sheet,
+  Skeleton,
   Navigation,
   Tabs,
   TabsList,
@@ -37,12 +38,14 @@ import {
   LineChart,
 } from '@/components'
 import type { SelectOption, CommandItem } from '@/components'
+import { useTranslation } from 'react-i18next'
 
 interface ComponentExamplesProps {
   componentName: string
 }
 
 export default function ComponentExamples({ componentName }: ComponentExamplesProps) {
+  const { t } = useTranslation()
   const [modalOpen, setModalOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -191,6 +194,19 @@ export default function ComponentExamples({ componentName }: ComponentExamplesPr
         )
       case 'progressbar':
         return <ProgressBar value={75} color="blue" showLabel />
+      case 'skeleton':
+        return (
+          <div className="w-full max-w-md space-y-4">
+            <div className="flex items-center gap-4">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 w-full" />
+              </div>
+            </div>
+            <Skeleton className="h-24 w-full" />
+          </div>
+        )
       case 'dropdownmenu':
         return (
           <DropdownMenu trigger={<Button>Abrir Menu</Button>}>
@@ -502,6 +518,23 @@ function MyComponent() {
     />
   )
 }`
+      case 'skeleton':
+        return `import { Skeleton } from '@/components'
+
+function MyComponent() {
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-4">
+        <Skeleton className="h-12 w-12 rounded-full" />
+        <div className="flex-1 space-y-2">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-4 w-full" />
+        </div>
+      </div>
+      <Skeleton className="h-24 w-full" />
+    </div>
+  )
+}`
       case 'dropdownmenu':
         return `import { DropdownMenu, DropdownMenuItem, Button } from '@/components'
 
@@ -780,8 +813,8 @@ function MyComponent() {
     <div className="space-y-5">
       <section className="space-y-3">
         <div>
-          <CardTitle>Preview</CardTitle>
-          <CardDescription>Visualização do componente</CardDescription>
+          <CardTitle>{t('components.preview')}</CardTitle>
+          <CardDescription>{t('components.previewDescription')}</CardDescription>
         </div>
         <div>
           {renderComponent()}
@@ -790,8 +823,8 @@ function MyComponent() {
 
       <section className="border-t border-border pt-6 space-y-4">
         <div>
-          <CardTitle>Instalação</CardTitle>
-          <CardDescription>Como instalar este componente</CardDescription>
+          <CardTitle>{t('docs.installation')}</CardTitle>
+          <CardDescription>{t('components.installationDescription')}</CardDescription>
         </div>
         <div>
           <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
@@ -800,15 +833,17 @@ function MyComponent() {
             </pre>
           </div>
           <p className="text-sm text-muted-foreground mt-3">
-            Selecione o componente {componentName?.charAt(0).toUpperCase() + componentName?.slice(1)} durante a instalação.
+            {t('components.installInstruction', {
+              name: componentName?.charAt(0).toUpperCase() + componentName?.slice(1),
+            })}
           </p>
         </div>
       </section>
 
       <section className="border-t border-border pt-6 space-y-4">
         <div>
-          <CardTitle>Uso</CardTitle>
-          <CardDescription>Exemplo de código completo</CardDescription>
+          <CardTitle>{t('components.usage')}</CardTitle>
+          <CardDescription>{t('components.usageDescription')}</CardDescription>
         </div>
         <div>
           <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">

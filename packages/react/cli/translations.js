@@ -52,6 +52,7 @@ const translations = {
       'status-badge': { name: 'StatusBadge', description: 'Badge de status' },
       badge: { name: 'Badge', description: 'Badge simples' },
       'progress-bar': { name: 'ProgressBar', description: 'Barra de progresso' },
+      skeleton: { name: 'Skeleton', description: 'Placeholder de carregamento' },
       'theme-toggle': { name: 'ThemeToggle', description: 'Alternador de tema claro/escuro' },
       'dropdown-menu': { name: 'DropdownMenu', description: 'Menu dropdown' },
       command: { name: 'Command', description: 'Paleta de comandos (Cmd+K)' },
@@ -125,6 +126,7 @@ const translations = {
       'status-badge': { name: 'StatusBadge', description: 'Status badge' },
       badge: { name: 'Badge', description: 'Simple badge' },
       'progress-bar': { name: 'ProgressBar', description: 'Progress bar' },
+      skeleton: { name: 'Skeleton', description: 'Loading placeholder' },
       'theme-toggle': { name: 'ThemeToggle', description: 'Light/dark theme toggle' },
       'dropdown-menu': { name: 'DropdownMenu', description: 'Dropdown menu' },
       command: { name: 'Command', description: 'Command palette (Cmd+K)' },
@@ -198,6 +200,7 @@ const translations = {
       'status-badge': { name: 'StatusBadge', description: 'Insignia de estado' },
       badge: { name: 'Badge', description: 'Insignia simple' },
       'progress-bar': { name: 'ProgressBar', description: 'Barra de progreso' },
+      skeleton: { name: 'Skeleton', description: 'Marcador de carga' },
       'theme-toggle': { name: 'ThemeToggle', description: 'Alternador de tema claro/oscuro' },
       'dropdown-menu': { name: 'DropdownMenu', description: 'Menú desplegable' },
       command: { name: 'Command', description: 'Paleta de comandos (Cmd+K)' },
@@ -221,4 +224,3 @@ const translations = {
 };
 
 module.exports = translations;
-

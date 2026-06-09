@@ -256,6 +256,7 @@ const componentsStructure = {
     { value: 'status-badge', category: 'feedback' },
     { value: 'badge', category: 'feedback' },
     { value: 'progress-bar', category: 'feedback' },
+    { value: 'skeleton', category: 'feedback' },
     { value: 'theme-toggle', category: 'feedback' },
     { value: 'dropdown-menu', category: 'feedback' },
     { value: 'command', category: 'feedback' },

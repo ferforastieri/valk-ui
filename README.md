@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Valk UI](https://img.shields.io/badge/Valk%20UI-v1.4.5-blue?style=for-the-badge)
+![Valk UI](https://img.shields.io/badge/Valk%20UI-v1.4.6-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=for-the-badge&logo=typescript)
 ![React](https://img.shields.io/badge/React-18.3-blue?style=for-the-badge&logo=react)
@@ -78,6 +78,7 @@ npm run dev
 - **Modal** - Modal responsivo com diferentes tamanhos
 - **StatusBadge** - Badges para indicar status
 - **ProgressBar** - Barra de progresso com diferentes cores
+- **Skeleton** - Placeholder de carregamento para estados assíncronos
 
 ### 📐 Layout
 - **Avatar** - Avatar com fallback para iniciais

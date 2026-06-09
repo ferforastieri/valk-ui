@@ -41,13 +41,24 @@ const Command = forwardRef<HTMLDivElement, CommandProps>(
     }, [filteredItems.length, selectedIndex])
 
     useEffect(() => {
-      if (listRef.current) {
-        const selectedElement = listRef.current.children[selectedIndex] as HTMLElement
-        if (selectedElement) {
-          selectedElement.scrollIntoView({ block: 'nearest' })
-        }
+      const list = listRef.current
+      const selectedElement = list?.children[selectedIndex] as HTMLElement | undefined
+
+      if (!list || !selectedElement) {
+        return
       }
-    }, [selectedIndex])
+
+      const selectedTop = selectedElement.offsetTop
+      const selectedBottom = selectedTop + selectedElement.offsetHeight
+      const visibleTop = list.scrollTop
+      const visibleBottom = visibleTop + list.clientHeight
+
+      if (selectedTop < visibleTop) {
+        list.scrollTop = selectedTop
+      } else if (selectedBottom > visibleBottom) {
+        list.scrollTop = selectedBottom - list.clientHeight
+      }
+    }, [selectedIndex, filteredItems.length])
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (e.key === 'ArrowDown') {
