@@ -1,4 +1,4 @@
-import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   Accordion,
   Avatar,
@@ -12,7 +12,6 @@ import {
   Command,
   DatePicker,
   Dialog,
-  DocsSidebar,
   DonutChart,
   DropdownMenu,
   DropdownMenuItem,
@@ -71,6 +70,7 @@ type ComponentItem = {
 }
 
 type ComponentSection = {
+  id: string
   title: string
   description: string
   items: ComponentItem[]
@@ -265,10 +265,11 @@ function ComponentPreview({ type }: { type: PreviewType }) {
 
 export default function Components() {
   const { t } = useTranslation()
-  const location = useLocation()
+  const navigate = useNavigate()
 
   const sidebarSections: ComponentSection[] = [
     {
+      id: 'forms',
       title: 'Forms',
       description: 'Controles para entrada, escolha e confirmação.',
       items: [
@@ -281,6 +282,7 @@ export default function Components() {
       ]
     },
     {
+      id: 'feedback',
       title: t('components.feedback'),
       description: 'Respostas visuais para estados, ações e fluxos.',
       items: [
@@ -295,6 +297,7 @@ export default function Components() {
       ]
     },
     {
+      id: 'layout',
       title: t('components.layout'),
       description: 'Estruturas para organizar conteúdo e navegação.',
       items: [
@@ -310,6 +313,7 @@ export default function Components() {
       ]
     },
     {
+      id: 'charts',
       title: t('components.charts'),
       description: 'Visualizações simples para dados essenciais.',
       items: [
@@ -321,65 +325,81 @@ export default function Components() {
   ]
 
   return (
-    <>
-      <DocsSidebar
-        sections={sidebarSections}
-        currentPath={location.pathname}
-        LinkComponent={RouterLink}
-      />
-      <main className="min-w-0 flex-1 px-6 pb-8 pt-4 md:px-8 md:pb-10 lg:ml-72 lg:px-10">
-        <div className="mb-6 border-b border-border pb-4">
-          <h1 className="text-3xl font-bold leading-tight text-foreground">
-            Biblioteca de componentes
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Explore os componentes disponíveis e abra qualquer item para ver exemplos, instalação e uso.
-          </p>
-        </div>
+    <div className="space-y-8">
+      <div className="mb-6 border-b border-border pb-4">
+        <h1 className="text-3xl font-bold leading-tight text-foreground">
+          Biblioteca de componentes
+        </h1>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          Explore os componentes disponíveis e abra qualquer item para ver exemplos, instalação e uso.
+        </p>
+      </div>
 
-        <div className="space-y-12">
-          {sidebarSections.map((section) => (
-            <section key={section.title} className="space-y-4">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold text-foreground">{section.title}</h2>
-                  <p className="text-sm text-muted-foreground">{section.description}</p>
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  {section.items.length} itens
-                </span>
-              </div>
+      <nav className="mb-8 flex flex-wrap gap-2" aria-label="Navegação de componentes">
+        {sidebarSections.map((section) => (
+          <a
+            key={section.id}
+            href={`#${section.id}`}
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-accent/60 hover:text-foreground"
+          >
+            <span>{section.title}</span>
+            <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
+              {section.items.length}
+            </span>
+          </a>
+        ))}
+      </nav>
 
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {section.items.map((item) => (
-                  <RouterLink
-                    key={item.href}
-                    to={item.href}
-                    className="group min-w-0 rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-                  >
-                    <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <h3 className="text-base font-semibold text-foreground break-words">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1 text-xs leading-snug text-muted-foreground [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
-                          {item.description}
-                        </p>
-                      </div>
-                      <span className="text-lg leading-none text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary">
-                        →
-                      </span>
-                    </div>
-                    <div className="pointer-events-none flex h-24 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-2">
-                      <ComponentPreview type={item.preview} />
-                    </div>
-                  </RouterLink>
-                ))}
+      <div className="space-y-12">
+        {sidebarSections.map((section) => (
+          <section key={section.title} id={section.id} className="scroll-mt-20 space-y-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">{section.title}</h2>
+                <p className="text-sm text-muted-foreground">{section.description}</p>
               </div>
-            </section>
-          ))}
-        </div>
-      </main>
-    </>
+              <span className="text-sm text-muted-foreground">
+                {section.items.length} itens
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {section.items.map((item) => (
+                <article
+                  key={item.href}
+                  role="link"
+                  tabIndex={0}
+                  onClick={() => navigate(item.href)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault()
+                      navigate(item.href)
+                    }
+                  }}
+                  className="group min-w-0 cursor-pointer rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                >
+                  <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <h3 className="text-base font-semibold text-foreground break-words">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-xs leading-snug text-muted-foreground [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
+                        {item.description}
+                      </p>
+                    </div>
+                    <span className="text-lg leading-none text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary">
+                      →
+                    </span>
+                  </div>
+                  <div className="flex min-h-24 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-2">
+                    <ComponentPreview type={item.preview} />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
   )
 }

@@ -268,7 +268,6 @@ function LayoutContent({ children }: LayoutProps) {
   )
 
   const isHome = location.pathname === '/'
-  const hasSidebar = location.pathname.startsWith('/components')
 
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-x-hidden w-full">
@@ -357,9 +356,7 @@ function LayoutContent({ children }: LayoutProps) {
         "flex-1 w-full overflow-x-hidden",
         isHome
           ? "block"
-          : hasSidebar
-            ? "block"
-            : "mx-auto max-w-6xl px-4 sm:px-6 py-8 md:px-8 md:py-10 lg:px-10"
+          : "mx-auto max-w-6xl px-4 sm:px-6 py-8 md:px-8 md:py-10 lg:px-10"
       )}>
         {children}
       </main>

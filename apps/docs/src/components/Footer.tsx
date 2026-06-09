@@ -21,8 +21,8 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-border bg-background">
-      <div className="w-full px-4 md:px-6 py-8 md:py-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="w-full px-4 py-5 md:px-6 md:py-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           {/* Brand */}
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-3">
@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div className="flex flex-wrap items-center justify-start gap-6">
+          <div className="flex flex-wrap items-center justify-start gap-4 md:gap-5">
             {navigation.map((item) => {
               const Icon = item.icon
               return (
