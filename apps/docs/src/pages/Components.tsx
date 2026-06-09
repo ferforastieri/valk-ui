@@ -1,32 +1,73 @@
-import type { SVGProps } from 'react'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import {
-  Bars3Icon,
-  BookOpenIcon,
-  CalendarIcon,
-  CheckCircleIcon,
-  CheckIcon,
-  ClockIcon,
-  CodeBracketIcon,
-  CubeIcon,
-  DocumentTextIcon,
-  HomeIcon,
-  MagnifyingGlassIcon,
-  SparklesIcon,
-  SwatchIcon,
-  XMarkIcon,
+  Accordion,
+  Avatar,
+  Badge,
+  BarChart,
+  Button,
+  Card,
+  CardContent,
+  CardTitle,
+  Checkbox,
+  Command,
+  DatePicker,
+  Dialog,
   DocsSidebar,
+  DonutChart,
+  DropdownMenu,
+  DropdownMenuItem,
+  Input,
+  LineChart,
+  MetricCard,
+  Modal,
+  Navigation,
+  PaginatedTable,
+  ProgressBar,
+  Select,
+  Separator,
+  Sheet,
+  StatusBadge,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  ThemeToggle,
+  Toggle,
 } from '@/components'
 import { useTranslation } from 'react-i18next'
 
-type IconComponent = (props: SVGProps<SVGSVGElement>) => JSX.Element
+type PreviewType =
+  | 'button'
+  | 'input'
+  | 'select'
+  | 'checkbox'
+  | 'toggle'
+  | 'datepicker'
+  | 'modal'
+  | 'dialog'
+  | 'statusbadge'
+  | 'badge'
+  | 'progressbar'
+  | 'dropdownmenu'
+  | 'command'
+  | 'themetoggle'
+  | 'avatar'
+  | 'metriccard'
+  | 'paginatedtable'
+  | 'accordion'
+  | 'card'
+  | 'separator'
+  | 'sheet'
+  | 'navigation'
+  | 'tabs'
+  | 'barchart'
+  | 'donutchart'
+  | 'linechart'
 
 type ComponentItem = {
   title: string
   href: string
   description: string
-  icon: IconComponent
-  preview: 'button' | 'field' | 'choice' | 'switch' | 'date' | 'modal' | 'badge' | 'progress' | 'menu' | 'command' | 'theme' | 'avatar' | 'metric' | 'table' | 'accordion' | 'card' | 'line' | 'sheet' | 'nav' | 'tabs' | 'bar' | 'donut' | 'chart'
+  preview: PreviewType
 }
 
 type ComponentSection = {
@@ -35,149 +76,187 @@ type ComponentSection = {
   items: ComponentItem[]
 }
 
-function ComponentPreview({ type }: { type: ComponentItem['preview'] }) {
-  const baseLine = 'h-1.5 rounded-full bg-primary/25'
+const selectOptions = [
+  { value: 'react', label: 'React' },
+  { value: 'vue', label: 'Vue' },
+]
 
+const tableColumns = [
+  { key: 'name', title: 'Nome', dataIndex: 'name' },
+  { key: 'status', title: 'Status', dataIndex: 'status' },
+] as const
+
+const tableData = [
+  { id: 1, name: 'Button', status: 'Stable' },
+  { id: 2, name: 'Input', status: 'Stable' },
+]
+
+function ComponentPreview({ type }: { type: PreviewType }) {
   switch (type) {
     case 'button':
-      return <div className="h-8 w-24 rounded-md bg-primary" />
-    case 'field':
-      return (
-        <div className="h-9 w-32 rounded-md border border-border bg-background px-3 py-2">
-          <div className={baseLine} />
-        </div>
-      )
-    case 'choice':
-      return (
-        <div className="flex items-center gap-2">
-          <div className="flex h-5 w-5 items-center justify-center rounded border border-primary bg-primary text-primary-foreground">
-            <CheckIcon className="h-3.5 w-3.5" />
-          </div>
-          <div className="h-1.5 w-20 rounded-full bg-muted-foreground/25" />
-        </div>
-      )
-    case 'switch':
-      return (
-        <div className="flex h-7 w-12 items-center rounded-full bg-primary p-1">
-          <div className="h-5 w-5 rounded-full bg-primary-foreground" />
-        </div>
-      )
-    case 'date':
-      return (
-        <div className="grid w-24 grid-cols-4 gap-1">
-          {Array.from({ length: 12 }).map((_, index) => (
-            <div key={index} className={`h-3 rounded-sm ${index === 6 ? 'bg-primary' : 'bg-primary/15'}`} />
-          ))}
-        </div>
-      )
+      return <Button size="sm">Button</Button>
+    case 'input':
+      return <Input placeholder="Digite algo" className="max-w-44" />
+    case 'select':
+      return <Select options={selectOptions} value="react" searchable={false} className="max-w-44" />
+    case 'checkbox':
+      return <Checkbox checked readOnly label="Checkbox" />
+    case 'toggle':
+      return <Toggle checked readOnly label="Toggle" />
+    case 'datepicker':
+      return <DatePicker value="2026-06-08" className="max-w-44" readOnly />
     case 'modal':
-      return <div className="h-14 w-24 rounded-md border border-primary/30 bg-background shadow-sm" />
+      return (
+        <>
+          <Button size="sm" variant="outline">Abrir modal</Button>
+          <Modal isOpen={false} onClose={() => undefined} title="Modal">
+            Conteúdo
+          </Modal>
+        </>
+      )
+    case 'dialog':
+      return (
+        <>
+          <Button size="sm" variant="outline">Abrir dialog</Button>
+          <Dialog isOpen={false} onClose={() => undefined} title="Dialog">
+            Conteúdo
+          </Dialog>
+        </>
+      )
+    case 'statusbadge':
+      return <StatusBadge status="completed" size="sm">Completed</StatusBadge>
     case 'badge':
       return (
-        <div className="flex gap-1.5">
-          <div className="h-5 w-14 rounded-full bg-primary" />
-          <div className="h-5 w-10 rounded-full border border-border" />
+        <div className="flex flex-wrap justify-center gap-2">
+          <Badge>Default</Badge>
+          <Badge variant="outline">Outline</Badge>
         </div>
       )
-    case 'progress':
+    case 'progressbar':
+      return <ProgressBar value={72} className="w-44" />
+    case 'dropdownmenu':
       return (
-        <div className="h-2 w-28 overflow-hidden rounded-full bg-primary/15">
-          <div className="h-full w-2/3 rounded-full bg-primary" />
-        </div>
-      )
-    case 'menu':
-      return (
-        <div className="space-y-1.5">
-          <div className="h-2 w-20 rounded-full bg-primary/30" />
-          <div className="h-2 w-28 rounded-full bg-primary/15" />
-          <div className="h-2 w-16 rounded-full bg-primary/15" />
-        </div>
+        <DropdownMenu trigger={<Button size="sm" variant="outline">Menu</Button>}>
+          <DropdownMenuItem>Editar</DropdownMenuItem>
+          <DropdownMenuItem>Excluir</DropdownMenuItem>
+        </DropdownMenu>
       )
     case 'command':
       return (
-        <div className="w-32 rounded-md border border-border bg-background p-2">
-          <div className="mb-2 h-1.5 w-20 rounded-full bg-primary/25" />
-          <div className="h-1.5 w-28 rounded-full bg-muted-foreground/20" />
-        </div>
+        <Command
+          className="h-24 w-52"
+          placeholder="Buscar..."
+          items={[
+            { id: 'button', title: 'Button' },
+            { id: 'input', title: 'Input' },
+          ]}
+        />
       )
-    case 'theme':
-      return (
-        <div className="flex gap-1.5">
-          <div className="h-7 w-7 rounded-full bg-primary" />
-          <div className="h-7 w-7 rounded-full bg-foreground" />
-        </div>
-      )
+    case 'themetoggle':
+      return <ThemeToggle theme="light" onToggle={() => undefined} />
     case 'avatar':
       return (
         <div className="flex -space-x-2">
-          <div className="h-8 w-8 rounded-full border-2 border-background bg-primary/80" />
-          <div className="h-8 w-8 rounded-full border-2 border-background bg-primary/40" />
-          <div className="h-8 w-8 rounded-full border-2 border-background bg-primary/20" />
+          <Avatar fallback="Valk UI" />
+          <Avatar fallback="Docs" />
+          <Avatar fallback="React" />
         </div>
       )
-    case 'metric':
+    case 'metriccard':
       return (
-        <div className="space-y-2">
-          <div className="h-2 w-16 rounded-full bg-muted-foreground/25" />
-          <div className="h-4 w-24 rounded-full bg-primary" />
-        </div>
+        <MetricCard
+          title="Downloads"
+          value="24k"
+          subtitle="+12%"
+          variant="blue-light"
+          className="w-48 p-4"
+        />
       )
-    case 'table':
+    case 'paginatedtable':
       return (
-        <div className="space-y-1.5">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="flex gap-1.5">
-              <div className="h-2 w-8 rounded-full bg-primary/20" />
-              <div className="h-2 w-12 rounded-full bg-primary/10" />
-              <div className="h-2 w-6 rounded-full bg-primary/10" />
-            </div>
-          ))}
-        </div>
+        <PaginatedTable
+          className="w-56 text-xs"
+          columns={tableColumns as never}
+          data={tableData}
+          searchable={false}
+          pageSize={2}
+          totalItems={2}
+        />
       )
     case 'accordion':
       return (
-        <div className="space-y-1.5">
-          <div className="h-2 w-28 rounded-full bg-primary/25" />
-          <div className="h-2 w-20 rounded-full bg-muted-foreground/20" />
-        </div>
+        <Accordion
+          className="w-52"
+          items={[
+            { value: 'item', trigger: 'Accordion', content: 'Conteúdo', defaultOpen: true },
+          ]}
+        />
       )
     case 'card':
-      return <div className="h-12 w-24 rounded-md border border-border bg-background" />
-    case 'line':
-      return <div className="h-px w-28 bg-border" />
-    case 'sheet':
-      return <div className="h-16 w-20 rounded-l-md border border-primary/30 border-r-primary bg-background" />
-    case 'nav':
       return (
-        <div className="flex gap-2">
-          <div className="h-7 w-7 rounded-md bg-primary" />
-          <div className="h-7 w-7 rounded-md bg-primary/15" />
-          <div className="h-7 w-7 rounded-md bg-primary/15" />
-        </div>
+        <Card className="w-48">
+          <CardContent className="p-4">
+            <CardTitle className="text-base">Card</CardTitle>
+            <p className="mt-2 text-sm text-muted-foreground">Conteúdo</p>
+          </CardContent>
+        </Card>
+      )
+    case 'separator':
+      return <Separator className="w-48" />
+    case 'sheet':
+      return (
+        <>
+          <Button size="sm" variant="outline">Abrir sheet</Button>
+          <Sheet isOpen={false} onClose={() => undefined}>Conteúdo</Sheet>
+        </>
+      )
+    case 'navigation':
+      return (
+        <Navigation
+          className="w-64 rounded-xl border"
+          showMobileMenu={false}
+          items={[
+            { name: 'Docs', href: '/docs' },
+            { name: 'UI', href: '/components' },
+          ]}
+          currentPath="/components"
+        />
       )
     case 'tabs':
       return (
-        <div className="flex rounded-md bg-primary/10 p-1">
-          <div className="h-6 w-10 rounded bg-primary" />
-          <div className="h-6 w-10 rounded" />
-        </div>
+        <Tabs defaultValue="one">
+          <TabsList>
+            <TabsTrigger value="one">One</TabsTrigger>
+            <TabsTrigger value="two">Two</TabsTrigger>
+          </TabsList>
+        </Tabs>
       )
-    case 'bar':
+    case 'barchart':
       return (
-        <div className="flex h-12 items-end gap-1.5">
-          <div className="h-5 w-3 rounded-t bg-primary/30" />
-          <div className="h-9 w-3 rounded-t bg-primary" />
-          <div className="h-7 w-3 rounded-t bg-primary/60" />
-          <div className="h-12 w-3 rounded-t bg-primary/80" />
-        </div>
+        <BarChart
+          title="BarChart"
+          data={{ label: 'Docs', previousPeriod: 40, selectedPeriod: 70 }}
+          showLegend={false}
+          className="h-40 w-56 p-3"
+        />
       )
-    case 'donut':
-      return <div className="h-12 w-12 rounded-full border-[10px] border-primary border-r-primary/20" />
-    case 'chart':
+    case 'donutchart':
       return (
-        <svg className="h-12 w-28 text-primary" viewBox="0 0 112 48" fill="none" aria-hidden="true">
-          <path d="M4 40C22 38 23 16 41 22C55 27 55 35 70 27C83 20 86 10 108 8" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-        </svg>
+        <DonutChart
+          title="DonutChart"
+          data={[{ label: 'Uso', value: 75, percentage: 75, color: '#003580' }]}
+          className="h-40 min-h-0 w-56 p-3"
+        />
+      )
+    case 'linechart':
+      return (
+        <LineChart
+          title="LineChart"
+          data={[12, 24, 18, 32, 28]}
+          labels={['A', 'B', 'C', 'D', 'E']}
+          color="#003580"
+          className="h-40 w-56 p-3"
+        />
       )
     default:
       return null
@@ -193,50 +272,50 @@ export default function Components() {
       title: 'Forms',
       description: 'Controles para entrada, escolha e confirmação.',
       items: [
-        { title: 'Button', href: '/components/button', description: 'Ações principais, secundárias e discretas.', icon: SparklesIcon, preview: 'button' },
-        { title: 'Input', href: '/components/input', description: 'Campos de texto com label, erro e ícones.', icon: MagnifyingGlassIcon, preview: 'field' },
-        { title: 'Select', href: '/components/select', description: 'Seleção única ou múltipla com busca.', icon: Bars3Icon, preview: 'menu' },
-        { title: 'Checkbox', href: '/components/checkbox', description: 'Escolhas booleanas com estado claro.', icon: CheckIcon, preview: 'choice' },
-        { title: 'Toggle', href: '/components/toggle', description: 'Alternância rápida para preferências.', icon: CheckCircleIcon, preview: 'switch' },
-        { title: 'DatePicker', href: '/components/datepicker', description: 'Seleção de data compacta e acessível.', icon: CalendarIcon, preview: 'date' },
+        { title: 'Button', href: '/components/button', description: 'Ações principais, secundárias e discretas.', preview: 'button' },
+        { title: 'Input', href: '/components/input', description: 'Campos de texto com label, erro e ícones.', preview: 'input' },
+        { title: 'Select', href: '/components/select', description: 'Seleção única ou múltipla com busca.', preview: 'select' },
+        { title: 'Checkbox', href: '/components/checkbox', description: 'Escolhas booleanas com estado claro.', preview: 'checkbox' },
+        { title: 'Toggle', href: '/components/toggle', description: 'Alternância rápida para preferências.', preview: 'toggle' },
+        { title: 'DatePicker', href: '/components/datepicker', description: 'Seleção de data compacta e acessível.', preview: 'datepicker' },
       ]
     },
     {
       title: t('components.feedback'),
       description: 'Respostas visuais para estados, ações e fluxos.',
       items: [
-        { title: 'Modal', href: '/components/modal', description: 'Camada focada para decisões importantes.', icon: XMarkIcon, preview: 'modal' },
-        { title: 'Dialog', href: '/components/dialog', description: 'Confirmações e mensagens contextuais.', icon: DocumentTextIcon, preview: 'modal' },
-        { title: 'StatusBadge', href: '/components/statusbadge', description: 'Estados operacionais em leitura rápida.', icon: CheckCircleIcon, preview: 'badge' },
-        { title: 'Badge', href: '/components/badge', description: 'Marcadores pequenos para rótulos e filtros.', icon: SparklesIcon, preview: 'badge' },
-        { title: 'ProgressBar', href: '/components/progressbar', description: 'Progresso linear para tarefas e etapas.', icon: ClockIcon, preview: 'progress' },
-        { title: 'DropdownMenu', href: '/components/dropdownmenu', description: 'Menus de ação compactos.', icon: Bars3Icon, preview: 'menu' },
-        { title: 'Command', href: '/components/command', description: 'Busca de comandos e navegação rápida.', icon: MagnifyingGlassIcon, preview: 'command' },
-        { title: 'ThemeToggle', href: '/components/themetoggle', description: 'Alternância visual entre temas.', icon: SwatchIcon, preview: 'theme' },
+        { title: 'Modal', href: '/components/modal', description: 'Camada focada para decisões importantes.', preview: 'modal' },
+        { title: 'Dialog', href: '/components/dialog', description: 'Confirmações e mensagens contextuais.', preview: 'dialog' },
+        { title: 'StatusBadge', href: '/components/statusbadge', description: 'Estados operacionais em leitura rápida.', preview: 'statusbadge' },
+        { title: 'Badge', href: '/components/badge', description: 'Marcadores pequenos para rótulos e filtros.', preview: 'badge' },
+        { title: 'ProgressBar', href: '/components/progressbar', description: 'Progresso linear para tarefas e etapas.', preview: 'progressbar' },
+        { title: 'DropdownMenu', href: '/components/dropdownmenu', description: 'Menus de ação compactos.', preview: 'dropdownmenu' },
+        { title: 'Command', href: '/components/command', description: 'Busca de comandos e navegação rápida.', preview: 'command' },
+        { title: 'ThemeToggle', href: '/components/themetoggle', description: 'Alternância visual entre temas.', preview: 'themetoggle' },
       ]
     },
     {
       title: t('components.layout'),
       description: 'Estruturas para organizar conteúdo e navegação.',
       items: [
-        { title: 'Avatar', href: '/components/avatar', description: 'Identidade visual para pessoas e entidades.', icon: HomeIcon, preview: 'avatar' },
-        { title: 'MetricCard', href: '/components/metriccard', description: 'Indicadores compactos para dashboards.', icon: CubeIcon, preview: 'metric' },
-        { title: 'PaginatedTable', href: '/components/paginatedtable', description: 'Tabela com busca, ordenação e paginação.', icon: DocumentTextIcon, preview: 'table' },
-        { title: 'Accordion', href: '/components/accordion', description: 'Conteúdo expansível com hierarquia clara.', icon: Bars3Icon, preview: 'accordion' },
-        { title: 'Card', href: '/components/card', description: 'Superfície para itens e blocos de conteúdo.', icon: CubeIcon, preview: 'card' },
-        { title: 'Separator', href: '/components/separator', description: 'Divisão sutil entre grupos de informação.', icon: CodeBracketIcon, preview: 'line' },
-        { title: 'Sheet', href: '/components/sheet', description: 'Painel lateral para fluxos complementares.', icon: DocumentTextIcon, preview: 'sheet' },
-        { title: 'Navigation', href: '/components/navigation', description: 'Navegação responsiva para aplicações.', icon: HomeIcon, preview: 'nav' },
-        { title: 'Tabs', href: '/components/tabs', description: 'Alternância entre visões relacionadas.', icon: BookOpenIcon, preview: 'tabs' },
+        { title: 'Avatar', href: '/components/avatar', description: 'Identidade visual para pessoas e entidades.', preview: 'avatar' },
+        { title: 'MetricCard', href: '/components/metriccard', description: 'Indicadores compactos para dashboards.', preview: 'metriccard' },
+        { title: 'PaginatedTable', href: '/components/paginatedtable', description: 'Tabela com busca, ordenação e paginação.', preview: 'paginatedtable' },
+        { title: 'Accordion', href: '/components/accordion', description: 'Conteúdo expansível com hierarquia clara.', preview: 'accordion' },
+        { title: 'Card', href: '/components/card', description: 'Superfície para itens e blocos de conteúdo.', preview: 'card' },
+        { title: 'Separator', href: '/components/separator', description: 'Divisão sutil entre grupos de informação.', preview: 'separator' },
+        { title: 'Sheet', href: '/components/sheet', description: 'Painel lateral para fluxos complementares.', preview: 'sheet' },
+        { title: 'Navigation', href: '/components/navigation', description: 'Navegação responsiva para aplicações.', preview: 'navigation' },
+        { title: 'Tabs', href: '/components/tabs', description: 'Alternância entre visões relacionadas.', preview: 'tabs' },
       ]
     },
     {
       title: t('components.charts'),
       description: 'Visualizações simples para dados essenciais.',
       items: [
-        { title: 'BarChart', href: '/components/barchart', description: 'Comparação direta entre categorias.', icon: SwatchIcon, preview: 'bar' },
-        { title: 'DonutChart', href: '/components/donutchart', description: 'Proporções e distribuição em anel.', icon: SparklesIcon, preview: 'donut' },
-        { title: 'LineChart', href: '/components/linechart', description: 'Tendências e evolução ao longo do tempo.', icon: CodeBracketIcon, preview: 'chart' },
+        { title: 'BarChart', href: '/components/barchart', description: 'Comparação direta entre categorias.', preview: 'barchart' },
+        { title: 'DonutChart', href: '/components/donutchart', description: 'Proporções e distribuição em anel.', preview: 'donutchart' },
+        { title: 'LineChart', href: '/components/linechart', description: 'Tendências e evolução ao longo do tempo.', preview: 'linechart' },
       ]
     },
   ]
@@ -278,40 +357,31 @@ export default function Components() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {section.items.map((item) => {
-                  const Icon = item.icon
-
-                  return (
-                    <RouterLink
-                      key={item.href}
-                      to={item.href}
-                      className="group min-w-0 rounded-lg border border-border bg-background p-4 transition-colors hover:border-primary/50 hover:bg-accent/40 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-                    >
-                      <div className="flex min-w-0 items-start gap-4">
-                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="mb-2 flex min-w-0 items-center justify-between gap-3">
-                            <h3 className="min-w-0 text-base font-semibold text-foreground break-words">
-                              {item.title}
-                            </h3>
-                            <span className="text-lg leading-none text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary">
-                              →
-                            </span>
-                          </div>
-                          <p className="text-sm leading-relaxed text-muted-foreground">
-                            {item.description}
-                          </p>
-                        </div>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {section.items.map((item) => (
+                  <RouterLink
+                    key={item.href}
+                    to={item.href}
+                    className="group min-w-0 rounded-lg border border-border bg-background p-4 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                  >
+                    <div className="mb-4 flex min-w-0 items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <h3 className="text-base font-semibold text-foreground break-words">
+                          {item.title}
+                        </h3>
+                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                          {item.description}
+                        </p>
                       </div>
-                      <div className="mt-5 flex h-20 items-center justify-center rounded-md bg-muted/35">
-                        <ComponentPreview type={item.preview} />
-                      </div>
-                    </RouterLink>
-                  )
-                })}
+                      <span className="text-lg leading-none text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary">
+                        →
+                      </span>
+                    </div>
+                    <div className="pointer-events-none flex h-36 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-3">
+                      <ComponentPreview type={item.preview} />
+                    </div>
+                  </RouterLink>
+                ))}
               </div>
             </section>
           ))}

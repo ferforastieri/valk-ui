@@ -29,42 +29,42 @@ const DocsSidebar = forwardRef<HTMLElement, DocsSidebarProps>(
         : { href: item.href }
 
       return (
-        <li key={item.href} className={cn(level > 0 && 'ml-4')}>
+        <li key={item.href} className={cn(level > 0 && 'ml-3')}>
           {LinkComponent ? (
             <LinkComponent
               {...linkProps}
               className={cn(
-                'block px-3 py-2 text-sm transition-colors rounded-md cursor-pointer relative',
+                'group relative flex min-w-0 items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors cursor-pointer',
                 level === 0 ? 'font-medium' : 'font-normal',
                 isActive
-                  ? 'text-foreground bg-accent'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-accent/60 hover:text-foreground'
               )}
             >
-              {item.title}
+              <span className="min-w-0 flex-1 truncate">{item.title}</span>
               {isActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-foreground rounded-r-full" />
+                <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
               )}
             </LinkComponent>
           ) : (
             <a
               {...linkProps}
               className={cn(
-                'block px-3 py-2 text-sm transition-colors rounded-md cursor-pointer relative',
+                'group relative flex min-w-0 items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors cursor-pointer',
                 level === 0 ? 'font-medium' : 'font-normal',
                 isActive
-                  ? 'text-foreground bg-accent'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-accent/60 hover:text-foreground'
               )}
             >
-              {item.title}
+              <span className="min-w-0 flex-1 truncate">{item.title}</span>
               {isActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-foreground rounded-r-full" />
+                <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
               )}
             </a>
           )}
           {hasChildren && (
-            <ul className="mt-1 space-y-0.5 ml-2 border-l border-border pl-2">
+            <ul className="mt-1 space-y-0.5 border-l border-border/80 pl-2">
               {item.items?.map((child) => renderItem(child, level + 1))}
             </ul>
           )}
@@ -76,28 +76,32 @@ const DocsSidebar = forwardRef<HTMLElement, DocsSidebarProps>(
       <aside
         ref={ref}
         className={cn(
-          'hidden lg:flex flex-col w-64 border-r border-border bg-background shrink-0',
+          'hidden lg:flex h-[calc(100vh-4rem)] sticky top-16 w-72 shrink-0 flex-col border-r border-border bg-background/95 backdrop-blur',
           className
         )}
         {...props}
       >
+        <div className="border-b border-border px-5 py-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">Componentes</p>
+          <p className="mt-1 text-sm text-muted-foreground">Navegue pela biblioteca</p>
+        </div>
         <nav className="flex-1 overflow-y-auto">
-          <div className="px-4 py-4">
+          <div className="px-4 py-5">
             {sections.map((section, sectionIndex) => (
-              <div key={sectionIndex} className={cn(sectionIndex > 0 && 'mt-8')}>
+              <div key={sectionIndex} className={cn(sectionIndex > 0 && 'mt-6')}>
                 {section.title && (
-                  <div className="px-3 py-2 mb-2">
+                  <div className="mb-2 flex items-center justify-between px-3">
                     <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                       {section.title}
                     </h2>
+                    <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
+                      {section.items.length}
+                    </span>
                   </div>
                 )}
-                <ul className="space-y-1">
+                <ul className="space-y-0.5">
                   {section.items.map((item) => renderItem(item))}
                 </ul>
-                {sectionIndex < sections.length - 1 && section.title && (
-                  <div className="mt-4 border-t border-border" />
-                )}
               </div>
             ))}
           </div>
@@ -110,4 +114,3 @@ const DocsSidebar = forwardRef<HTMLElement, DocsSidebarProps>(
 DocsSidebar.displayName = 'DocsSidebar'
 
 export { DocsSidebar }
-
