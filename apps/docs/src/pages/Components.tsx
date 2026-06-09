@@ -169,13 +169,13 @@ function ComponentPreview({ type }: { type: PreviewType }) {
           value="24k"
           subtitle="+12%"
           variant="blue-light"
-          className="w-48 p-4"
+          className="w-40 p-3"
         />
       )
     case 'paginatedtable':
       return (
         <PaginatedTable
-          className="w-56 text-xs"
+          className="w-52 text-xs [&>div:first-child]:hidden [&_table]:text-xs [&_th]:px-2 [&_th]:py-2 [&_td]:px-2 [&_td]:py-2"
           columns={tableColumns as never}
           data={tableData}
           searchable={false}
@@ -237,7 +237,7 @@ function ComponentPreview({ type }: { type: PreviewType }) {
           title="BarChart"
           data={{ label: 'Docs', previousPeriod: 40, selectedPeriod: 70 }}
           showLegend={false}
-          className="h-40 w-56 p-3"
+          className="h-24 w-52 p-2 [&_h3]:mb-1 [&_h3]:text-xs [&>div]:gap-4 [&>div]:px-4 [&>div]:pb-2 [&>div]:pt-2"
         />
       )
     case 'donutchart':
@@ -245,7 +245,7 @@ function ComponentPreview({ type }: { type: PreviewType }) {
         <DonutChart
           title="DonutChart"
           data={[{ label: 'Uso', value: 75, percentage: 75, color: '#003580' }]}
-          className="h-40 min-h-0 w-56 p-3"
+          className="h-24 min-h-0 w-52 p-2 [&_h3]:text-xs [&_h3]:mb-1"
         />
       )
     case 'linechart':
@@ -255,7 +255,7 @@ function ComponentPreview({ type }: { type: PreviewType }) {
           data={[12, 24, 18, 32, 28]}
           labels={['A', 'B', 'C', 'D', 'E']}
           color="#003580"
-          className="h-40 w-56 p-3"
+          className="h-24 w-52 p-2 [&_h3]:mb-1 [&_h3]:text-xs [&_svg]:h-20"
         />
       )
     default:
@@ -346,7 +346,7 @@ export default function Components() {
 
         <div className="space-y-12">
           {sidebarSections.map((section) => (
-            <section key={section.title} className="space-y-5">
+            <section key={section.title} className="space-y-4">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-foreground">{section.title}</h2>
@@ -357,19 +357,19 @@ export default function Components() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {section.items.map((item) => (
                   <RouterLink
                     key={item.href}
                     to={item.href}
-                    className="group min-w-0 rounded-lg border border-border bg-background p-4 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                    className="group min-w-0 rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   >
-                    <div className="mb-4 flex min-w-0 items-start justify-between gap-3">
+                    <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
                       <div className="min-w-0">
                         <h3 className="text-base font-semibold text-foreground break-words">
                           {item.title}
                         </h3>
-                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                        <p className="mt-1 text-xs leading-snug text-muted-foreground [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
                           {item.description}
                         </p>
                       </div>
@@ -377,7 +377,7 @@ export default function Components() {
                         →
                       </span>
                     </div>
-                    <div className="pointer-events-none flex h-36 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-3">
+                    <div className="pointer-events-none flex h-24 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-2">
                       <ComponentPreview type={item.preview} />
                     </div>
                   </RouterLink>

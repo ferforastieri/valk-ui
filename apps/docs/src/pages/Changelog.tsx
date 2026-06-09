@@ -338,10 +338,12 @@ export default function Changelog() {
         />
       </div>
 
-      <div className="space-y-8 border-l border-border pl-4 md:pl-6">
+      <div className="relative space-y-8 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-border">
         {versions.map((version) => (
-          <section key={version.version} className="relative pb-8 last:pb-0">
-            <span className="absolute -left-[21px] md:-left-[29px] top-1 h-3 w-3 rounded-full border-2 border-background bg-primary" />
+          <section key={version.version} className="relative border-b border-border/70 pb-8 last:border-b-0 last:pb-0">
+            <span className="absolute -left-8 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-background">
+              <span className="h-3 w-3 rounded-full border-2 border-primary bg-background shadow-sm" />
+            </span>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
               <div className="flex flex-wrap items-center gap-3">
                 <SparklesIcon className="h-6 w-6 text-primary flex-shrink-0" />

@@ -21,13 +21,13 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-border bg-background">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 md:py-10 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-8 lg:px-10 py-8 md:py-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           {/* Brand */}
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="Valk UI" className="h-6 w-6" />
-              <span className="text-lg font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <img src="/logo.png" alt="Valk UI" className="h-10 w-10" />
+              <span className="text-xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Valk UI
               </span>
             </Link>

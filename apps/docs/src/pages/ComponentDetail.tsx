@@ -1,5 +1,5 @@
 import { useParams, Link as RouterLink } from 'react-router-dom'
-import { DocsSidebar, Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components'
+import { DocsSidebar } from '@/components'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import ComponentExamples from '../components/ComponentExamples'
@@ -71,6 +71,12 @@ export default function ComponentDetail() {
       />
       <div className="flex-1 min-w-0 px-6 py-8 md:px-8 md:py-10 lg:px-10">
         <div className="mb-8">
+          <RouterLink
+            to="/components"
+            className="mb-4 inline-flex items-center text-sm font-medium text-primary hover:underline"
+          >
+            ← Voltar para componentes
+          </RouterLink>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
             {componentDisplayName}
           </h1>
@@ -84,4 +90,3 @@ export default function ComponentDetail() {
     </>
   )
 }
-
