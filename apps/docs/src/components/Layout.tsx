@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, Link as RouterLink } from 'react-router-dom'
 import { Navigation, ThemeToggle } from '@/components'
 import { cn } from '@/lib'
@@ -121,14 +121,6 @@ function LayoutContent({ children }: LayoutProps) {
       document.documentElement.classList.remove('dark')
     }
   }, [])
-
-  useLayoutEffect(() => {
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual'
-    }
-
-    window.scrollTo(0, 0)
-  }, [location.pathname])
 
   useEffect(() => {
     const meta = getRouteMeta(location.pathname)
