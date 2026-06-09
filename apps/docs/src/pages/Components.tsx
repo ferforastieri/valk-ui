@@ -81,8 +81,8 @@ export default function Components() {
                   className="block min-w-0"
                 >
                   <Card className="h-full min-w-0 cursor-pointer transition-colors hover:bg-accent/50">
-                    <CardContent className="flex min-h-20 min-w-0 items-center p-4">
-                      <CardTitle className="min-w-0 text-base font-medium leading-snug break-words [overflow-wrap:anywhere]">
+                    <CardContent className="flex min-w-0 items-center justify-center p-4 text-center">
+                      <CardTitle className="min-w-0 text-center text-base font-medium leading-snug break-words [overflow-wrap:anywhere]">
                         {item.title}
                       </CardTitle>
                     </CardContent>

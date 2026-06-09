@@ -916,7 +916,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-background rounded-2xl p-6 md:p-8 border border-border shadow-xl">
+          <div className="py-2">
             {renderContent()}
           </div>
         </div>

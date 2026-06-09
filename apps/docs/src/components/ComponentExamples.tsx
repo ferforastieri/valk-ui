@@ -778,22 +778,22 @@ function MyComponent() {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
+      <section className="space-y-4">
+        <div>
           <CardTitle>Preview</CardTitle>
           <CardDescription>Visualização do componente</CardDescription>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div>
           {renderComponent()}
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
-      <Card>
-        <CardHeader>
+      <section className="border-t border-border pt-6 space-y-4">
+        <div>
           <CardTitle>Instalação</CardTitle>
           <CardDescription>Como instalar este componente</CardDescription>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div>
           <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
             <pre className="text-green-400 text-sm font-mono">
               <code>npx ui-valk</code>
@@ -802,23 +802,22 @@ function MyComponent() {
           <p className="text-sm text-muted-foreground mt-3">
             Selecione o componente {componentName?.charAt(0).toUpperCase() + componentName?.slice(1)} durante a instalação.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
-      <Card>
-        <CardHeader>
+      <section className="border-t border-border pt-6 space-y-4">
+        <div>
           <CardTitle>Uso</CardTitle>
           <CardDescription>Exemplo de código completo</CardDescription>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div>
           <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
             <pre className="text-green-400 text-sm font-mono whitespace-pre">
               <code>{getCodeExample()}</code>
             </pre>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
     </div>
   )
 }
-
