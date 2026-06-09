@@ -27,7 +27,7 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <Link to="/" className="flex items-center gap-3">
               <img src="/logo.png" alt="Valk UI" className="h-14 w-14" />
-              <span className="text-2xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <span className="font-brand text-2xl font-bold text-foreground">
                 Valk UI
               </span>
             </Link>

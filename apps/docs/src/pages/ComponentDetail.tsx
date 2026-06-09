@@ -69,19 +69,23 @@ export default function ComponentDetail() {
         currentPath={location.pathname}
         LinkComponent={RouterLink}
       />
-      <div className="flex-1 min-w-0 px-6 pb-8 pt-4 md:px-8 md:pb-10 md:pt-6 lg:px-10">
-        <div className="mb-8">
+      <div className="min-w-0 flex-1 px-6 pb-8 pt-4 md:px-8 md:pb-10 lg:ml-72 lg:px-10">
+        <div className="mb-8 border-b border-border pb-6">
           <RouterLink
             to="/components"
-            className="mb-4 inline-flex items-center text-sm font-medium text-primary hover:underline"
+            className="mb-5 inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-accent/50 hover:text-primary"
           >
-            ← Voltar para componentes
+            <span aria-hidden="true">←</span>
+            Voltar para componentes
           </RouterLink>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+            Componente
+          </p>
+          <h1 className="mb-3 text-3xl font-bold leading-tight text-foreground md:text-4xl">
             {componentDisplayName}
           </h1>
-          <p className="text-base md:text-lg text-muted-foreground">
-            Documentação e exemplos de uso do componente {componentDisplayName}
+          <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            Documentação, exemplos de uso e instalação do componente {componentDisplayName}.
           </p>
         </div>
 

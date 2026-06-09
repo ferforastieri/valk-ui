@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 import { useLocation, Link as RouterLink } from 'react-router-dom'
 import { Navigation, ThemeToggle } from '@/components'
 import { cn } from '@/lib'
@@ -122,8 +122,12 @@ function LayoutContent({ children }: LayoutProps) {
     }
   }, [])
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+
+    window.scrollTo(0, 0)
   }, [location.pathname])
 
   useEffect(() => {
@@ -191,7 +195,7 @@ function LayoutContent({ children }: LayoutProps) {
   const logo = (
     <RouterLink to="/" className="flex items-center gap-2 min-w-0" onClick={() => setMobileMenuOpen(false)}>
       <img src="/logo.png" alt="Valk UI" className="h-11 w-11 flex-shrink-0" />
-      <span className="text-2xl font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
+      <span className="font-brand text-2xl font-bold text-foreground whitespace-nowrap">Valk UI</span>
     </RouterLink>
   )
 
@@ -271,6 +275,7 @@ function LayoutContent({ children }: LayoutProps) {
     </div>
   )
 
+  const isHome = location.pathname === '/'
   const hasSidebar = location.pathname.startsWith('/components')
 
   return (
@@ -358,7 +363,11 @@ function LayoutContent({ children }: LayoutProps) {
 
       <main className={cn(
         "flex-1 w-full overflow-x-hidden",
-        hasSidebar ? "flex overflow-hidden" : "mx-auto max-w-6xl px-4 sm:px-6 py-8 md:px-8 md:py-10 lg:px-10"
+        isHome
+          ? "block"
+          : hasSidebar
+            ? "block"
+            : "mx-auto max-w-6xl px-4 sm:px-6 py-8 md:px-8 md:py-10 lg:px-10"
       )}>
         {children}
       </main>

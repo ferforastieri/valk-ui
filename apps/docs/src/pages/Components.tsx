@@ -320,8 +320,6 @@ export default function Components() {
     },
   ]
 
-  const totalComponents = sidebarSections.reduce((total, section) => total + section.items.length, 0)
-
   return (
     <>
       <DocsSidebar
@@ -329,20 +327,15 @@ export default function Components() {
         currentPath={location.pathname}
         LinkComponent={RouterLink}
       />
-      <main className="flex-1 min-w-0 px-6 pb-8 pt-4 md:px-8 md:pb-10 md:pt-6 lg:px-10">
-        <header className="mb-8 border-b border-border pb-6">
-          <div className="max-w-3xl">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
-              {totalComponents} componentes
-            </p>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              {t('components.title')}
-            </h1>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              {t('components.subtitle')}
-            </p>
-          </div>
-        </header>
+      <main className="min-w-0 flex-1 px-6 pb-8 pt-4 md:px-8 md:pb-10 lg:ml-72 lg:px-10">
+        <div className="mb-6 border-b border-border pb-4">
+          <h1 className="text-3xl font-bold leading-tight text-foreground">
+            Biblioteca de componentes
+          </h1>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            Explore os componentes disponíveis e abra qualquer item para ver exemplos, instalação e uso.
+          </p>
+        </div>
 
         <div className="space-y-12">
           {sidebarSections.map((section) => (

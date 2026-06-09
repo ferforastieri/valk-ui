@@ -76,13 +76,21 @@ const DocsSidebar = forwardRef<HTMLElement, DocsSidebarProps>(
       <aside
         ref={ref}
         className={cn(
-          'hidden lg:flex h-[calc(100vh-3.5rem)] sticky top-14 w-72 shrink-0 flex-col border-r border-border bg-background/95 backdrop-blur',
+          'fixed bottom-0 left-0 top-14 z-30 hidden w-72 flex-col border-r border-border bg-background/95 backdrop-blur lg:flex',
           className
         )}
         {...props}
       >
         <nav className="flex-1 overflow-y-auto">
-          <div className="px-4 pb-4 pt-0">
+          <div className="px-4 py-4">
+            <div className="mb-4 flex items-center justify-between px-3">
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                Componentes
+              </span>
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                {sections.reduce((total, section) => total + section.items.length, 0)}
+              </span>
+            </div>
             {sections.map((section, sectionIndex) => (
               <div key={sectionIndex} className={cn(sectionIndex > 0 && 'mt-6')}>
                 {section.title && (

@@ -80,7 +80,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
             className={baseClasses}
           >
             {Icon && <Icon className={iconClasses} />}
-            <span className={cn('text-sm font-medium', isMobile ? '' : 'hidden xl:inline')}>{item.name}</span>
+            <span className={cn('font-brand text-sm font-medium', isMobile ? '' : 'hidden xl:inline')}>{item.name}</span>
             {isActive && (
               <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground" />
             )}
@@ -95,7 +95,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
           className={baseClasses}
         >
           {Icon && <Icon className={iconClasses} />}
-          <span className={cn('text-sm font-medium', isMobile ? '' : 'hidden xl:inline')}>{item.name}</span>
+          <span className={cn('font-brand text-sm font-medium', isMobile ? '' : 'hidden xl:inline')}>{item.name}</span>
           {isActive && (
             <div className="ml-auto w-1.5 h-1.5 rounded-full bg-foreground" />
           )}
