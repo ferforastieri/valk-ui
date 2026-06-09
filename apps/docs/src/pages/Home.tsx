@@ -308,7 +308,7 @@ export default function Home() {
             <CardDescription>3 tarefas</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="p-3 border rounded-lg bg-card">
+            <div className="p-3 rounded-md bg-muted/30">
               <div className="flex items-start gap-3">
                 <Checkbox 
                   checked={taskCheckboxes.todo1}
@@ -321,7 +321,7 @@ export default function Home() {
                 <Badge variant="high">Alta</Badge>
               </div>
             </div>
-            <div className="p-3 border rounded-lg bg-card">
+            <div className="p-3 rounded-md bg-muted/30">
               <div className="flex items-start gap-3">
                 <Checkbox 
                   checked={taskCheckboxes.todo2}
@@ -334,7 +334,7 @@ export default function Home() {
                 <Badge variant="medium">Média</Badge>
               </div>
             </div>
-            <div className="p-3 border rounded-lg bg-card">
+            <div className="p-3 rounded-md bg-muted/30">
               <div className="flex items-start gap-3">
                 <Checkbox 
                   checked={taskCheckboxes.todo3}
@@ -356,7 +356,7 @@ export default function Home() {
             <CardDescription>2 tarefas</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="p-3 border rounded-lg bg-card border-primary/20">
+            <div className="p-3 rounded-md bg-primary/10">
               <div className="flex items-start gap-3">
                 <Checkbox 
                   checked={taskCheckboxes.progress1}
@@ -369,7 +369,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="p-3 border rounded-lg bg-card border-primary/20">
+            <div className="p-3 rounded-md bg-primary/10">
               <div className="flex items-start gap-3">
                 <Checkbox 
                   checked={taskCheckboxes.progress2}
@@ -391,7 +391,7 @@ export default function Home() {
             <CardDescription>5 tarefas</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="p-3 border rounded-lg bg-card opacity-60">
+            <div className="p-3 rounded-md bg-muted/20 opacity-70">
               <div className="flex items-start gap-3">
                 <Checkbox 
                   checked={taskCheckboxes.done1}
@@ -404,7 +404,7 @@ export default function Home() {
                 <StatusBadge status="completed">✓</StatusBadge>
               </div>
             </div>
-            <div className="p-3 border rounded-lg bg-card opacity-60">
+            <div className="p-3 rounded-md bg-muted/20 opacity-70">
               <div className="flex items-start gap-3">
                 <Checkbox 
                   checked={taskCheckboxes.done2}
@@ -722,7 +722,7 @@ export default function Home() {
               <CardDescription className="text-xs sm:text-sm">3 itens no carrinho</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 sm:space-y-4">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-3 border rounded-lg bg-card w-full">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 py-3 w-full border-b border-border/60">
                 <Avatar fallback="📱" size="md" className="flex-shrink-0" />
                 <div className="flex-1 min-w-0 w-full sm:w-auto">
                   <p className="text-xs sm:text-sm font-medium break-words">Smartphone Pro Max</p>
@@ -732,7 +732,7 @@ export default function Home() {
                   <p className="text-xs sm:text-sm font-bold break-words">R$ 2.499</p>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-3 border rounded-lg bg-card w-full">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 py-3 w-full">
                 <Avatar fallback="👕" size="md" className="flex-shrink-0" />
                 <div className="flex-1 min-w-0 w-full sm:w-auto">
                   <p className="text-xs sm:text-sm font-medium break-words">Camiseta Premium</p>

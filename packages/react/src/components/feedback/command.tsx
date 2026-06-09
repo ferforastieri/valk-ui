@@ -22,7 +22,6 @@ const Command = forwardRef<HTMLDivElement, CommandProps>(
   ({ className, items, placeholder = 'Search...', onSelect, emptyMessage = 'No results found.', ...props }, ref) => {
     const [search, setSearch] = useState('')
     const [selectedIndex, setSelectedIndex] = useState(0)
-    const inputRef = useRef<HTMLInputElement>(null)
     const listRef = useRef<HTMLDivElement>(null)
 
     const filteredItems = items.filter((item) => {
@@ -85,7 +84,6 @@ const Command = forwardRef<HTMLDivElement, CommandProps>(
         <div className="flex items-center border-b px-3">
           <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
           <input
-            ref={inputRef}
             type="text"
             value={search}
             onChange={(e) => {

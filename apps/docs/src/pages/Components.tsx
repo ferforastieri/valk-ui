@@ -78,11 +78,11 @@ export default function Components() {
                 <RouterLink
                   key={item.href}
                   to={item.href}
-                  className="block"
+                  className="block min-w-0"
                 >
-                  <Card className="hover:bg-accent/50 transition-colors cursor-pointer h-full">
-                    <CardContent className="p-4">
-                      <CardTitle className="text-base font-medium">
+                  <Card className="h-full min-w-0 cursor-pointer transition-colors hover:bg-accent/50">
+                    <CardContent className="flex min-h-20 min-w-0 items-center p-4">
+                      <CardTitle className="min-w-0 text-base font-medium leading-snug break-words [overflow-wrap:anywhere]">
                         {item.title}
                       </CardTitle>
                     </CardContent>

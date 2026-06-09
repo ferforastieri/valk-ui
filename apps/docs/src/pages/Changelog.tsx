@@ -338,12 +338,13 @@ export default function Changelog() {
         />
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-8 border-l border-border pl-4 md:pl-6">
         {versions.map((version) => (
-          <section key={version.version} className="bg-card border rounded-lg p-4 md:p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <SparklesIcon className="h-6 w-6 text-primary" />
+          <section key={version.version} className="relative pb-8 last:pb-0">
+            <span className="absolute -left-[21px] md:-left-[29px] top-1 h-3 w-3 rounded-full border-2 border-background bg-primary" />
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
+              <div className="flex flex-wrap items-center gap-3">
+                <SparklesIcon className="h-6 w-6 text-primary flex-shrink-0" />
                 <h2 className="text-2xl font-bold text-foreground">v{version.version}</h2>
                 <StatusBadge status={version.type === 'major' ? 'completed' : 'active'}>
                   {version.type === 'major' ? t('changelog.major') : version.type === 'minor' ? t('changelog.minor') : t('changelog.patch')}
@@ -361,7 +362,7 @@ export default function Changelog() {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 pt-4 border-t">
+            <div className="mt-4">
               <a
                 href={`https://github.com/ferforastieri/valk-ui/releases/tag/v${version.version}`}
                 target="_blank"

@@ -34,7 +34,9 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     const childrenWithClose = React.Children.map(children, (child) => {
       if (React.isValidElement(child)) {
         return React.cloneElement(child, {
-          onClick: (e: React.MouseEvent) => {
+          onMouseDown: (e: React.MouseEvent) => {
+            e.preventDefault()
+            child.props.onMouseDown?.(e)
             child.props.onClick?.(e)
             if (document.activeElement instanceof HTMLElement) {
               document.activeElement.blur()

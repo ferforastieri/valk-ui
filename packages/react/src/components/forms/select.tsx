@@ -150,8 +150,8 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                       <button
                         type="button"
                         data-select-action
-                        onClick={(e) => {
-                          e.stopPropagation()
+                        onMouseDown={(e) => {
+                          e.preventDefault()
                           handleRemove(option.value)
                         }}
                         className="hover:text-accent-foreground/80"
@@ -174,8 +174,8 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                 <button
                   type="button"
                   data-select-action
-                  onClick={(e) => {
-                    e.stopPropagation()
+                  onMouseDown={(e) => {
+                    e.preventDefault()
                     handleClear()
                   }}
                   className="p-1 hover:bg-muted rounded-xl transition-colors"
@@ -200,7 +200,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                       onChange={(e) => setSearchTerm(e.target.value)}
                       placeholder="Buscar..."
                       className="flex-1 bg-transparent outline-none text-sm text-popover-foreground min-w-0"
-                      onClick={(e) => e.stopPropagation()}
                       style={{ minWidth: '120px' }}
                     />
                   </div>
@@ -222,7 +221,12 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                         selectedValues.includes(option.value) && 'bg-accent text-accent-foreground',
                         option.disabled && 'opacity-50 cursor-not-allowed'
                       )}
-                      onClick={() => !option.disabled && handleSelect(option.value)}
+                      onMouseDown={(event) => {
+                        event.preventDefault()
+                        if (!option.disabled) {
+                          handleSelect(option.value)
+                        }
+                      }}
                     >
                       {mode === 'multi' && (
                         <div className="flex-shrink-0">

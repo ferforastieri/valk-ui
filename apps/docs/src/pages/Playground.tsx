@@ -316,7 +316,7 @@ const examples = [
             <CardDescription>3 tarefas</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="p-3 border rounded-lg bg-card">
+            <div className="p-3 rounded-md bg-muted/30">
               <div className="flex items-start gap-3">
                 <Checkbox checked={todo1} onChange={(e) => setTodo1(e.target.checked)} />
                 <div className="flex-1">
@@ -334,7 +334,7 @@ const examples = [
             <CardDescription>2 tarefas</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="p-3 border rounded-lg bg-card border-primary/20">
+            <div className="p-3 rounded-md bg-primary/10">
               <div className="flex items-start gap-3">
                 <Checkbox checked={progress1} onChange={(e) => setProgress1(e.target.checked)} />
                 <div className="flex-1">
@@ -352,7 +352,7 @@ const examples = [
             <CardDescription>5 tarefas</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="p-3 border rounded-lg bg-card opacity-60">
+            <div className="p-3 rounded-md bg-muted/20 opacity-70">
               <div className="flex items-start gap-3">
                 <Checkbox checked={done1} onChange={(e) => setDone1(e.target.checked)} />
                 <div className="flex-1">

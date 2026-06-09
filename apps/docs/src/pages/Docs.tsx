@@ -29,7 +29,7 @@ export default function Docs() {
         </div>
       </div>
 
-      <section className="bg-card border rounded-lg p-4 md:p-6 space-y-5">
+      <section className="border-t border-border pt-6 space-y-5">
         <h2 className="text-2xl font-bold text-foreground">{t('docs.installation')}</h2>
         
         <div>
@@ -72,7 +72,7 @@ export default function Docs() {
 
       </section>
 
-      <section className="bg-card border rounded-lg p-6 space-y-6">
+      <section className="border-t border-border pt-6 space-y-6">
         <h2 className="text-2xl font-bold text-foreground">{t('docs.basicUsage')}</h2>
         
         <div>
@@ -95,7 +95,7 @@ export default function Docs() {
 
       </section>
 
-      <section className="bg-card border rounded-lg p-6 space-y-6">
+      <section className="border-t border-border pt-6 space-y-6">
         <h2 className="text-2xl font-bold text-foreground">{t('docs.requirements')}</h2>
         
         <div>

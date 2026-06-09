@@ -94,7 +94,10 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               isToday && 'bg-accent text-accent-foreground font-semibold',
               isSelected && 'bg-foreground text-background font-semibold hover:bg-foreground/90'
             )}
-            onClick={() => handleDateSelect(buttonDate)}
+            onMouseDown={(event) => {
+              event.preventDefault()
+              handleDateSelect(buttonDate)
+            }}
           >
             {buttonDate.getDate()}
           </button>
@@ -160,7 +163,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => {
+                onMouseDown={(event) => {
+                  event.preventDefault()
                   const newMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1)
                   setCurrentMonth(newMonth)
                 }}
@@ -176,7 +180,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => {
+                onMouseDown={(event) => {
+                  event.preventDefault()
                   const newMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1)
                   setCurrentMonth(newMonth)
                 }}
