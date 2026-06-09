@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import {
   Accordion,
   Avatar,
@@ -9,7 +9,6 @@ import {
   CardContent,
   CardTitle,
   Checkbox,
-  Command,
   DatePicker,
   Dialog,
   DonutChart,
@@ -19,7 +18,6 @@ import {
   LineChart,
   MetricCard,
   Modal,
-  Navigation,
   PaginatedTable,
   ProgressBar,
   Select,
@@ -143,14 +141,13 @@ function ComponentPreview({ type }: { type: PreviewType }) {
       )
     case 'command':
       return (
-        <Command
-          className="h-24 w-52"
-          placeholder="Buscar..."
-          items={[
-            { id: 'button', title: 'Button' },
-            { id: 'input', title: 'Input' },
-          ]}
-        />
+        <div className="h-24 w-52 overflow-hidden rounded-md border bg-popover text-popover-foreground">
+          <div className="border-b px-3 py-2 text-sm text-muted-foreground">Buscar...</div>
+          <div className="p-1">
+            <div className="rounded-sm bg-accent px-2 py-1.5 text-sm text-accent-foreground">Button</div>
+            <div className="px-2 py-1.5 text-sm">Input</div>
+          </div>
+        </div>
       )
     case 'themetoggle':
       return <ThemeToggle theme="light" onToggle={() => undefined} />
@@ -212,15 +209,10 @@ function ComponentPreview({ type }: { type: PreviewType }) {
       )
     case 'navigation':
       return (
-        <Navigation
-          className="w-64 rounded-xl border"
-          showMobileMenu={false}
-          items={[
-            { name: 'Docs', href: '/docs' },
-            { name: 'UI', href: '/components' },
-          ]}
-          currentPath="/components"
-        />
+        <div className="flex w-64 items-center gap-2 rounded-xl border border-border bg-background px-3 py-2">
+          <span className="rounded-lg px-3 py-2 text-sm text-muted-foreground">Docs</span>
+          <span className="rounded-lg bg-accent px-3 py-2 text-sm font-medium text-foreground">UI</span>
+        </div>
       )
     case 'tabs':
       return (
@@ -265,7 +257,6 @@ function ComponentPreview({ type }: { type: PreviewType }) {
 
 export default function Components() {
   const { t } = useTranslation()
-  const navigate = useNavigate()
 
   const sidebarSections: ComponentSection[] = [
     {
@@ -335,24 +326,23 @@ export default function Components() {
         </p>
       </div>
 
-      <nav className="mb-8 flex flex-wrap gap-2" aria-label="Navegação de componentes">
+      <div className="mb-8 flex flex-wrap gap-2" aria-label="Categorias de componentes">
         {sidebarSections.map((section) => (
-          <a
+          <span
             key={section.id}
-            href={`#${section.id}`}
-            className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-accent/60 hover:text-foreground"
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-muted-foreground"
           >
             <span>{section.title}</span>
             <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
               {section.items.length}
             </span>
-          </a>
+          </span>
         ))}
-      </nav>
+      </div>
 
       <div className="space-y-12">
         {sidebarSections.map((section) => (
-          <section key={section.title} id={section.id} className="scroll-mt-20 space-y-4">
+          <section key={section.title} className="space-y-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-foreground">{section.title}</h2>
@@ -365,18 +355,10 @@ export default function Components() {
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
               {section.items.map((item) => (
-                <article
+                <RouterLink
                   key={item.href}
-                  role="link"
-                  tabIndex={0}
-                  onClick={() => navigate(item.href)}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault()
-                      navigate(item.href)
-                    }
-                  }}
-                  className="group min-w-0 cursor-pointer rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                  to={item.href}
+                  className="group min-w-0 rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                 >
                   <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
                     <div className="min-w-0">
@@ -391,10 +373,10 @@ export default function Components() {
                       →
                     </span>
                   </div>
-                  <div className="flex min-h-24 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-2">
+                  <div className="pointer-events-none flex min-h-24 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-2">
                     <ComponentPreview type={item.preview} />
                   </div>
-                </article>
+                </RouterLink>
               ))}
             </div>
           </section>
