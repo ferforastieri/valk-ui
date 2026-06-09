@@ -76,7 +76,7 @@ const DocsSidebar = forwardRef<HTMLElement, DocsSidebarProps>(
       <aside
         ref={ref}
         className={cn(
-          'hidden lg:flex h-[calc(100vh-4rem)] sticky top-16 w-72 shrink-0 flex-col border-r border-border bg-background/95 backdrop-blur',
+          'hidden lg:flex h-[calc(100vh-3.5rem)] sticky top-14 w-72 shrink-0 flex-col border-r border-border bg-background/95 backdrop-blur',
           className
         )}
         {...props}

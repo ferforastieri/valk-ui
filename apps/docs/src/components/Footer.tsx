@@ -22,19 +22,19 @@ export default function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="w-full px-4 md:px-6 py-8 md:py-10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           {/* Brand */}
           <div className="flex items-center gap-3">
-            <Link to="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="Valk UI" className="h-10 w-10" />
-              <span className="text-xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <Link to="/" className="flex items-center gap-3">
+              <img src="/logo.png" alt="Valk UI" className="h-14 w-14" />
+              <span className="text-2xl font-bold text-foreground" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Valk UI
               </span>
             </Link>
           </div>
 
           {/* Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6">
+          <div className="flex flex-wrap items-center justify-start gap-6">
             {navigation.map((item) => {
               const Icon = item.icon
               return (

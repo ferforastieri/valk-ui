@@ -18,6 +18,55 @@ interface LayoutProps {
   children: React.ReactNode
 }
 
+const SITE_URL = 'https://valkui.vercel.app'
+
+const routeMeta: Record<string, { title: string; description: string }> = {
+  '/': {
+    title: 'Valk UI - React UI Component Library',
+    description: 'Modern React UI components for forms, feedback, layout, charts, documentation, and visual design systems.',
+  },
+  '/docs': {
+    title: 'Documentation - Valk UI',
+    description: 'Install Valk UI, learn how the React component library works, and copy components into your project.',
+  },
+  '/components': {
+    title: 'Components - Valk UI',
+    description: 'Explore Valk UI components for forms, feedback, layout, navigation, charts, and design systems.',
+  },
+  '/playground': {
+    title: 'Playground - Valk UI',
+    description: 'Preview Valk UI React components, themes, colors, and examples in an interactive playground.',
+  },
+  '/changelog': {
+    title: 'Changelog - Valk UI',
+    description: 'See Valk UI releases, updates, fixes, and component library changes.',
+  },
+}
+
+const getRouteMeta = (pathname: string) => {
+  if (pathname.startsWith('/components/') && pathname !== '/components') {
+    const componentName = pathname
+      .replace('/components/', '')
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase())
+
+    return {
+      title: `${componentName} Component - Valk UI`,
+      description: `Documentation, usage examples, and installation details for the ${componentName} component in Valk UI.`,
+    }
+  }
+
+  return routeMeta[pathname] || routeMeta['/']
+}
+
+const setMetaTag = (selector: string, attribute: 'content' | 'href', value: string) => {
+  const element = document.head.querySelector(selector)
+
+  if (element) {
+    element.setAttribute(attribute, value)
+  }
+}
+
 function LayoutContent({ children }: LayoutProps) {
   const [isDark, setIsDark] = useState(false)
   const [showLanguageMenu, setShowLanguageMenu] = useState(false)
@@ -77,6 +126,20 @@ function LayoutContent({ children }: LayoutProps) {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [location.pathname])
 
+  useEffect(() => {
+    const meta = getRouteMeta(location.pathname)
+    const canonicalUrl = `${SITE_URL}${location.pathname === '/' ? '/' : location.pathname}`
+
+    document.title = meta.title
+    setMetaTag('meta[name="description"]', 'content', meta.description)
+    setMetaTag('link[rel="canonical"]', 'href', canonicalUrl)
+    setMetaTag('meta[property="og:title"]', 'content', meta.title)
+    setMetaTag('meta[property="og:description"]', 'content', meta.description)
+    setMetaTag('meta[property="og:url"]', 'content', canonicalUrl)
+    setMetaTag('meta[name="twitter:title"]', 'content', meta.title)
+    setMetaTag('meta[name="twitter:description"]', 'content', meta.description)
+  }, [location.pathname])
+
   const toggleTheme = () => {
     const newDark = !isDark
     setIsDark(newDark)
@@ -127,8 +190,8 @@ function LayoutContent({ children }: LayoutProps) {
 
   const logo = (
     <RouterLink to="/" className="flex items-center gap-2 min-w-0" onClick={() => setMobileMenuOpen(false)}>
-      <img src="/logo.png" alt="Valk UI" className="h-8 w-8 flex-shrink-0" />
-      <span className="text-xl font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
+      <img src="/logo.png" alt="Valk UI" className="h-11 w-11 flex-shrink-0" />
+      <span className="text-2xl font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'Poppins', sans-serif" }}>Valk UI</span>
     </RouterLink>
   )
 
