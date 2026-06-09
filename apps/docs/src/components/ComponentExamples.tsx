@@ -777,8 +777,8 @@ function MyComponent() {
   }
 
   return (
-    <div className="space-y-6">
-      <section className="space-y-4">
+    <div className="space-y-5">
+      <section className="space-y-3">
         <div>
           <CardTitle>Preview</CardTitle>
           <CardDescription>Visualização do componente</CardDescription>

@@ -1,9 +1,8 @@
-import { Link as RouterLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   Accordion,
   Avatar,
   Badge,
-  BarChart,
   Button,
   Card,
   CardContent,
@@ -11,11 +10,9 @@ import {
   Checkbox,
   DatePicker,
   Dialog,
-  DonutChart,
   DropdownMenu,
   DropdownMenuItem,
   Input,
-  LineChart,
   MetricCard,
   Modal,
   PaginatedTable,
@@ -225,30 +222,65 @@ function ComponentPreview({ type }: { type: PreviewType }) {
       )
     case 'barchart':
       return (
-        <BarChart
-          title="BarChart"
-          data={{ label: 'Docs', previousPeriod: 40, selectedPeriod: 70 }}
-          showLegend={false}
-          className="h-24 w-52 p-2 [&_h3]:mb-1 [&_h3]:text-xs [&>div]:gap-4 [&>div]:px-4 [&>div]:pb-2 [&>div]:pt-2"
-        />
+        <div className="flex h-full w-full max-w-56 items-end justify-center gap-5 px-8 py-3">
+          <span className="h-9 w-12 rounded-t-md bg-blue-500" />
+          <span className="h-16 w-12 rounded-t-md bg-emerald-500" />
+        </div>
       )
     case 'donutchart':
       return (
-        <DonutChart
-          title="DonutChart"
-          data={[{ label: 'Uso', value: 75, percentage: 75, color: '#003580' }]}
-          className="h-24 min-h-0 w-52 p-2 [&_h3]:text-xs [&_h3]:mb-1"
-        />
+        <div className="relative flex h-full w-full items-center justify-center">
+          <svg viewBox="0 0 160 96" className="h-24 w-40" role="img" aria-label="DonutChart preview">
+            <path
+              d="M 32 72 A 48 48 0 0 1 128 72"
+              fill="none"
+              stroke="hsl(var(--muted))"
+              strokeWidth="18"
+              strokeLinecap="round"
+              pathLength={100}
+            />
+            <path
+              d="M 32 72 A 48 48 0 0 1 128 72"
+              fill="none"
+              stroke="#003580"
+              strokeWidth="18"
+              strokeLinecap="round"
+              pathLength={100}
+              strokeDasharray="74 100"
+            />
+          </svg>
+          <span className="absolute bottom-5 text-sm font-bold text-primary">74%</span>
+        </div>
       )
     case 'linechart':
       return (
-        <LineChart
-          title="LineChart"
-          data={[12, 24, 18, 32, 28]}
-          labels={['A', 'B', 'C', 'D', 'E']}
-          color="#003580"
-          className="h-24 w-52 p-2 [&_h3]:mb-1 [&_h3]:text-xs [&_svg]:h-20"
-        />
+        <svg viewBox="0 0 220 96" className="h-24 w-full max-w-60" role="img" aria-label="LineChart preview">
+          <line x1="20" y1="78" x2="204" y2="78" stroke="hsl(var(--border))" />
+          <line x1="20" y1="18" x2="20" y2="78" stroke="hsl(var(--border))" />
+          <polygon
+            points="20,78 20,62 66,42 112,54 158,28 204,36 204,78"
+            fill="hsl(var(--primary) / 0.14)"
+          />
+          <polyline
+            points="20,62 66,42 112,54 158,28 204,36"
+            fill="none"
+            stroke="#003580"
+            strokeWidth="5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          {[20, 66, 112, 158, 204].map((x, index) => (
+            <circle
+              key={x}
+              cx={x}
+              cy={[62, 42, 54, 28, 36][index]}
+              r="4"
+              fill="#003580"
+              stroke="hsl(var(--background))"
+              strokeWidth="2"
+            />
+          ))}
+        </svg>
       )
     default:
       return null
@@ -257,6 +289,7 @@ function ComponentPreview({ type }: { type: PreviewType }) {
 
 export default function Components() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
 
   const sidebarSections: ComponentSection[] = [
     {
@@ -326,23 +359,24 @@ export default function Components() {
         </p>
       </div>
 
-      <div className="mb-8 flex flex-wrap gap-2" aria-label="Categorias de componentes">
+      <nav className="mb-8 flex flex-wrap gap-2" aria-label="Categorias de componentes">
         {sidebarSections.map((section) => (
-          <span
+          <a
             key={section.id}
+            href={`#${section.id}`}
             className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-muted-foreground"
           >
             <span>{section.title}</span>
             <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
               {section.items.length}
             </span>
-          </span>
+          </a>
         ))}
-      </div>
+      </nav>
 
       <div className="space-y-12">
         {sidebarSections.map((section) => (
-          <section key={section.title} className="space-y-4">
+          <section key={section.title} id={section.id} className="scroll-mt-20 space-y-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-foreground">{section.title}</h2>
@@ -353,14 +387,22 @@ export default function Components() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 items-stretch gap-3 md:grid-cols-2 xl:grid-cols-3">
               {section.items.map((item) => (
-                <RouterLink
+                <article
                   key={item.href}
-                  to={item.href}
-                  className="group min-w-0 rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                  role="link"
+                  tabIndex={0}
+                  onClick={() => navigate(item.href)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault()
+                      navigate(item.href)
+                    }
+                  }}
+                  className="group flex min-h-48 min-w-0 cursor-pointer flex-col rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary/50 hover:bg-accent/35 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                 >
-                  <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
+                  <div className="mb-3 flex min-h-16 min-w-0 items-start justify-between gap-3">
                     <div className="min-w-0">
                       <h3 className="text-base font-semibold text-foreground break-words">
                         {item.title}
@@ -373,10 +415,14 @@ export default function Components() {
                       →
                     </span>
                   </div>
-                  <div className="pointer-events-none flex min-h-24 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-2">
+                  <div
+                    inert=""
+                    aria-hidden="true"
+                    className="pointer-events-none flex h-24 items-center justify-center overflow-hidden rounded-md bg-muted/25 p-2"
+                  >
                     <ComponentPreview type={item.preview} />
                   </div>
-                </RouterLink>
+                </article>
               ))}
             </div>
           </section>

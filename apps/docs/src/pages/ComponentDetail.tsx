@@ -69,19 +69,19 @@ export default function ComponentDetail() {
         currentPath={location.pathname}
         LinkComponent={RouterLink}
       />
-      <div className="min-w-0 flex-1 px-6 pb-8 pt-4 md:px-8 md:pb-10 lg:ml-72 lg:px-10">
-        <div className="mb-8 border-b border-border pb-6">
+      <div className="-mt-5 min-w-0 flex-1 px-6 pb-8 pt-0 md:-mt-7 md:px-8 md:pb-10 lg:ml-72 lg:px-10">
+        <div className="mb-4 border-b border-border pb-4">
           <RouterLink
             to="/components"
-            className="mb-5 inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-accent/50 hover:text-primary"
+            className="mb-3 inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-accent/50 hover:text-primary"
           >
             <span aria-hidden="true">←</span>
             Voltar para componentes
           </RouterLink>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-primary">
             Componente
           </p>
-          <h1 className="mb-3 text-3xl font-bold leading-tight text-foreground md:text-4xl">
+          <h1 className="mb-1 text-3xl font-bold leading-tight text-foreground md:text-4xl">
             {componentDisplayName}
           </h1>
           <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
